@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'eState Market',
       theme: lightThemeData,
       home: SafeArea(child: LoginPage()),
     );
