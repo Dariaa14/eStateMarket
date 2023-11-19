@@ -16,5 +16,6 @@ abstract class GarageEntity extends PropertyEntity {
       required this.capacity,
       required super.surface,
       required super.price,
-      required super.isNegotiable});
+      required super.isNegotiable,
+      required super.constructionYear});
 }

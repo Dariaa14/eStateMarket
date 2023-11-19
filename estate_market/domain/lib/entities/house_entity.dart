@@ -11,8 +11,9 @@ abstract class HouseEntity extends ResidenceEntity {
       required this.numberOfFloors,
       required super.numberOfRooms,
       required super.numberOfBathrooms,
-      required super.isFurnished,
+      required super.furnishingLevel,
       required super.surface,
       required super.price,
-      required super.isNegotiable});
+      required super.isNegotiable,
+      required super.constructionYear});
 }

@@ -8,7 +8,6 @@ enum DepositType {
 
 abstract class DepositEntity extends PropertyEntity {
   final double height;
-  final int constructionYear;
   final double usableSurface;
   final double administrativeSurface;
   final DepositType depositType;
@@ -20,11 +19,11 @@ abstract class DepositEntity extends PropertyEntity {
 
   DepositEntity(
       {required this.height,
-      required this.constructionYear,
       required this.usableSurface,
       required this.administrativeSurface,
       required this.depositType,
       required this.parkingSpaces,
+      required super.constructionYear,
       required super.surface,
       required super.price,
       required super.isNegotiable});
