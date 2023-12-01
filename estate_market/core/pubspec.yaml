@@ -1,6 +1,7 @@
 name: core
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
+publish_to: none
 # repository: https://github.com/my_org/my_repo
 
 environment:
@@ -8,7 +9,11 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  # path: ^1.8.0
+  domain:
+    path: ../domain
+
+  data:
+    path: ../data
 
 dev_dependencies:
   lints: ^2.0.0

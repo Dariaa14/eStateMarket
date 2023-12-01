@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:estate_market/widgets/searchbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'register_page_bloc.dart';
 
@@ -80,51 +80,25 @@ class RegisterPage extends StatelessWidget {
                             ),
 
                             // Username textfield:
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surfaceVariant,
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-                                child: PlatformTextField(
-                                  maxLines: 1,
-                                  hintText: "Username",
-                                  textAlignVertical: TextAlignVertical.center,
-                                ),
-                              ),
-                            ),
+                            const CustomTextField(hintText: "Username"),
 
                             const SizedBox(
                               height: 10,
                             ),
 
                             // Password textfield:
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surfaceVariant,
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              height: 40,
-                              child: TextField(
-                                obscureText: state.isPasswordObscured,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Password',
-                                  contentPadding: const EdgeInsets.only(left: 15.0, top: 3.0, bottom: 3.0),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      bloc.add(ChangePasswordVisibilityEvent());
-                                    },
-                                    icon: Icon(
-                                      (state.isPasswordObscured == true)
-                                          ? CupertinoIcons.eye
-                                          : CupertinoIcons.eye_slash,
-                                      size: 20,
-                                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                    ),
-                                  ),
+                            CustomTextField(
+                              hintText: "Password",
+                              obscureText: state.isPasswordObscured,
+                              onChanged: (password) => {bloc.add(CalculatePasswordStrenghtEvent(password: password))},
+                              suffix: IconButton(
+                                onPressed: () {
+                                  bloc.add(ChangePasswordVisibilityEvent());
+                                },
+                                icon: Icon(
+                                  (state.isPasswordObscured == true) ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
+                                  size: 20,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ),
@@ -143,18 +117,18 @@ class RegisterPage extends StatelessWidget {
                                     "Password strenght: ",
                                     style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                                   ),
-                                  const Expanded(
+                                  Expanded(
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         PasswordStrenghtContainer(
-                                          colored: Colors.red,
+                                          colored: (state.passwordStrenght.index >= 1) ? Colors.red : Colors.grey,
                                         ),
                                         PasswordStrenghtContainer(
-                                          colored: Colors.orange,
+                                          colored: (state.passwordStrenght.index >= 2) ? Colors.orange : Colors.grey,
                                         ),
                                         PasswordStrenghtContainer(
-                                          colored: Colors.green,
+                                          colored: (state.passwordStrenght.index >= 3) ? Colors.green : Colors.grey,
                                         ),
                                       ],
                                     ),

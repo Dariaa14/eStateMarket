@@ -1,6 +1,7 @@
 import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/config/themes.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
+import 'package:estate_market/register_page/register_page_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'eState Market',
       theme: lightThemeData,
       onGenerateRoute: (settings) => RouteNames.generateRoute(settings),
-      home: const SafeArea(child: MainPageView()),
+      home: SafeArea(child: RegisterPage()),
     );
   }
 }

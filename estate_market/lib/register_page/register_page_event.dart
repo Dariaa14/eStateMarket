@@ -8,6 +8,12 @@ class ChangePasswordVisibilityEvent extends RegisterPageEvent {
   ChangePasswordVisibilityEvent();
 }
 
+class CalculatePasswordStrenghtEvent extends RegisterPageEvent {
+  String password;
+
+  CalculatePasswordStrenghtEvent({required this.password});
+}
+
 class ChangeStayConnectedEvent extends RegisterPageEvent {
   ChangeStayConnectedEvent();
 }

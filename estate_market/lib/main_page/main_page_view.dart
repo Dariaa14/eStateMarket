@@ -2,6 +2,7 @@ import 'package:domain/entities/ad_entity.dart';
 import 'package:estate_market/main_page/category_item.dart';
 import 'package:estate_market/main_page/property_item.dart';
 import 'package:estate_market/widgets/searchbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../sidebar_menu/sidebar_menu_view.dart';
@@ -13,7 +14,13 @@ class MainPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const MainSearchBar(),
+          title: CustomTextField(
+            hintText: "Search",
+            prefix: Icon(
+              CupertinoIcons.search,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
           backgroundColor: Theme.of(context).colorScheme.surface,
           actions: [
             IconButton(

@@ -1,25 +1,38 @@
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainSearchBar extends StatefulWidget {
+class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
   final Function(String)? onChanged;
   final VoidCallback? onTap;
   final Widget? prefix;
+  final Widget? suffix;
+  final VoidCallback? onSuffixTap;
+  final String hintText;
 
   final bool? readOnly;
   final bool hasHighlight;
+  final bool obscureText;
 
-  const MainSearchBar(
-      {super.key, this.prefix, this.onTap, this.onChanged, this.readOnly, this.hasHighlight = false, this.controller});
+  const CustomTextField(
+      {super.key,
+      this.prefix,
+      this.suffix,
+      this.onSuffixTap,
+      this.onTap,
+      this.onChanged,
+      this.readOnly,
+      required this.hintText,
+      this.hasHighlight = false,
+      this.controller,
+      this.obscureText = false});
 
   @override
-  State<MainSearchBar> createState() => _MainSearchBarState();
+  State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
-class _MainSearchBarState extends State<MainSearchBar> {
+class _CustomTextFieldState extends State<CustomTextField> {
   bool _firstTime = true;
   String _prevInput = '';
 
@@ -41,7 +54,8 @@ class _MainSearchBarState extends State<MainSearchBar> {
       child: PlatformTextField(
         controller: widget.controller,
         readOnly: widget.readOnly ?? false,
-        hintText: 'Search',
+        hintText: widget.hintText,
+        obscureText: widget.obscureText,
         textAlignVertical: TextAlignVertical.center,
         style: widget.hasHighlight
             ? Theme.of(context)
@@ -49,8 +63,8 @@ class _MainSearchBarState extends State<MainSearchBar> {
                 .headlineLarge!
                 .copyWith(backgroundColor: Theme.of(context).colorScheme.onSurfaceVariant)
             : Theme.of(context).textTheme.headlineLarge!,
-        material: (context, platform) => getMaterialSearchBarData(context, platform, widget.prefix),
-        cupertino: (context, platform) => getCupertinoSearchBarData(context, platform, widget.prefix),
+        material: (context, platform) => getMaterialSearchBarData(context, platform, widget.prefix, widget.suffix),
+        cupertino: (context, platform) => getCupertinoSearchBarData(context, platform, widget.prefix, widget.suffix),
         onTap: widget.onTap,
         onTapOutside: (event) {
           FocusManager.instance.primaryFocus!.unfocus();
@@ -77,48 +91,45 @@ class _MainSearchBarState extends State<MainSearchBar> {
   }
 }
 
-CupertinoTextFieldData getCupertinoSearchBarData(BuildContext context, PlatformTarget target, Widget? prefix) {
+CupertinoTextFieldData getCupertinoSearchBarData(
+    BuildContext context, PlatformTarget target, Widget? prefix, Widget? suffix) {
   return CupertinoTextFieldData(
-    prefix: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3.0),
-      child: prefix ??
-          Icon(
-            CupertinoIcons.search,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
-    ),
+    prefix: prefix ??
+        const SizedBox(
+          width: 1.0,
+        ),
+    suffix: Padding(padding: const EdgeInsets.symmetric(horizontal: 3.0), child: suffix),
     style: const TextStyle(fontSize: 20, color: Colors.grey),
     placeholderStyle: const TextStyle(fontSize: 20, color: Colors.grey),
     textAlignVertical: TextAlignVertical.center,
     padding: EdgeInsets.zero,
     decoration: BoxDecoration(
       color: Theme.of(context).colorScheme.surfaceVariant,
-      borderRadius: const BorderRadius.all(Radius.circular(30)),
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
     ),
   );
 }
 
-MaterialTextFieldData getMaterialSearchBarData(BuildContext context, PlatformTarget target, Widget? prefix) {
+MaterialTextFieldData getMaterialSearchBarData(
+    BuildContext context, PlatformTarget target, Widget? prefix, Widget? suffix) {
   return MaterialTextFieldData(
     textAlignVertical: TextAlignVertical.center,
     style: const TextStyle(fontSize: 20, color: Colors.grey),
     decoration: InputDecoration(
       prefixIcon: prefix ??
-          Icon(
-            CupertinoIcons.search,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          const SizedBox(
+            width: 1.0,
           ),
+      suffixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 3.0), child: suffix),
       contentPadding: EdgeInsets.zero,
-      hintText: 'Search',
-      hintStyle: const TextStyle(fontSize: 20),
       enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Theme.of(context).colorScheme.surfaceVariant)),
       focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Theme.of(context).colorScheme.surfaceVariant)),
       border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Theme.of(context).colorScheme.surfaceVariant)),
       filled: true,
       fillColor: Theme.of(context).colorScheme.surfaceVariant,
