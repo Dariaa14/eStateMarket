@@ -1,4 +1,6 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:estate_market/main_page/category_item.dart';
+import 'package:estate_market/main_page/property_item.dart';
 import 'package:estate_market/widgets/searchbar.dart';
 import 'package:flutter/material.dart';
 
@@ -30,26 +32,31 @@ class MainPageView extends StatelessWidget {
             child: CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
-                    height: 100,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10, // Set your item count
-                      itemBuilder: (context, index) {
-                        return const CategoryItem();
-                      },
-                    ),
+                  child: Column(
+                    children: [
+                      const Text("Categories"),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: AdCategory.values.length,
+                          itemBuilder: (context, index) {
+                            return CategoryItem(category: AdCategory.values[index]);
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text('Item $index'),
+                      return const ListTile(
+                        title: PropertyItem(),
                       );
                     },
                     childCount: 100,

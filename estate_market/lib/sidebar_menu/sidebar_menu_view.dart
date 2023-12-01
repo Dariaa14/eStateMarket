@@ -14,16 +14,7 @@ class SidebarMenu extends StatelessWidget {
         child: Column(
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-              ),
-              child: Text(
-                'eState Market',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  fontSize: 24,
-                ),
-              ),
+              child: Image.asset('assets/app_logo/logo_with_title.png'),
             ),
             ListTile(
               leading: const Icon(Icons.explore),

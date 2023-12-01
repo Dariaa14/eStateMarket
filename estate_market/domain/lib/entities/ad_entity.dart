@@ -13,6 +13,7 @@ abstract class AdEntity {
   final String description;
   final PropertyEntity property;
   final ListingType listingType;
+  final DateTime dateOfAd;
 
   AdEntity(
       {required this.title,
@@ -20,5 +21,6 @@ abstract class AdEntity {
       required this.images,
       required this.description,
       required this.property,
-      required this.listingType});
+      required this.listingType,
+      required this.dateOfAd});
 }
