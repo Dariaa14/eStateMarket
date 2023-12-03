@@ -7,7 +7,7 @@ class RouteNames {
   static const String registerPage = '/register';
 
   static Map<String, Widget Function(BuildContext)> routeMap = {
-    mainPage: (context) => const MainPageView(),
+    mainPage: (context) => MainPageView(),
     registerPage: (context) => RegisterPage(),
   };
 
@@ -15,7 +15,7 @@ class RouteNames {
     switch (settings.name) {
       case RouteNames.mainPage:
         return MaterialPageRoute(
-          builder: (context) => const MainPageView(),
+          builder: (context) => MainPageView(),
         );
       case RouteNames.registerPage:
         return MaterialPageRoute(

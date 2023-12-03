@@ -1,14 +1,17 @@
 import 'package:domain/entities/ad_entity.dart';
 import 'package:estate_market/main_page/category_item.dart';
+import 'package:estate_market/main_page/main_page_bloc.dart';
 import 'package:estate_market/main_page/property_item.dart';
 import 'package:estate_market/widgets/searchbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../sidebar_menu/sidebar_menu_view.dart';
 
 class MainPageView extends StatelessWidget {
-  const MainPageView({super.key});
+  final MainPageBloc bloc = MainPageBloc();
+  MainPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,40 +39,30 @@ class MainPageView extends StatelessWidget {
           color: Theme.of(context).colorScheme.background,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      Text(AppLocalizations.of(context)!.categories),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Theme.of(context).colorScheme.surface,
-                        ),
-                        height: 100,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: AdCategory.values.length,
-                          itemBuilder: (context, index) {
-                            return CategoryItem(category: AdCategory.values[index]);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return const ListTile(
-                        title: PropertyItem(),
+            child: BlocBuilder<MainPageBloc, MainPageState>(
+              bloc: bloc,
+              builder: (context, state) {
+                return FutureBuilder<List<AdEntity>>(
+                  future: bloc.getAdsTest(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
                       );
-                    },
-                    childCount: 100,
-                  ),
-                ),
-              ],
+                    }
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    final data = snapshot.requireData;
+                    return ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return PropertyItem(ad: data[index]);
+                        });
+                  },
+                );
+              },
             ),
           ),
         ));

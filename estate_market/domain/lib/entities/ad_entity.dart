@@ -6,12 +6,12 @@ enum AdCategory { apartament, house, terrain, garage, deposit }
 
 enum ListingType { sale, rent }
 
-abstract class AdEntity {
+class AdEntity {
   final String title;
   final AdCategory adCategory;
   final List<Uint8List> images;
   final String description;
-  final PropertyEntity property;
+  final PropertyEntity? property;
   final ListingType listingType;
   final DateTime dateOfAd;
 
