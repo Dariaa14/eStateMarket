@@ -38,16 +38,12 @@ class AdEntityImpl extends AdEntity {
 
   factory AdEntityImpl.fromJson(Map<String, Object?> json) {
     return AdEntityImpl(
-      title: json['title']! as String,
-      adCategory: AdCategory.values.firstWhere(
-        (e) => e.toString() == json['adCategory'] as String,
-      ),
-      images: (json['images'] as List).map((image) => Uint8List.fromList(image.cast<int>())).toList(),
+      title: json['title'] as String,
+      adCategory: AdCategory.values[json['adCategory'] as int],
+      images: [], // (json['images'] as List).map((image) => Uint8List.fromList(image.cast<int>())).toList(),
       description: json['description'] as String,
       property: null,
-      listingType: ListingType.values.firstWhere(
-        (e) => e.toString() == json['listingType'] as String,
-      ),
+      listingType: ListingType.values[json['listingType'] as int],
       dateOfAd: (json['dateOfAd'] as Timestamp).toDate(),
     );
   }

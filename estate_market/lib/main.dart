@@ -1,3 +1,4 @@
+import 'package:core/dependency_injector/di.dart';
 import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/config/themes.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    diRepositories();
+    diUseCases();
+
     return MaterialApp(
       title: 'eState Market',
       theme: lightThemeData,

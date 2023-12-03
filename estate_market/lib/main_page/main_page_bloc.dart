@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/use_cases/database_use_case.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,7 +12,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
 
   MainPageBloc() : super(MainPageInitial());
 
-  getAdsTest() async {
+  Future<List<AdEntity>> getAdsTest() async {
     return await _databaseUseCase.getAllAds();
   }
 }
