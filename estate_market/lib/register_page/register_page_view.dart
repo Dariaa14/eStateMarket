@@ -4,11 +4,13 @@ import 'package:estate_market/widgets/searchbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'register_page_bloc.dart';
 
 class RegisterPage extends StatelessWidget {
   final RegisterPageBloc bloc = RegisterPageBloc();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   RegisterPage({super.key});
 
@@ -20,37 +22,51 @@ class RegisterPage extends StatelessWidget {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
-              color: Theme.of(context).colorScheme.background,
-              child: Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(20.0),
+            color: Theme.of(context).colorScheme.background,
+            child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                width: min(MediaQuery.of(context).size.width - 60, 450),
+                height: MediaQuery.of(context).size.height / 1.25,
+                child: Stack(children: [
+                  // Return to previous page button
+                  Positioned(
+                    left: 5.0,
+                    top: 5.0,
+                    child: IconButton(
+                      onPressed: () {
+                        // Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
-                  width: min(MediaQuery.of(context).size.width - 60, 450),
-                  height: MediaQuery.of(context).size.height / 1.25,
-                  child: Padding(
+                  Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          width: 70,
-                          height: 60,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
+                        Image.asset('assets/app_logo/logo_with_title.png'),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Change pages between login/signup
                             Row(
                               children: [
                                 GestureDetector(
                                   onTap: () {
+                                    _usernameController.text = '';
+                                    _passwordController.text = '';
                                     bloc.add(ChangeRegisterTypeEvent(type: RegisterPageType.login));
                                   },
                                   child: Text(
-                                    "Login",
+                                    AppLocalizations.of(context)!.login,
                                     style: TextStyle(
                                         color: (state.registerPageType == RegisterPageType.login)
                                             ? Theme.of(context).colorScheme.primary
@@ -62,10 +78,12 @@ class RegisterPage extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    _usernameController.text = '';
+                                    _passwordController.text = '';
                                     bloc.add(ChangeRegisterTypeEvent(type: RegisterPageType.signup));
                                   },
                                   child: Text(
-                                    "Signup",
+                                    AppLocalizations.of(context)!.signup,
                                     style: TextStyle(
                                         color: (state.registerPageType == RegisterPageType.signup)
                                             ? Theme.of(context).colorScheme.primary
@@ -80,7 +98,14 @@ class RegisterPage extends StatelessWidget {
                             ),
 
                             // Username textfield:
-                            const CustomTextField(hintText: "Username"),
+                            CustomTextField(
+                              hintText: AppLocalizations.of(context)!.username,
+                              controller: _usernameController,
+                              prefix: Icon(
+                                Icons.person,
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
+                            ),
 
                             const SizedBox(
                               height: 10,
@@ -88,9 +113,14 @@ class RegisterPage extends StatelessWidget {
 
                             // Password textfield:
                             CustomTextField(
-                              hintText: "Password",
+                              controller: _passwordController,
+                              hintText: AppLocalizations.of(context)!.password,
                               obscureText: state.isPasswordObscured,
                               onChanged: (password) => {bloc.add(CalculatePasswordStrenghtEvent(password: password))},
+                              prefix: Icon(
+                                Icons.password,
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
                               suffix: IconButton(
                                 onPressed: () {
                                   bloc.add(ChangePasswordVisibilityEvent());
@@ -114,7 +144,7 @@ class RegisterPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Password strenght: ",
+                                    AppLocalizations.of(context)!.password_strength,
                                     style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                                   ),
                                   Expanded(
@@ -148,13 +178,14 @@ class RegisterPage extends StatelessWidget {
                                         bloc.add(ChangeStayConnectedEvent());
                                       }),
                                   Text(
-                                    "Stay Connected",
+                                    AppLocalizations.of(context)!.stay_connected,
                                     style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                                   ),
                                 ],
                               ),
                           ],
                         ),
+                        // Login/Signup button
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
@@ -164,13 +195,17 @@ class RegisterPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
-                          child: Text((state.registerPageType == RegisterPageType.login) ? "Login" : "Signup"),
+                          child: Text((state.registerPageType == RegisterPageType.login)
+                              ? AppLocalizations.of(context)!.login
+                              : AppLocalizations.of(context)!.signup),
                         ),
                       ],
                     ),
                   ),
-                ),
-              )),
+                ]),
+              ),
+            ),
+          ),
         );
       },
     );

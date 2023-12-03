@@ -1,0 +1,34 @@
+{
+    "login": "Login",
+    "@login": {
+        "description": "Login"
+    },
+    "signup": "Signup",
+    "@signup": {
+        "description": "Signup"
+    },
+    "username": "Username",
+    "@username": {
+        "description": "Username"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Password"
+    },
+    "password_strength": "Password strength",
+    "@password_strength": {
+        "description": "Password strength"
+    },
+    "stay_connected": "Stay connected",
+    "@stay_connected": {
+        "description": "Stay connected"
+    },
+    "search": "Search",
+    "@search": {
+        "description": "Search"
+    },
+    "categories": "Main categories",
+    "@categories": {
+        "description": "Categories"
+    }
+}

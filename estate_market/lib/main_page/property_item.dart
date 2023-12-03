@@ -1,14 +1,14 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:flutter/material.dart';
 
 class PropertyItem extends StatelessWidget {
-  const PropertyItem({super.key});
+  final AdEntity? ad;
+  const PropertyItem({super.key, this.ad});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        print('ad tap');
-      },
+      onTap: () {},
       child: Container(
         height: 300,
         decoration: BoxDecoration(
@@ -26,13 +26,13 @@ class PropertyItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 child: Padding(
-                  padding: EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Title"),
+                      Text((ad != null) ? ad!.title : "Test title"),
                       Text("Price"),
                       Text("Location"),
                       Text("Date"),

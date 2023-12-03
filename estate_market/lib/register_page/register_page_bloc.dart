@@ -35,6 +35,6 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
   }
 
   _changeRegisterTypeEventHandler(ChangeRegisterTypeEvent event, Emitter<RegisterPageState> emit) {
-    emit(state.copyWith(registerPageType: event.type));
+    emit(state.copyWith(registerPageType: event.type, passwordStrenght: PasswordStrength.none));
   }
 }

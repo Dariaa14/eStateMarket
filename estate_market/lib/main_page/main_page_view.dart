@@ -4,7 +4,7 @@ import 'package:estate_market/main_page/property_item.dart';
 import 'package:estate_market/widgets/searchbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../sidebar_menu/sidebar_menu_view.dart';
 
 class MainPageView extends StatelessWidget {
@@ -15,7 +15,7 @@ class MainPageView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: CustomTextField(
-            hintText: "Search",
+            hintText: AppLocalizations.of(context)!.search,
             prefix: Icon(
               CupertinoIcons.search,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -41,7 +41,7 @@ class MainPageView extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      const Text("Categories"),
+                      Text(AppLocalizations.of(context)!.categories),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),

@@ -1,0 +1,10 @@
+{
+    "login": "Autentificare",
+    "signup": "Înregistrare",
+    "username": "Nume de utilizator",
+    "password": "Parolă",
+    "password_strength": "Puterea parolei",
+    "stay_connected": "Rămâi conectat",
+    "search": "Căutare",
+    "categories": "Principalele categorii"
+}
