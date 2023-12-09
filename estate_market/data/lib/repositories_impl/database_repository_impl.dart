@@ -15,7 +15,9 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
     List<AdEntity> allAds = [];
     final items = await adRef.get();
     for (int index = 0; index < items.size; index++) {
-      allAds.add(items.docs[index].data());
+      AdEntity ad = items.docs[index].data();
+      await (ad as AdEntityImpl).setProperty();
+      allAds.add(ad);
     }
     return allAds;
   }

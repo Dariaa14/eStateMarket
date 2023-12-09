@@ -6,12 +6,12 @@ enum AdCategory { apartament, house, terrain, garage, deposit }
 
 enum ListingType { sale, rent }
 
-class AdEntity {
+abstract class AdEntity {
   final String title;
   final AdCategory adCategory;
   final List<Uint8List> images;
   final String description;
-  final PropertyEntity? property;
+  PropertyEntity? property;
   final ListingType listingType;
   final DateTime dateOfAd;
 
@@ -20,7 +20,9 @@ class AdEntity {
       required this.adCategory,
       required this.images,
       required this.description,
-      required this.property,
+      this.property,
       required this.listingType,
       required this.dateOfAd});
+
+  Future<void> setProperty();
 }
