@@ -30,8 +30,8 @@ class PropertyEntityImpl extends PropertyEntity {
 
   factory PropertyEntityImpl.fromJson(Map<String, Object?> json) {
     return PropertyEntityImpl(
-      surface: json['surface'] as double,
-      price: json['price'] as double,
+      surface: (json['surface'] as num).toDouble(),
+      price: (json['price'] as num).toDouble(),
       isNegociable: json['isNegociable'] as bool,
       constructionYear: json['constructionYear'] as int?,
     );

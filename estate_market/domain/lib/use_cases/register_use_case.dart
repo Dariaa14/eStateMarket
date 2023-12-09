@@ -1,33 +1,19 @@
 import '../repositories/register_repository.dart';
 
 class RegisterUseCase {
+  final RegisterRepository _registerRepository;
+
+  RegisterUseCase({required RegisterRepository registerRepository}) : _registerRepository = registerRepository;
+
   PasswordStrength calculatePasswordStrenght(String password) {
-    if (password.isEmpty) {
-      return PasswordStrength.none;
-    }
+    return _registerRepository.calculatePasswordStrenght(password);
+  }
 
-    int length = password.length;
-    bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
-    bool hasLowercase = password.contains(RegExp(r'[a-z]'));
-    bool hasNumber = password.contains(RegExp(r'[0-9]'));
-    bool hasSpecialChar = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+  Future<bool> createAccount(String email, String password) async {
+    return await _registerRepository.createAccount(email, password);
+  }
 
-    int lengthThreshold = 8;
-    int complexityThreshold = 3;
-
-    int strength = 0;
-    if (length >= lengthThreshold) strength++;
-    if (hasUppercase) strength++;
-    if (hasLowercase) strength++;
-    if (hasNumber) strength++;
-    if (hasSpecialChar) strength++;
-
-    if (strength < complexityThreshold) {
-      return PasswordStrength.poor;
-    } else if (strength < complexityThreshold + 2) {
-      return PasswordStrength.average;
-    } else {
-      return PasswordStrength.good;
-    }
+  Future<bool> signIn(String email, String password) async {
+    return await _registerRepository.signIn(email, password);
   }
 }

@@ -9,7 +9,7 @@ import 'register_page_bloc.dart';
 
 class RegisterPage extends StatelessWidget {
   final RegisterPageBloc bloc = RegisterPageBloc();
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   RegisterPage({super.key});
@@ -63,7 +63,7 @@ class RegisterPage extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    _usernameController.text = '';
+                                    _emailController.text = '';
                                     _passwordController.text = '';
                                     bloc.add(ChangeRegisterTypeEvent(type: RegisterPageType.login));
                                   },
@@ -80,7 +80,7 @@ class RegisterPage extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    _usernameController.text = '';
+                                    _emailController.text = '';
                                     _passwordController.text = '';
                                     bloc.add(ChangeRegisterTypeEvent(type: RegisterPageType.signup));
                                   },
@@ -99,10 +99,10 @@ class RegisterPage extends StatelessWidget {
                               height: 10,
                             ),
 
-                            // Username textfield:
+                            // Email textfield:
                             CustomTextField(
-                              hintText: AppLocalizations.of(context)!.username,
-                              controller: _usernameController,
+                              hintText: AppLocalizations.of(context)!.email,
+                              controller: _emailController,
                               prefix: Icon(
                                 Icons.person,
                                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -189,7 +189,15 @@ class RegisterPage extends StatelessWidget {
                         ),
                         // Login/Signup button
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (state.registerPageType == RegisterPageType.signup) {
+                              bloc.add(
+                                  CreateAccountEvent(email: _emailController.text, password: _passwordController.text));
+                              // Navigator.pop(context);
+                            } else {
+                              bloc.add(SignInEvent(email: _emailController.text, password: _passwordController.text));
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).colorScheme.primary,
                             foregroundColor: Theme.of(context).colorScheme.onPrimary,

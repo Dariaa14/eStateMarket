@@ -9,7 +9,7 @@ class ChangePasswordVisibilityEvent extends RegisterPageEvent {
 }
 
 class CalculatePasswordStrenghtEvent extends RegisterPageEvent {
-  String password;
+  final String password;
 
   CalculatePasswordStrenghtEvent({required this.password});
 }
@@ -22,4 +22,18 @@ class ChangeRegisterTypeEvent extends RegisterPageEvent {
   RegisterPageType type;
 
   ChangeRegisterTypeEvent({required this.type});
+}
+
+class CreateAccountEvent extends RegisterPageEvent {
+  final String email;
+  final String password;
+
+  CreateAccountEvent({required this.email, required this.password});
+}
+
+class SignInEvent extends RegisterPageEvent {
+  final String email;
+  final String password;
+
+  SignInEvent({required this.email, required this.password});
 }

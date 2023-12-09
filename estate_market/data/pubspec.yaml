@@ -13,6 +13,7 @@ dependencies:
   cloud_firestore: ^4.13.3
   domain:
     path: ../domain
+  firebase_auth: ^4.15.2
 
 dev_dependencies:
   lints: ^2.0.0

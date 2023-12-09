@@ -1,7 +1,7 @@
 {
     "login": "Autentificare",
     "signup": "Înregistrare",
-    "username": "Nume de utilizator",
+    "email": "Adresă de email",
     "password": "Parolă",
     "password_strength": "Puterea parolei",
     "stay_connected": "Rămâi conectat",

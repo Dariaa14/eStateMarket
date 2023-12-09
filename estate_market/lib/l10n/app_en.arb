@@ -7,9 +7,9 @@
     "@signup": {
         "description": "Signup"
     },
-    "username": "Username",
-    "@username": {
-        "description": "Username"
+    "email": "Email address",
+    "@email": {
+        "description": "Email"
     },
     "password": "Password",
     "@password": {
