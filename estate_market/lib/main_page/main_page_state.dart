@@ -1,10 +1,12 @@
 part of 'main_page_bloc.dart';
 
-abstract class MainPageState extends Equatable {
-  const MainPageState();
-  
-  @override
-  List<Object> get props => [];
-}
+class MainPageState extends Equatable {
+  final List<AdEntity> ads;
 
-class MainPageInitial extends MainPageState {}
+  const MainPageState({required this.ads});
+
+  MainPageState copyWith(List<AdEntity>? ads) => MainPageState(ads: ads ?? this.ads);
+
+  @override
+  List<Object?> get props => [ads];
+}

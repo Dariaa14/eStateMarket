@@ -10,7 +10,7 @@ part 'main_page_state.dart';
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   final DatabaseUseCase _databaseUseCase = sl.get<DatabaseUseCase>();
 
-  MainPageBloc() : super(MainPageInitial());
+  MainPageBloc() : super(const MainPageState(ads: []));
 
   Future<List<AdEntity>> getAdsTest() async {
     return await _databaseUseCase.getAllAds();

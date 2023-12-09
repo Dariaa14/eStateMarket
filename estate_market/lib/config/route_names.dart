@@ -5,24 +5,41 @@ import 'package:flutter/material.dart';
 class RouteNames {
   static const String mainPage = '/';
   static const String registerPage = '/register';
+}
 
-  static Map<String, Widget Function(BuildContext)> routeMap = {
-    mainPage: (context) => MainPageView(),
-    registerPage: (context) => RegisterPage(),
-  };
-
-  static Route<dynamic>? generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case RouteNames.mainPage:
-        return MaterialPageRoute(
-          builder: (context) => MainPageView(),
-        );
-      case RouteNames.registerPage:
-        return MaterialPageRoute(
-          builder: (context) => RegisterPage(),
-        );
-      default:
-        return null;
-    }
+Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+  switch (settings.name) {
+    case RouteNames.mainPage:
+      return routeBuilder(MainPageView());
+    case RouteNames.registerPage:
+      return routeBuilder(RegisterPage());
   }
+  return null;
+}
+
+class FadeRoute extends PageRouteBuilder {
+  final Widget page;
+  FadeRoute({required this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
+}
+
+MaterialPageRoute routeBuilder(Widget page) {
+  return MaterialPageRoute(builder: (context) => page);
 }

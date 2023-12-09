@@ -38,7 +38,7 @@ class RegisterPage extends StatelessWidget {
                     top: 5.0,
                     child: IconButton(
                       onPressed: () {
-                        // Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                       icon: Icon(
                         Icons.arrow_back_ios_new,
@@ -51,7 +51,9 @@ class RegisterPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Image.asset('assets/app_logo/logo_with_title.png'),
+                        Image.asset(
+                          'assets/app_logo/logo_with_title.png',
+                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,

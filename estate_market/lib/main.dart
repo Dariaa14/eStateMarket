@@ -3,7 +3,6 @@ import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/config/themes.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:estate_market/register_page/register_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +10,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  diRepositories();
+  diUseCases();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -23,9 +25,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    diRepositories();
-    diUseCases();
-
     return MaterialApp(
       title: 'eState Market',
       theme: lightThemeData,
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
         Locale('en'),
         Locale('ro'),
       ],
-      onGenerateRoute: (settings) => RouteNames.generateRoute(settings),
+      onGenerateRoute: onGenerateRoute,
       home: SafeArea(child: MainPageView()),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:domain/entities/ad_entity.dart';
 import 'package:estate_market/main_page/category_item.dart';
 import 'package:estate_market/main_page/main_page_bloc.dart';
-import 'package:estate_market/main_page/property_item.dart';
+import 'package:estate_market/main_page/ad_item.dart';
 import 'package:estate_market/widgets/searchbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,30 +39,60 @@ class MainPageView extends StatelessWidget {
           color: Theme.of(context).colorScheme.background,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: BlocBuilder<MainPageBloc, MainPageState>(
-              bloc: bloc,
-              builder: (context, state) {
-                return FutureBuilder<List<AdEntity>>(
-                  future: bloc.getAdsTest(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text(snapshot.error.toString()),
-                      );
-                    }
-                    if (!snapshot.hasData) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Text(AppLocalizations.of(context)!.categories),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: AdCategory.values.length,
+                          itemBuilder: (context, index) {
+                            return CategoryItem(category: AdCategory.values[index]);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  BlocBuilder<MainPageBloc, MainPageState>(
+                    bloc: bloc,
+                    builder: (context, state) {
+                      return FutureBuilder<List<AdEntity>>(
+                        future: bloc.getAdsTest(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text(snapshot.error.toString()),
+                            );
+                          }
+                          if (!snapshot.hasData) {
+                            return const Center(child: CircularProgressIndicator());
+                          }
 
-                    final data = snapshot.requireData;
-                    return ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return PropertyItem(ad: data[index]);
-                        });
-                  },
-                );
-              },
+                          final data = snapshot.requireData;
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                return AdItem(ad: data[index]);
+                              });
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ));
