@@ -6,26 +6,40 @@ import 'package:domain/entities/property_entity.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AdEntityImpl extends AdEntity {
+class AdEntityImpl implements AdEntity {
   DocumentReference<Map<String, dynamic>>? _propertyReference;
 
-  AdEntityImpl({
-    required String title,
-    required AdCategory adCategory,
-    required List<Uint8List> images,
-    required String description,
-    required DocumentReference<Map<String, dynamic>>? propertyReference,
-    required ListingType listingType,
-    required DateTime dateOfAd,
-  })  : _propertyReference = propertyReference,
-        super(
-          title: title,
-          adCategory: adCategory,
-          images: images,
-          description: description,
-          listingType: listingType,
-          dateOfAd: dateOfAd,
-        );
+  @override
+  PropertyEntity? property;
+
+  @override
+  AdCategory adCategory;
+
+  @override
+  DateTime dateOfAd;
+
+  @override
+  String description;
+
+  @override
+  List<Uint8List> images;
+
+  @override
+  ListingType listingType;
+
+  @override
+  String title;
+
+  AdEntityImpl(
+      {required this.title,
+      required this.adCategory,
+      required this.images,
+      required this.description,
+      this.property,
+      required this.listingType,
+      required this.dateOfAd,
+      required DocumentReference<Map<String, dynamic>>? propertyReference})
+      : _propertyReference = propertyReference;
 
   Map<String, dynamic> toJson() {
     return {

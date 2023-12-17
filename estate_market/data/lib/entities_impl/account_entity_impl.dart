@@ -1,21 +1,28 @@
 import 'package:domain/entities/account_entity.dart';
 
-class AccountEntityImpl extends AccountEntity {
+class AccountEntityImpl implements AccountEntity {
+  @override
+  String email;
+
+  @override
+  String password;
+
+  @override
+  String? phoneNumber;
+
+  @override
+  SellerType sellerType;
+
   AccountEntityImpl({
-    required String username,
-    required String password,
-    String? phoneNumber,
-    required SellerType sellerType,
-  }) : super(
-          email: username,
-          password: password,
-          phoneNumber: phoneNumber,
-          sellerType: sellerType,
-        );
+    required this.email,
+    required this.password,
+    required this.phoneNumber,
+    required this.sellerType,
+  });
 
   Map<String, dynamic> toJson() {
     return {
-      'username': email,
+      'email': email,
       'password': password,
       'phoneNumber': phoneNumber,
       'sellerType': sellerType.index,
@@ -24,7 +31,7 @@ class AccountEntityImpl extends AccountEntity {
 
   factory AccountEntityImpl.fromJson(Map<String, Object?> json) {
     return AccountEntityImpl(
-      username: json['username'] as String,
+      email: json['email'] as String,
       password: json['password'] as String,
       phoneNumber: json['phoneNumber'] as String,
       sellerType: SellerType.values[json['sellerType'] as int],
