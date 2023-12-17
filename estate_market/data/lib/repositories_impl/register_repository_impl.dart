@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:domain/errors/failure.dart';
+import 'package:domain/errors/register_errors.dart';
 import 'package:domain/repositories/register_repository.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dartz/dartz.dart';
 
 class RegisterRepositoryImpl implements RegisterRepository {
   RegisterRepositoryImpl() {
@@ -25,7 +30,6 @@ class RegisterRepositoryImpl implements RegisterRepository {
     bool hasSpecialChar = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
 
     int lengthThreshold = 8;
-    int complexityThreshold = 3;
 
     int strength = 0;
     if (length >= lengthThreshold) strength++;
@@ -34,47 +38,77 @@ class RegisterRepositoryImpl implements RegisterRepository {
     if (hasNumber) strength++;
     if (hasSpecialChar) strength++;
 
-    if (strength < complexityThreshold) {
-      return PasswordStrength.poor;
-    } else if (strength < complexityThreshold + 2) {
-      return PasswordStrength.average;
+    if (strength <= 1 || length < lengthThreshold) {
+      return PasswordStrength.veryWeak;
+    } else if (strength <= 2) {
+      return PasswordStrength.weak;
+    } else if (strength <= 3) {
+      return PasswordStrength.moderate;
+    } else if (strength <= 4) {
+      return PasswordStrength.strong;
     } else {
-      return PasswordStrength.good;
+      return PasswordStrength.veryStrong;
     }
   }
 
   @override
-  Future<bool> createAccount(String email, String password) async {
+  Future<Either<Failure, String?>> createAccount(String email, String password) async {
+    Completer<Either<Failure, String?>> completer = Completer<Either<Failure, String?>>();
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return true;
+      final String? token = await user.user!.getIdToken();
+      completer.complete(Right(token));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        completer.complete(Left(InvalidPassword()));
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        completer.complete(Left(EmailAlreadyInUse()));
+      } else if (e.code == 'missing-password') {
+        completer.complete(Left(MissingPassword()));
+      } else if (e.code == 'invalid-email') {
+        completer.complete(Left(InvalidEmail()));
+      } else if (e.code == 'missing-email') {
+        completer.complete(Left(MissingEmail()));
+      } else if (e.code == 'network-request-failed') {
+        completer.complete(Left(NetworkRequestFailed()));
+      } else {
+        print('REGISTER ERROR: $e');
+        completer.complete(Left(UnknownError()));
       }
     } catch (e) {
       print(e);
     }
-    return false;
+    return completer.future;
   }
 
   @override
-  Future<bool> signIn(String email, String password) async {
+  Future<Either<Failure, String?>> signIn(String email, String password) async {
+    Completer<Either<Failure, String?>> completer = Completer<Either<Failure, String?>>();
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-      return true;
+      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      final String? token = await user.user!.getIdToken();
+      completer.complete(Right(token));
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      if (e.code == 'missing-password') {
+        completer.complete(Left(MissingPassword()));
+      } else if (e.code == 'invalid-email') {
+        completer.complete(Left(InvalidEmail()));
+      } else if (e.code == 'missing-email') {
+        completer.complete(Left(MissingEmail()));
+      } else if (e.code == 'network-request-failed') {
+        completer.complete(Left(NetworkRequestFailed()));
+      } else if (e.code == 'invalid-credential') {
+        completer.complete(Left(InvalidCredential()));
+      } else if (e.code == 'missing-password') {
+        completer.complete(Left(MissingPassword()));
+      } else {
+        print('REGISTER ERROR: $e');
+        completer.complete(Left(UnknownError()));
       }
     }
-    return false;
+    return completer.future;
   }
 }

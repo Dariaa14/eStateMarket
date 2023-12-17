@@ -1,3 +1,6 @@
+import 'package:dartz/dartz.dart';
+
+import '../errors/failure.dart';
 import '../repositories/register_repository.dart';
 
 class RegisterUseCase {
@@ -9,11 +12,11 @@ class RegisterUseCase {
     return _registerRepository.calculatePasswordStrenght(password);
   }
 
-  Future<bool> createAccount(String email, String password) async {
+  Future<Either<Failure, String?>> createAccount(String email, String password) async {
     return await _registerRepository.createAccount(email, password);
   }
 
-  Future<bool> signIn(String email, String password) async {
+  Future<Either<Failure, String?>> signIn(String email, String password) async {
     return await _registerRepository.signIn(email, password);
   }
 }

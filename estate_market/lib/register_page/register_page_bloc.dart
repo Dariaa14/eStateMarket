@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
+import 'package:dartz/dartz.dart';
+import 'package:domain/errors/failure.dart';
 
 import 'package:domain/repositories/register_repository.dart';
 import 'package:domain/use_cases/register_use_case.dart';
@@ -44,10 +46,22 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
   }
 
   _createAccountEventHandler(CreateAccountEvent event, Emitter<RegisterPageState> emit) async {
-    await _registerUseCase.createAccount(event.email, event.password);
+    final result = await _registerUseCase.createAccount(event.email, event.password);
+    if (result is Left) {
+      final failure = (result as Left).value;
+      emit(state.copyWith(failure: failure));
+    } else {
+      emit(state.copyWithFailureNull());
+    }
   }
 
   _signInEventHandler(SignInEvent event, Emitter<RegisterPageState> emit) async {
-    await _registerUseCase.signIn(event.email, event.password);
+    final result = await _registerUseCase.signIn(event.email, event.password);
+    if (result is Left) {
+      final failure = (result as Left).value;
+      emit(state.copyWith(failure: failure));
+    } else {
+      emit(state.copyWithFailureNull());
+    }
   }
 }

@@ -6,5 +6,12 @@
     "password_strength": "Puterea parolei",
     "stay_connected": "Rămâi conectat",
     "search": "Căutare",
-    "categories": "Principalele categorii"
+    "categories": "Principalele categorii",
+    "usedEmail": "Adresa de email furnizată este deja înregistrată. Vă rugăm să utilizați o altă adresă de email.",
+    "invalidEmail": "Vă rugăm să furnizați o adresă de email validă.",
+    "invalidPassword": "Parola furnizată nu este validă. Trebuie să aibă cel puțin 8 caractere.",
+    "invalidCredential": "Email sau parolă incorectă. Verificați-vă datele de conectare și încercați din nou.",
+    "missingEmail": "Este necesară adresa de email. Vă rugăm să furnizați adresa dvs. de email.",
+    "missingPassword": "Este necesară parola. Vă rugăm să introduceți parola.",
+    "networkRequestFailure": "Nu am putut finaliza cererea dvs. din cauza unei probleme de rețea. Verificați conexiunea la internet și încercați din nou."
 }

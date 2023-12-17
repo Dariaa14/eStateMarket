@@ -11,6 +11,7 @@ environment:
 dependencies:
   # path: ^1.8.0
   cloud_firestore: ^4.13.3
+  dartz: ^0.10.1
   domain:
     path: ../domain
   firebase_auth: ^4.15.2

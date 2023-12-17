@@ -30,5 +30,39 @@
     "categories": "Main categories",
     "@categories": {
         "description": "Categories"
+    },
+    "usedEmail": "The provided email is already registered. Please use a different email address.",
+    "@usedEmail": {
+        "description": "Error in case the email is already used when registering"
+    },
+
+    "invalidEmail": "Please provide a valid email address.",
+    "@invalidEmail": {
+        "description": "Error in case the email is invalid when registering"
+    },
+
+    "invalidPassword": "The provided password is invalid. It must be at least 8 characters long.",
+    "@invalidPassword": {
+        "description": "Error in case the password is invalid when registering"
+    },
+
+    "invalidCredential": "Invalid email or password. Please check your credentials and try again.",
+    "@invalidCredential": {
+        "description": "Error in case the credentials are invalid when registering"
+    },
+
+    "missingEmail": "Email is required. Please provide your email address.",
+    "@missingEmail": {
+        "description": "Error in case the email is missing when registering"
+    },
+
+    "missingPassword": "Password is required. Please enter your password.",
+    "@missingPassword": {
+        "description": "Error in case the password is missing when registering"
+    },
+
+    "networkRequestFailure": "We couldn't complete your request due to a network issue.  Please check your internet connection and try again.",
+    "@networkRequestFailure": {
+        "description": "Error in case the network failed when registering"
     }
 }
