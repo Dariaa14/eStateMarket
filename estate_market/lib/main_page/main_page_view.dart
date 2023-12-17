@@ -44,7 +44,7 @@ class MainPageView extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text(AppLocalizations.of(context)!.categories),
+                      Text(AppLocalizations.of(context)!.mainCategories),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),

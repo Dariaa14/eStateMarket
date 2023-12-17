@@ -1,3 +1,4 @@
+import 'package:estate_market/create_ad_page/create_ad_view.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
 import 'package:estate_market/register_page/register_page_view.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 class RouteNames {
   static const String mainPage = '/';
   static const String registerPage = '/register';
+  static const String createAdPage = '/createAdPage';
 }
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -13,6 +15,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return routeBuilder(MainPageView());
     case RouteNames.registerPage:
       return routeBuilder(RegisterPage());
+    case RouteNames.createAdPage:
+      return routeBuilder(CreateAdView());
   }
   return null;
 }

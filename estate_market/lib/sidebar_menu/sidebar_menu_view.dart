@@ -1,5 +1,7 @@
 import 'package:estate_market/config/route_names.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SidebarMenu extends StatelessWidget {
   const SidebarMenu({
@@ -18,17 +20,24 @@ class SidebarMenu extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.explore),
-              title: const Text('Explore'),
+              title: Text(AppLocalizations.of(context)!.explore),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.favorite),
-              title: const Text('Favorites'),
+              title: Text(AppLocalizations.of(context)!.favorites),
               onTap: () {},
             ),
             ListTile(
+              leading: const Icon(CupertinoIcons.add),
+              title: Text(AppLocalizations.of(context)!.addAdd),
+              onTap: () {
+                Navigator.pushNamed(context, RouteNames.createAdPage);
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.photo_filter),
-              title: const Text('Photo editor'),
+              title: Text(AppLocalizations.of(context)!.photoEditor),
               onTap: () {},
             ),
             Expanded(child: Container()),
@@ -37,14 +46,14 @@ class SidebarMenu extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.account_circle),
-              title: const Text('Profile'),
+              title: Text(AppLocalizations.of(context)!.profile),
               onTap: () {
                 Navigator.pushNamed(context, RouteNames.registerPage);
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
+              title: Text(AppLocalizations.of(context)!.settings),
               onTap: () {},
             ),
           ],

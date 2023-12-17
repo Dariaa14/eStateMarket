@@ -27,8 +27,8 @@
     "@search": {
         "description": "Search"
     },
-    "categories": "Main categories",
-    "@categories": {
+    "mainCategories": "Main categories",
+    "@mainCategories": {
         "description": "Categories"
     },
     "usedEmail": "The provided email is already registered. Please use a different email address.",
@@ -64,5 +64,70 @@
     "networkRequestFailure": "We couldn't complete your request due to a network issue.  Please check your internet connection and try again.",
     "@networkRequestFailure": {
         "description": "Error in case the network failed when registering"
+    },
+
+    "explore": "Explore",
+    "@explore":{
+        "description": "Explore"
+    },
+
+    "favorites": "Favorites",
+    "@favorites":{
+        "description": "Favorites"
+    },
+
+    "addAdd": "Add ad",
+    "@addAdd":{
+        "description": "Add ad"
+    },
+
+    "photoEditor": "Photo editor",
+    "@photoEditor":{
+        "description": "Photo editor"
+    },
+
+    "profile": "Profile",
+    "@profile":{
+        "description": "Profile"
+    },
+
+    "settings": "Settings",
+    "@settings":{
+        "description": "Settings"
+    },
+
+    "adDetails": "Details about the ad: ",
+    "@adDetails":{
+        "description": "Details about the ad"
+    },
+
+    "adTitle": "Ad title*",
+    "@adTitle":{
+        "description": "Ad title"
+    },
+
+    "adTitleHintText": "Enter a descriptive title for your ad",
+    "@adTitleHintText":{
+        "description": "Hint text for setting the title of an ad"
+    },
+
+    "adCategory": "Category*",
+    "@adCategory":{
+        "description": "Category"
+    },
+
+    "adDescription": "Ad description*",
+    "@adDescription":{
+        "description": "Ad description"
+    },
+
+    "adDescriptionHintText": "Enter a detailed description of your ad",
+    "@adDescriptionHintText":{
+        "description": "Hint text for setting the description of an ad"
+    },
+
+    "postAd": "Post ad",
+    "@postAd":{
+        "description": "Post ad"
     }
 }
