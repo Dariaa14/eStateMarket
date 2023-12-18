@@ -1,5 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/property_entity.dart';
+
+import 'terrain_entity_impl.dart';
+import 'garage_entity_impl.dart';
+import 'deposit_entity_impl.dart';
+import 'apartment_entity_impl.dart';
+import 'house_entity_impl.dart';
 
 class PropertyEntityImpl implements PropertyEntity {
   static final propertyRef = FirebaseFirestore.instance.collection('properties').withConverter<PropertyEntity>(
@@ -39,12 +46,20 @@ class PropertyEntityImpl implements PropertyEntity {
   }
 
   factory PropertyEntityImpl.fromJson(Map<String, Object?> json) {
-    return PropertyEntityImpl(
-      surface: (json['surface'] as num).toDouble(),
-      price: (json['price'] as num).toDouble(),
-      isNegotiable: json['isNegotiable'] as bool,
-      constructionYear: (json.containsKey('constructionYear')) ? json['constructionYear'] as int : null,
-    );
+    switch (AdCategory.values[(json['type'] as num).toInt()]) {
+      case AdCategory.terrain:
+        return TerrainEntityImpl.fromJson(json);
+      case AdCategory.garage:
+        return GarageEntityImpl.fromJson(json);
+      case AdCategory.deposit:
+        return DepositEntityImpl.fromJson(json);
+      case AdCategory.apartament:
+        return ApartmentEntityImpl.fromJson(json);
+      case AdCategory.house:
+        return HouseEntityImpl.fromJson(json);
+      default:
+        throw Exception('Unknown type: ${json['type']}');
+    }
   }
 
   static Future<PropertyEntity?> getPropertyFromDocument(DocumentReference<Map<String, dynamic>> document) async {
