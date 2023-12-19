@@ -1,4 +1,6 @@
 import 'package:domain/entities/ad_entity.dart';
+import 'package:estate_market/create_ad_page/property_widgets/garage_widgets.dart';
+import 'package:estate_market/create_ad_page/property_widgets/terrain_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -37,11 +39,15 @@ class CreateAdView extends StatelessWidget {
                 children: [
                   Text(AppLocalizations.of(context)!.adDetails),
                   const SizedBox(height: 20.0),
+
+                  // Write title textbox
                   Text(AppLocalizations.of(context)!.adTitle),
                   TextField(
                     decoration: InputDecoration(hintText: AppLocalizations.of(context)!.adTitleHintText),
                   ),
                   const SizedBox(height: 16.0),
+
+                  // Choose property type dropbox
                   Text(AppLocalizations.of(context)!.adCategory),
                   DropdownButton<AdCategory>(
                       value: state.currentCategory,
@@ -53,11 +59,41 @@ class CreateAdView extends StatelessWidget {
                         bloc.add(ChangeCurrentCategoryEvent(category: category));
                       }),
                   const SizedBox(height: 16.0),
+
+                  // Write description textbox
                   Text(AppLocalizations.of(context)!.adDescription),
                   TextField(
                     decoration: InputDecoration(hintText: AppLocalizations.of(context)!.adDescriptionHintText),
                   ),
+                  const SizedBox(height: 16.0),
+
+                  // Listing type radio buttons
+                  const Text('Listing type*'),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (final value in ListingType.values)
+                        ListTile(
+                          title: Text(value.name),
+                          leading: Radio<ListingType>(
+                            value: value,
+                            groupValue: state.listingType,
+                            onChanged: (listingType) {
+                              bloc.add(ChangeListingTypeEvent(listingType: listingType));
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                  // Add images
+
                   const SizedBox(height: 20.0),
+
+                  // Specific properties based on category:
+                  _buildPropertyTypeWidgets(bloc),
+                  const SizedBox(height: 16.0),
+
+                  // submit button
                   PlatformElevatedButton(
                     color: Theme.of(context).colorScheme.primary,
                     onPressed: () {},
@@ -65,7 +101,7 @@ class CreateAdView extends StatelessWidget {
                       AppLocalizations.of(context)!.postAd,
                       style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -73,5 +109,22 @@ class CreateAdView extends StatelessWidget {
         );
       },
     );
+  }
+
+  _buildPropertyTypeWidgets(CreateAdBloc bloc) {
+    switch (bloc.state.currentCategory) {
+      case AdCategory.apartament:
+        return Container();
+      case AdCategory.deposit:
+        return Container();
+      case AdCategory.garage:
+        return GarageWidgets(bloc: bloc);
+      case AdCategory.house:
+        return Container();
+      case AdCategory.terrain:
+        return TerrainWidget(bloc: bloc);
+      default:
+        return Container();
+    }
   }
 }
