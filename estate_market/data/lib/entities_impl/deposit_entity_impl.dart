@@ -1,5 +1,5 @@
 import 'package:domain/entities/deposit_entity.dart';
-
+import 'package:domain/entities/ad_entity.dart';
 import 'property_entity_impl.dart';
 
 class DepositEntityImpl extends PropertyEntityImpl implements DepositEntity {
@@ -33,6 +33,7 @@ class DepositEntityImpl extends PropertyEntityImpl implements DepositEntity {
   @override
   Map<String, dynamic> toJson() {
     final json = {
+      'type': AdCategory.deposit.index,
       'height': height,
       'usableSurface': usableSurface,
       'administrativeSurface': administrativeSurface,

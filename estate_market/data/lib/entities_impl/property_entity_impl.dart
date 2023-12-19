@@ -11,7 +11,7 @@ import 'house_entity_impl.dart';
 class PropertyEntityImpl implements PropertyEntity {
   static final propertyRef = FirebaseFirestore.instance.collection('properties').withConverter<PropertyEntity>(
         fromFirestore: (snapshots, _) => PropertyEntityImpl.fromJson(snapshots.data()!),
-        toFirestore: (ad, _) => (ad as PropertyEntityImpl).toJson(),
+        toFirestore: (property, _) => (property as PropertyEntityImpl).toJson(),
       );
 
   @override
@@ -34,15 +34,19 @@ class PropertyEntityImpl implements PropertyEntity {
   });
 
   Map<String, dynamic> toJson() {
-    final json = {
-      'surface': surface,
-      'price': price,
-      'isNegotiable': isNegotiable,
-    };
-    if (constructionYear != null) {
-      json.addAll({'constructionYear': constructionYear!});
+    if (this is TerrainEntityImpl) {
+      return (this as TerrainEntityImpl).toJson();
+    } else if (this is GarageEntityImpl) {
+      return (this as GarageEntityImpl).toJson();
+    } else if (this is DepositEntityImpl) {
+      return (this as DepositEntityImpl).toJson();
+    } else if (this is ApartmentEntityImpl) {
+      return (this as ApartmentEntityImpl).toJson();
+    } else if (this is HouseEntityImpl) {
+      return (this as HouseEntityImpl).toJson();
+    } else {
+      throw Exception('Unknown entity type');
     }
-    return json;
   }
 
   factory PropertyEntityImpl.fromJson(Map<String, Object?> json) {

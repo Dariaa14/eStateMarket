@@ -1,5 +1,6 @@
 import 'package:data/entities_impl/property_entity_impl.dart';
 import 'package:domain/entities/terrain_entity.dart';
+import 'package:domain/entities/ad_entity.dart';
 
 class TerrainEntityImpl extends PropertyEntityImpl implements TerrainEntity {
   @override
@@ -20,6 +21,7 @@ class TerrainEntityImpl extends PropertyEntityImpl implements TerrainEntity {
   @override
   Map<String, dynamic> toJson() {
     final json = {
+      'type': AdCategory.terrain.index,
       'surface': surface,
       'price': price,
       'isNegotiable': isNegotiable,

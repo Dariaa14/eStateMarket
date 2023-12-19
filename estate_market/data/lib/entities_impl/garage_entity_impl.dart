@@ -1,5 +1,5 @@
 import 'package:domain/entities/garage_entity.dart';
-
+import 'package:domain/entities/ad_entity.dart';
 import 'property_entity_impl.dart';
 
 class GarageEntityImpl extends PropertyEntityImpl implements GarageEntity {
@@ -21,6 +21,7 @@ class GarageEntityImpl extends PropertyEntityImpl implements GarageEntity {
   @override
   Map<String, dynamic> toJson() {
     final json = {
+      'type': AdCategory.garage.index,
       'surface': surface,
       'price': price,
       'isNegotiable': isNegotiable,

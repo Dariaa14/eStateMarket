@@ -1,6 +1,7 @@
 import 'package:data/entities_impl/residence_entity_impl.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
+import 'package:domain/entities/ad_entity.dart';
 
 class ApartmentEntityImpl extends ResidenceEntityImpl implements ApartmentEntity {
   @override
@@ -31,6 +32,7 @@ class ApartmentEntityImpl extends ResidenceEntityImpl implements ApartmentEntity
   @override
   Map<String, dynamic> toJson() {
     final json = {
+      'type': AdCategory.apartament.index,
       'partitioning': partitioning.index,
       'floor': floor,
       'numberOfRooms': numberOfRooms,

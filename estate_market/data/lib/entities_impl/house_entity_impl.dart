@@ -1,6 +1,7 @@
 import 'package:data/entities_impl/residence_entity_impl.dart';
 import 'package:domain/entities/house_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
+import 'package:domain/entities/ad_entity.dart';
 
 class HouseEntityImpl extends ResidenceEntityImpl implements HouseEntity {
   @override
@@ -35,6 +36,7 @@ class HouseEntityImpl extends ResidenceEntityImpl implements HouseEntity {
   @override
   Map<String, dynamic> toJson() {
     final json = {
+      'type': AdCategory.house.index,
       'insideSurface': insideSurface,
       'outsideSurface': outsideSurface,
       'numberOfFloors': numberOfFloors,
