@@ -2,6 +2,7 @@ import 'package:domain/entities/terrain_entity.dart';
 import 'package:estate_market/create_ad_page/create_ad_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TerrainWidget extends StatelessWidget {
   final CreateAdBloc bloc;
@@ -16,7 +17,7 @@ class TerrainWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Land use categories dropbox
-            const Text("Land use categories*"),
+            Text(AppLocalizations.of(context)!.landUseCategory),
             DropdownButton<LandUseCategories>(
                 value: state.landUseCategory,
                 items: [
@@ -33,7 +34,7 @@ class TerrainWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  title: const Text('Inside build-up area'),
+                  title: Text(AppLocalizations.of(context)!.insideBuildUpArea),
                   leading: Radio<bool>(
                     value: true,
                     groupValue: state.isInBuildUpArea,
@@ -43,7 +44,7 @@ class TerrainWidget extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  title: const Text('Outside build-up area'),
+                  title: Text(AppLocalizations.of(context)!.outsideBuildUpArea),
                   leading: Radio<bool>(
                     value: false,
                     groupValue: state.isInBuildUpArea,

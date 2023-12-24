@@ -2,6 +2,7 @@ import 'package:domain/entities/garage_entity.dart';
 import 'package:estate_market/create_ad_page/create_ad_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GarageWidgets extends StatelessWidget {
   final CreateAdBloc bloc;
@@ -16,7 +17,7 @@ class GarageWidgets extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Parking type dropbox
-            const Text("Parking type*"),
+            Text(AppLocalizations.of(context)!.parkingType),
             DropdownButton<ParkingType>(
               value: state.parkingType,
               items: [
@@ -29,8 +30,9 @@ class GarageWidgets extends StatelessWidget {
             const SizedBox(height: 16.0),
 
             // Set capacity
-            const TextField(
-              decoration: InputDecoration(hintText: 'Add capacity of garage'),
+            Text(AppLocalizations.of(context)!.capacityOfGarage),
+            TextField(
+              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.capacityOfGarageHintText),
               keyboardType: TextInputType.number,
             ),
           ],

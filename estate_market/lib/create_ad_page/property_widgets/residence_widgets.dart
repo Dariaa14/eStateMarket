@@ -1,6 +1,7 @@
 import 'package:domain/entities/residence_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../create_ad_bloc.dart';
 
@@ -15,23 +16,23 @@ class ResidenceWidgets extends StatelessWidget {
       builder: (context, state) {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Number of rooms text field
-          const Text("Number of rooms*"),
-          const TextField(
-            decoration: InputDecoration(hintText: 'Add number of rooms'),
+          Text(AppLocalizations.of(context)!.numberOfRooms),
+          TextField(
+            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.numberOfRoomsHintText),
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: 16),
 
           // Number of bathrooms text field
-          const Text("Number of bathrooms*"),
-          const TextField(
-            decoration: InputDecoration(hintText: 'Add number of bathrooms'),
+          Text(AppLocalizations.of(context)!.numberOfBathrooms),
+          TextField(
+            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.numberOfBathroomsHintText),
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: 16),
 
           // Furnishing level dropbox
-          const Text("Furnishing level*"),
+          Text(AppLocalizations.of(context)!.furnishingLevel),
           DropdownButton<FurnishingLevel>(
             value: state.furnishingLevel,
             items: [

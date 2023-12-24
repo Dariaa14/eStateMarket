@@ -71,7 +71,7 @@ class CreateAdView extends StatelessWidget {
                   const SizedBox(height: 16.0),
 
                   // Listing type radio buttons
-                  const Text('Listing type*'),
+                  Text(AppLocalizations.of(context)!.listingType),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

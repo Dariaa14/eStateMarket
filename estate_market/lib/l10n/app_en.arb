@@ -129,5 +129,155 @@
     "postAd": "Post ad",
     "@postAd":{
         "description": "Post ad"
+    },
+
+    "listingType": "Listing type*",
+    "@listingType":{
+        "description": "Listing type"
+    },
+
+    "landUseCategory": "Land use category*",
+    "@landUseCategory":{
+        "description": "Land use category"
+    },
+
+    "insideBuildUpArea": "Inside build-up area",
+    "@insideBuildUpArea":{
+        "description": "Inside build-up area"
+    },
+
+    "outsideBuildUpArea": "Outside build-up area",
+    "@outsideBuildUpArea":{
+        "description": "Outside build-up area"
+    },
+
+    "numberOfRooms": "Number of rooms*",
+    "@numberOfRooms":{
+        "description": "Number of rooms"
+    },
+
+    "numberOfRoomsHintText": "Add number of rooms",
+    "@numberOfRoomsHintText":{
+        "description": "Hint text for setting the number of rooms"
+    },
+
+    "numberOfBathrooms": "Number of bathrooms*",
+    "@numberOfBathrooms":{
+        "description": "Number of bathrooms"
+    },
+
+    "numberOfBathroomsHintText": "Add number of bathrooms",
+    "@numberOfBathroomsHintText":{
+        "description": "Hint text for setting the number of bathrooms"
+    },
+
+    "furnishingLevel": "Furnishing level*",
+    "@furnishingLevel":{
+        "description": "Furnishing level"
+    },
+
+    "insideSurface": "Inside surface*",
+    "@insideSurface":{
+        "description": "Inside surface"
+    },
+
+    "insideSurfaceHintText": "Add the inside surface",
+    "@insideSurfaceHintText":{
+        "description": "Hint text for setting the inside surface"
+    },
+
+    "outsideSurface": "Outside surface*",
+    "@outsideSurface":{
+        "description": "Outside surface"
+    },
+
+    "outsideSurfaceHintText": "Add the outside surface",
+    "@outsideSurfaceHintText":{
+        "description": "Hint text for setting the outside surface"
+    },
+
+    "numberOfFloors": "Number of floors*",
+    "@numberOfFloors":{
+        "description": "Number of floors"
+    },
+
+    "numberOfFloorsHintText": "Add the number of floors in the building",
+    "@numberOfFloorsHintText":{
+        "description": "Hint text for setting the number of floors in the building"
+    },
+
+    "parkingType": "Parking type*",
+    "@parkingType":{
+        "description": "Parking type"
+    },
+
+    "capacityOfGarage": "Capacity of garage*",
+    "@capacityOfGarage":{
+        "description": "Capacity of garage"
+    },
+
+    "capacityOfGarageHintText": "Add capacity of garage",
+    "@capacityOfGarageHintText":{
+        "description": "Hint text for setting the capacity of garage"
+    },
+
+    "height": "Height*",
+    "@height":{
+        "description": "Height"
+    },
+
+    "heightHintText": "Add the height",
+    "@heightHintText":{
+        "description": "Hint text for setting the height"
+    },
+
+    "usableSurface": "Usable surface*",
+    "@usableSurface":{
+        "description": "Usable surface"
+    },
+
+    "usableSurfaceHintText": "Add the usable surface",
+    "@usableSurfaceHintText":{
+        "description": "Hint text for setting the usable surface"
+    },
+
+    "administrativeSurface": "Administrative surface*",
+    "@administrativeSurface":{
+        "description": "Administrative surface"
+    },
+
+    "administrativeSurfaceHintText": "Add the administrative surface",
+    "@administrativeSurfaceHintText":{
+        "description": "Hint text for setting the administrative surface"
+    },
+
+    "depositType": "Deposit type*",
+    "@depositType":{
+        "description": "Deposit type"
+    },
+
+    "parkingSpaces": "Parking spaces*",
+    "@parkingSpaces":{
+        "description": "Parking spaces"
+    },
+
+    "parkingSpacesHintText": "Add the number of parking spaces",
+    "@parkingSpacesHintText":{
+        "description": "Hint text for setting the number of parking spaces"
+    },
+
+    "partitioningLevel": "Partitioning level*",
+    "@partitioningLevel":{
+        "description": "Partitioning level"
+    },
+
+    "floorNumber": "Floor number*",
+    "@floorNumber":{
+        "description": "Floor"
+    },
+
+    "floorNumberHintText": "Add the floor number",
+    "@floorNumberHintText":{
+        "description": "Hint text for setting the floor number"
     }
 }

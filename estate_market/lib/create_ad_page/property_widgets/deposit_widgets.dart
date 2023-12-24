@@ -1,7 +1,7 @@
 import 'package:domain/entities/deposit_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../create_ad_bloc.dart';
 
@@ -18,30 +18,30 @@ class DepositWidgets extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Height textfield
-              const Text("Height*"),
-              const TextField(
-                decoration: InputDecoration(hintText: 'Add the height'),
+              Text(AppLocalizations.of(context)!.height),
+              TextField(
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.heightHintText),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
 
               // Usable surface textfield
-              const Text("Usable surface*"),
-              const TextField(
-                decoration: InputDecoration(hintText: 'Add the usable surface'),
+              Text(AppLocalizations.of(context)!.usableSurface),
+              TextField(
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.usableSurfaceHintText),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
 
               // Administrative surface textfield
-              const Text("Administrative surface*"),
-              const TextField(
-                decoration: InputDecoration(hintText: 'Add the administrative surface'),
+              Text(AppLocalizations.of(context)!.administrativeSurface),
+              TextField(
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
 
-              const Text("Deposit type*"),
+              Text(AppLocalizations.of(context)!.depositType),
               DropdownButton<DepositType>(
                 value: state.depositType,
                 items: [
@@ -55,9 +55,9 @@ class DepositWidgets extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Parking spaces textfield
-              const Text("Parking spaces*"),
-              const TextField(
-                decoration: InputDecoration(hintText: 'Add the number of parking spaces'),
+              Text(AppLocalizations.of(context)!.parkingSpaces),
+              TextField(
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.parkingSpacesHintText),
                 keyboardType: TextInputType.number,
               ),
             ],
