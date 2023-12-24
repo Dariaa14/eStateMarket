@@ -11,6 +11,10 @@ class CreateAdState extends Equatable {
 
   final FurnishingLevel furnishingLevel;
 
+  final Partitioning partitioning;
+
+  final DepositType depositType;
+
   const CreateAdState({
     this.currentCategory = AdCategory.apartament,
     this.listingType = ListingType.sale,
@@ -18,6 +22,8 @@ class CreateAdState extends Equatable {
     this.isInBuildUpArea = true,
     this.parkingType = ParkingType.interiorParking,
     this.furnishingLevel = FurnishingLevel.furnished,
+    this.partitioning = Partitioning.selfContained,
+    this.depositType = DepositType.deposit,
   });
 
   CreateAdState copyWith({
@@ -27,6 +33,8 @@ class CreateAdState extends Equatable {
     bool? isInBuildUpArea,
     ParkingType? parkingType,
     FurnishingLevel? furnishingLevel,
+    Partitioning? partitioning,
+    DepositType? depositType,
   }) =>
       CreateAdState(
         currentCategory: currentCategory ?? this.currentCategory,
@@ -35,6 +43,8 @@ class CreateAdState extends Equatable {
         isInBuildUpArea: isInBuildUpArea ?? this.isInBuildUpArea,
         parkingType: parkingType ?? this.parkingType,
         furnishingLevel: furnishingLevel ?? this.furnishingLevel,
+        partitioning: partitioning ?? this.partitioning,
+        depositType: depositType ?? this.depositType,
       );
 
   @override
@@ -45,5 +55,7 @@ class CreateAdState extends Equatable {
         isInBuildUpArea,
         parkingType,
         furnishingLevel,
+        partitioning,
+        depositType,
       ];
 }

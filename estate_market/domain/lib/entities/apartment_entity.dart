@@ -1,6 +1,11 @@
 import 'package:domain/entities/residence_entity.dart';
 
-enum Partitioning { selfContained, semiSelfContained, nonSelfContained, circular }
+enum Partitioning {
+  selfContained,
+  semiSelfContained,
+  nonSelfContained,
+  circular,
+}
 
 abstract class ApartmentEntity extends ResidenceEntity {
   final Partitioning partitioning;

@@ -1,5 +1,8 @@
 import 'package:domain/entities/ad_entity.dart';
+import 'package:estate_market/create_ad_page/property_widgets/apartment_widgets.dart';
+import 'package:estate_market/create_ad_page/property_widgets/deposit_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/garage_widgets.dart';
+import 'package:estate_market/create_ad_page/property_widgets/house_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/terrain_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,7 +96,7 @@ class CreateAdView extends StatelessWidget {
                   _buildPropertyTypeWidgets(bloc),
                   const SizedBox(height: 16.0),
 
-                  // submit button
+                  // Submit button
                   PlatformElevatedButton(
                     color: Theme.of(context).colorScheme.primary,
                     onPressed: () {},
@@ -114,13 +117,13 @@ class CreateAdView extends StatelessWidget {
   _buildPropertyTypeWidgets(CreateAdBloc bloc) {
     switch (bloc.state.currentCategory) {
       case AdCategory.apartament:
-        return Container();
+        return ApartmentWidgets(bloc: bloc);
       case AdCategory.deposit:
-        return Container();
+        return DepositWidgets(bloc: bloc);
       case AdCategory.garage:
         return GarageWidgets(bloc: bloc);
       case AdCategory.house:
-        return Container();
+        return HouseWidgets(bloc: bloc);
       case AdCategory.terrain:
         return TerrainWidget(bloc: bloc);
       default:

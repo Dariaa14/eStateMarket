@@ -23,7 +23,7 @@ class GarageWidgets extends StatelessWidget {
                 for (final type in ParkingType.values) DropdownMenuItem(value: type, child: Text(type.name)),
               ],
               onChanged: (type) {
-                bloc.add(ChangeParkingTypeCategoryEvent(parkingType: type));
+                bloc.add(ChangeParkingTypeEvent(parkingType: type));
               },
             ),
             const SizedBox(height: 16.0),

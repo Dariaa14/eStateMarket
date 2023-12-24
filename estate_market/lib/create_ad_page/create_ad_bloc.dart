@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:domain/entities/ad_entity.dart';
+import 'package:domain/entities/apartment_entity.dart';
+import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
@@ -16,9 +18,13 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     on<ChangeLandUseCategoryEvent>(_changeLandUseCategoryEventHandler);
     on<ChangeBuildUpStatusEvent>(_changeBuildUpStatusEventHandler);
 
-    on<ChangeParkingTypeCategoryEvent>(_changeParkingTypeCategoryEventHandler);
+    on<ChangeParkingTypeEvent>(_changeParkingTypeCategoryEventHandler);
 
     on<ChangeFurnishingLevelCategoryEvent>(_changeFurnishingLevelCategoryEventHandler);
+
+    on<ChangePartitioningEvent>(_changePartitioningEventHandler);
+
+    on<ChangeDepositTypeEvent>(_changeDepositTypeEventHandler);
   }
 
   _changeCurrentCategoryEventHandler(ChangeCurrentCategoryEvent event, Emitter<CreateAdState> emit) {
@@ -37,11 +43,19 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     emit(state.copyWith(isInBuildUpArea: event.buildUpStatus));
   }
 
-  _changeParkingTypeCategoryEventHandler(ChangeParkingTypeCategoryEvent event, Emitter<CreateAdState> emit) {
+  _changeParkingTypeCategoryEventHandler(ChangeParkingTypeEvent event, Emitter<CreateAdState> emit) {
     emit(state.copyWith(parkingType: event.parkingType));
   }
 
   _changeFurnishingLevelCategoryEventHandler(ChangeFurnishingLevelCategoryEvent event, Emitter<CreateAdState> emit) {
     emit(state.copyWith(furnishingLevel: event.furnishingLevel));
+  }
+
+  _changePartitioningEventHandler(ChangePartitioningEvent event, Emitter<CreateAdState> emit) {
+    emit(state.copyWith(partitioning: event.partitioning));
+  }
+
+  _changeDepositTypeEventHandler(ChangeDepositTypeEvent event, Emitter<CreateAdState> emit) {
+    emit(state.copyWith(depositType: event.depositType));
   }
 }

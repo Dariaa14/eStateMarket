@@ -26,14 +26,26 @@ class ChangeBuildUpStatusEvent extends CreateAdEvent {
   ChangeBuildUpStatusEvent({required this.buildUpStatus});
 }
 
-class ChangeParkingTypeCategoryEvent extends CreateAdEvent {
+class ChangeParkingTypeEvent extends CreateAdEvent {
   final ParkingType? parkingType;
 
-  ChangeParkingTypeCategoryEvent({required this.parkingType});
+  ChangeParkingTypeEvent({required this.parkingType});
 }
 
 class ChangeFurnishingLevelCategoryEvent extends CreateAdEvent {
   final FurnishingLevel? furnishingLevel;
 
   ChangeFurnishingLevelCategoryEvent({required this.furnishingLevel});
+}
+
+class ChangePartitioningEvent extends CreateAdEvent {
+  final Partitioning? partitioning;
+
+  ChangePartitioningEvent({required this.partitioning});
+}
+
+class ChangeDepositTypeEvent extends CreateAdEvent {
+  final DepositType? depositType;
+
+  ChangeDepositTypeEvent({required this.depositType});
 }
