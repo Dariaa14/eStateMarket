@@ -132,7 +132,7 @@ class CreateAdView extends StatelessWidget {
                   Text(AppLocalizations.of(context)!.price),
                   CreateAdTextfield(
                     hintText: AppLocalizations.of(context)!.priceHintText,
-                    controller: _descriptionController,
+                    controller: _priceController,
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(
@@ -175,7 +175,7 @@ class CreateAdView extends StatelessWidget {
                   CreateAdTextfield(
                     hintText: AppLocalizations.of(context)!.constructionYearHintText,
                     keyboardType: TextInputType.number,
-                    controller: _descriptionController,
+                    controller: _constructionYearController,
                   ),
                   const SizedBox(height: 16.0),
 
