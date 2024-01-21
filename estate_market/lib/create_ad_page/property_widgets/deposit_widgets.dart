@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../create_ad_bloc.dart';
+import '../widgets/create_ad_textfield.dart';
 
 class DepositWidgets extends StatelessWidget {
   final CreateAdBloc bloc;
@@ -19,24 +20,24 @@ class DepositWidgets extends StatelessWidget {
             children: [
               // Height textfield
               Text(AppLocalizations.of(context)!.height),
-              TextField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.heightHintText),
+              CreateAdTextfield(
+                hintText: AppLocalizations.of(context)!.heightHintText,
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
 
               // Usable surface textfield
               Text(AppLocalizations.of(context)!.usableSurface),
-              TextField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.usableSurfaceHintText),
+              CreateAdTextfield(
+                hintText: AppLocalizations.of(context)!.usableSurfaceHintText,
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
 
               // Administrative surface textfield
               Text(AppLocalizations.of(context)!.administrativeSurface),
-              TextField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText),
+              CreateAdTextfield(
+                hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText,
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
@@ -56,8 +57,8 @@ class DepositWidgets extends StatelessWidget {
 
               // Parking spaces textfield
               Text(AppLocalizations.of(context)!.parkingSpaces),
-              TextField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.parkingSpacesHintText),
+              CreateAdTextfield(
+                hintText: AppLocalizations.of(context)!.parkingSpacesHintText,
                 keyboardType: TextInputType.number,
               ),
             ],

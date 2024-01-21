@@ -10,6 +10,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'create_ad_bloc.dart';
+import 'widgets/create_ad_textfield.dart';
 
 //TODO: internationalizare pentru enum-uri
 
@@ -49,13 +50,18 @@ class CreateAdView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppLocalizations.of(context)!.adDetails),
+                  Text(
+                    AppLocalizations.of(context)!.adDetails,
+                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
                   const SizedBox(height: 20.0),
 
                   // Write title textbox
-                  Text(AppLocalizations.of(context)!.adTitle),
-                  TextField(
-                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.adTitleHintText),
+                  Text(
+                    AppLocalizations.of(context)!.adTitle,
+                  ),
+                  CreateAdTextfield(
+                    hintText: AppLocalizations.of(context)!.adTitleHintText,
                     controller: _titleController,
                   ),
                   const SizedBox(height: 16.0),
@@ -75,14 +81,15 @@ class CreateAdView extends StatelessWidget {
 
                   // Write description textbox
                   Text(AppLocalizations.of(context)!.adDescription),
-                  TextField(
-                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.adDescriptionHintText),
+                  CreateAdTextfield(
+                    hintText: AppLocalizations.of(context)!.adDescriptionHintText,
                     controller: _descriptionController,
                   ),
                   const SizedBox(height: 16.0),
 
                   // Listing type radio buttons
                   Text(AppLocalizations.of(context)!.listingType),
+
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -104,26 +111,36 @@ class CreateAdView extends StatelessWidget {
                   const SizedBox(height: 20.0),
 
                   // Properties for all property types:
-                  Text(AppLocalizations.of(context)!.propertyDetails),
+                  Text(
+                    AppLocalizations.of(context)!.propertyDetails,
+                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
                   const SizedBox(height: 20.0),
 
                   // Surface textfield
                   Text(AppLocalizations.of(context)!.surface),
-                  TextField(
-                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.surfaceHintText),
-                    keyboardType: TextInputType.number,
+                  CreateAdTextfield(
+                    hintText: AppLocalizations.of(context)!.surfaceHintText,
                     controller: _surfaceController,
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(
+                    height: 16.0,
                   ),
 
                   // Price textfield
                   Text(AppLocalizations.of(context)!.price),
-                  TextField(
-                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.priceHintText),
+                  CreateAdTextfield(
+                    hintText: AppLocalizations.of(context)!.priceHintText,
+                    controller: _descriptionController,
                     keyboardType: TextInputType.number,
-                    controller: _priceController,
+                  ),
+                  const SizedBox(
+                    height: 16.0,
                   ),
 
                   // Is negotiable radio button
+                  const Text('Is negotiable*'),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -149,14 +166,18 @@ class CreateAdView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
 
                   // Construction year textfield
                   Text(AppLocalizations.of(context)!.constructionYear),
-                  TextField(
-                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.constructionYearHintText),
+                  CreateAdTextfield(
+                    hintText: AppLocalizations.of(context)!.constructionYearHintText,
                     keyboardType: TextInputType.number,
-                    controller: _constructionYearController,
+                    controller: _descriptionController,
                   ),
+                  const SizedBox(height: 16.0),
 
                   // Specific properties based on category:
                   _buildPropertyTypeWidgets(bloc),

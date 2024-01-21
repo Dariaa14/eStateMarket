@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../widgets/create_ad_textfield.dart';
+
 class GarageWidgets extends StatelessWidget {
   final CreateAdBloc bloc;
   const GarageWidgets({super.key, required this.bloc});
@@ -31,10 +33,10 @@ class GarageWidgets extends StatelessWidget {
 
             // Set capacity
             Text(AppLocalizations.of(context)!.capacityOfGarage),
-            TextField(
-              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.capacityOfGarageHintText),
+            CreateAdTextfield(
+              hintText: AppLocalizations.of(context)!.capacityOfGarageHintText,
               keyboardType: TextInputType.number,
-              onChanged: (value) => {bloc.add(ChangeParkingCapacityEvent(parkingCapacity: value))},
+              onChanged: (value) => bloc.add(ChangeParkingCapacityEvent(parkingCapacity: value)),
             ),
           ],
         );

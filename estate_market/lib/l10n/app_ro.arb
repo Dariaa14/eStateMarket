@@ -57,6 +57,7 @@
     "partitioningLevel": "Nivel de compartimentare*",
     "floorNumber": "Număr de etaj*",
     "floorNumberHintText": "Adăugați numărul etajului",
+    "propertyDetails": "Detalii despre proprietate: ",
     "surface": "Suprafață*",
     "surfaceHintText": "Adăugați suprafața",
     "price": "Preț*",

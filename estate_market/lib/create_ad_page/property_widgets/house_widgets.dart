@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../create_ad_bloc.dart';
+import '../widgets/create_ad_textfield.dart';
 
 class HouseWidgets extends StatelessWidget {
   final CreateAdBloc bloc;
@@ -21,24 +22,24 @@ class HouseWidgets extends StatelessWidget {
 
               // Inside surface textfield
               Text(AppLocalizations.of(context)!.insideSurface),
-              TextField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.insideSurfaceHintText),
+              CreateAdTextfield(
+                hintText: AppLocalizations.of(context)!.insideSurfaceHintText,
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
 
               // Outside surface textfield
               Text(AppLocalizations.of(context)!.outsideSurface),
-              TextField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.outsideSurfaceHintText),
+              CreateAdTextfield(
+                hintText: AppLocalizations.of(context)!.outsideSurfaceHintText,
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
 
               // Floors number textfield
               Text(AppLocalizations.of(context)!.numberOfFloors),
-              TextField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.numberOfFloorsHintText),
+              CreateAdTextfield(
+                hintText: AppLocalizations.of(context)!.numberOfFloorsHintText,
                 keyboardType: TextInputType.number,
               ),
             ],

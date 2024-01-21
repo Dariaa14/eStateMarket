@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../create_ad_bloc.dart';
+import '../widgets/create_ad_textfield.dart';
 
 class ApartmentWidgets extends StatelessWidget {
   final CreateAdBloc bloc;
@@ -36,8 +37,8 @@ class ApartmentWidgets extends StatelessWidget {
 
               // Floor number textfield
               Text(AppLocalizations.of(context)!.floorNumber),
-              TextField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.floorNumberHintText),
+              CreateAdTextfield(
+                hintText: AppLocalizations.of(context)!.floorNumberHintText,
                 keyboardType: TextInputType.number,
               ),
             ],

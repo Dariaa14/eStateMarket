@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../create_ad_bloc.dart';
+import '../widgets/create_ad_textfield.dart';
 
 class ResidenceWidgets extends StatelessWidget {
   final CreateAdBloc bloc;
@@ -17,16 +18,17 @@ class ResidenceWidgets extends StatelessWidget {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Number of rooms text field
           Text(AppLocalizations.of(context)!.numberOfRooms),
-          TextField(
-            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.numberOfRoomsHintText),
+          CreateAdTextfield(
+            hintText: AppLocalizations.of(context)!.numberOfRoomsHintText,
             keyboardType: TextInputType.number,
           ),
+
           const SizedBox(height: 16),
 
           // Number of bathrooms text field
           Text(AppLocalizations.of(context)!.numberOfBathrooms),
-          TextField(
-            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.numberOfBathroomsHintText),
+          CreateAdTextfield(
+            hintText: AppLocalizations.of(context)!.numberOfBathroomsHintText,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: 16),
