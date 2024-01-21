@@ -56,5 +56,13 @@
     "parkingSpacesHintText": "Adăugați numărul de locuri de parcare",
     "partitioningLevel": "Nivel de compartimentare*",
     "floorNumber": "Număr de etaj*",
-    "floorNumberHintText": "Adăugați numărul etajului"
+    "floorNumberHintText": "Adăugați numărul etajului",
+    "surface": "Suprafață*",
+    "surfaceHintText": "Adăugați suprafața",
+    "price": "Preț*",
+    "priceHintText": "Adăugați prețul",
+    "constructionYear": "Anul construcției*",
+    "constructionYearHintText": "Adăugați anul construcției",
+    "negotiable": "Negociabil",
+    "nonNegotiable": "Non-negociabil"
 }

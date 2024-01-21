@@ -11,8 +11,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'create_ad_bloc.dart';
 
+//TODO: internationalizare pentru enum-uri
+
 class CreateAdView extends StatelessWidget {
   final CreateAdBloc bloc = CreateAdBloc();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  final TextEditingController _surfaceController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _constructionYearController = TextEditingController();
+
   CreateAdView({super.key});
 
   @override
@@ -47,6 +56,7 @@ class CreateAdView extends StatelessWidget {
                   Text(AppLocalizations.of(context)!.adTitle),
                   TextField(
                     decoration: InputDecoration(hintText: AppLocalizations.of(context)!.adTitleHintText),
+                    controller: _titleController,
                   ),
                   const SizedBox(height: 16.0),
 
@@ -67,6 +77,7 @@ class CreateAdView extends StatelessWidget {
                   Text(AppLocalizations.of(context)!.adDescription),
                   TextField(
                     decoration: InputDecoration(hintText: AppLocalizations.of(context)!.adDescriptionHintText),
+                    controller: _descriptionController,
                   ),
                   const SizedBox(height: 16.0),
 
@@ -92,6 +103,61 @@ class CreateAdView extends StatelessWidget {
 
                   const SizedBox(height: 20.0),
 
+                  // Properties for all property types:
+                  Text(AppLocalizations.of(context)!.propertyDetails),
+                  const SizedBox(height: 20.0),
+
+                  // Surface textfield
+                  Text(AppLocalizations.of(context)!.surface),
+                  TextField(
+                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.surfaceHintText),
+                    keyboardType: TextInputType.number,
+                    controller: _surfaceController,
+                  ),
+
+                  // Price textfield
+                  Text(AppLocalizations.of(context)!.price),
+                  TextField(
+                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.priceHintText),
+                    keyboardType: TextInputType.number,
+                    controller: _priceController,
+                  ),
+
+                  // Is negotiable radio button
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        title: Text(AppLocalizations.of(context)!.negotiable),
+                        leading: Radio<bool>(
+                          value: true,
+                          groupValue: state.isNegotiable,
+                          onChanged: (isNegotiable) {
+                            bloc.add(ChangeIsNegotiableEvent(isNegotiable: isNegotiable));
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(AppLocalizations.of(context)!.nonNegotiable),
+                        leading: Radio<bool>(
+                          value: false,
+                          groupValue: state.isNegotiable,
+                          onChanged: (isNegotiable) {
+                            bloc.add(ChangeIsNegotiableEvent(isNegotiable: isNegotiable));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // Construction year textfield
+                  Text(AppLocalizations.of(context)!.constructionYear),
+                  TextField(
+                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.constructionYearHintText),
+                    keyboardType: TextInputType.number,
+                    controller: _constructionYearController,
+                  ),
+
                   // Specific properties based on category:
                   _buildPropertyTypeWidgets(bloc),
                   const SizedBox(height: 16.0),
@@ -99,7 +165,20 @@ class CreateAdView extends StatelessWidget {
                   // Submit button
                   PlatformElevatedButton(
                     color: Theme.of(context).colorScheme.primary,
-                    onPressed: () {},
+                    onPressed: () {
+                      bloc.add(InsertInDatabaseEvent(
+                          title: _titleController.text,
+                          description: _descriptionController.text,
+                          surface: _surfaceController.text,
+                          price: _priceController.text,
+                          constructionYear: _constructionYearController.text));
+
+                      _titleController.clear();
+                      _descriptionController.clear();
+                      _surfaceController.clear();
+                      _priceController.clear();
+                      _constructionYearController.clear();
+                    },
                     child: Text(
                       AppLocalizations.of(context)!.postAd,
                       style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),

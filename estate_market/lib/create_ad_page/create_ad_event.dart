@@ -2,6 +2,28 @@ part of 'create_ad_bloc.dart';
 
 abstract class CreateAdEvent {}
 
+class InsertInDatabaseEvent extends CreateAdEvent {
+  final String title;
+  final String description;
+
+  final String surface;
+  final String price;
+  final String constructionYear;
+
+  InsertInDatabaseEvent(
+      {required this.title,
+      required this.description,
+      required this.surface,
+      required this.price,
+      required this.constructionYear});
+}
+
+class ChangeIsNegotiableEvent extends CreateAdEvent {
+  final bool? isNegotiable;
+
+  ChangeIsNegotiableEvent({required this.isNegotiable});
+}
+
 class ChangeCurrentCategoryEvent extends CreateAdEvent {
   final AdCategory? category;
 
@@ -30,6 +52,11 @@ class ChangeParkingTypeEvent extends CreateAdEvent {
   final ParkingType? parkingType;
 
   ChangeParkingTypeEvent({required this.parkingType});
+}
+
+class ChangeParkingCapacityEvent extends CreateAdEvent {
+  final String parkingCapacity;
+  ChangeParkingCapacityEvent({required this.parkingCapacity});
 }
 
 class ChangeFurnishingLevelCategoryEvent extends CreateAdEvent {

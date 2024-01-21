@@ -34,6 +34,7 @@ class GarageWidgets extends StatelessWidget {
             TextField(
               decoration: InputDecoration(hintText: AppLocalizations.of(context)!.capacityOfGarageHintText),
               keyboardType: TextInputType.number,
+              onChanged: (value) => {bloc.add(ChangeParkingCapacityEvent(parkingCapacity: value))},
             ),
           ],
         );

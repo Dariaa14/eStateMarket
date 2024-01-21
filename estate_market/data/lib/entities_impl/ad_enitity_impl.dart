@@ -47,7 +47,7 @@ class AdEntityImpl implements AdEntity {
       'adCategory': adCategory.index,
       'images': images.map((image) => image.toList()).toList(),
       'description': description,
-      'property': (property as PropertyEntityImpl).toJson(),
+      'property': _propertyReference,
       'listingType': listingType.index,
       'dateOfAd': Timestamp.fromDate(dateOfAd),
     };

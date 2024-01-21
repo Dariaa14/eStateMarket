@@ -279,5 +279,50 @@
     "floorNumberHintText": "Add the floor number",
     "@floorNumberHintText":{
         "description": "Hint text for setting the floor number"
+    },
+
+    "propertyDetails": "Details about the property: ",
+    "@propertyDetails":{
+        "description": "Details about the property"
+    },
+
+    "surface": "Surface*",
+    "@surface":{
+        "description": "Surface"
+    },
+
+    "surfaceHintText": "Add the surface",
+    "@surfaceHintText":{
+        "description": "Hint text for setting the surface"
+    },
+
+    "price": "Price*",
+    "@price":{
+        "description": "Price"
+    },
+
+    "priceHintText": "Add the price",
+    "@priceHintText":{
+        "description": "Hint text for setting the price"
+    },
+
+    "constructionYear": "Construction year*",
+    "@constructionYear":{
+        "description": "Construction year"
+    },
+
+    "constructionYearHintText": "Add the construction year",
+    "@constructionYearHintText":{
+        "description": "Hint text for setting the construction year"
+    },
+
+    "negotiable": "Negotiable",
+    "@negotiable":{
+        "description": "Negotiable"
+    },
+
+    "nonNegotiable": "Non-negotiable",
+    "@nonNegotiable":{
+        "description": "Non-negotiable"
     }
 }
