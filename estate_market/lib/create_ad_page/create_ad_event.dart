@@ -76,3 +76,39 @@ class ChangeDepositTypeEvent extends CreateAdEvent {
 
   ChangeDepositTypeEvent({required this.depositType});
 }
+
+class ChangeNumberOfRoomsEvent extends CreateAdEvent {
+  final String numberOfRooms;
+
+  ChangeNumberOfRoomsEvent({required this.numberOfRooms});
+}
+
+class ChangeNumberOfBathroomsEvent extends CreateAdEvent {
+  final String numberOfBathooms;
+
+  ChangeNumberOfBathroomsEvent({required this.numberOfBathooms});
+}
+
+class ChangeFloorEvent extends CreateAdEvent {
+  final String floor;
+
+  ChangeFloorEvent({required this.floor});
+}
+
+class ChangeInsideSurfaceEvent extends CreateAdEvent {
+  final String insideSurface;
+
+  ChangeInsideSurfaceEvent({required this.insideSurface});
+}
+
+class ChangeOutsideSurfaceEvent extends CreateAdEvent {
+  final String outsideSurface;
+
+  ChangeOutsideSurfaceEvent({required this.outsideSurface});
+}
+
+class ChangeNumberOfFloorsEvent extends CreateAdEvent {
+  final String numberOfFloors;
+
+  ChangeNumberOfFloorsEvent({required this.numberOfFloors});
+}

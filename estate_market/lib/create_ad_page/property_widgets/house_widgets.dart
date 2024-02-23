@@ -25,6 +25,7 @@ class HouseWidgets extends StatelessWidget {
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.insideSurfaceHintText,
                 keyboardType: TextInputType.number,
+                onChanged: (text) => bloc.add(ChangeInsideSurfaceEvent(insideSurface: text)),
               ),
               const SizedBox(height: 16),
 
@@ -33,6 +34,7 @@ class HouseWidgets extends StatelessWidget {
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.outsideSurfaceHintText,
                 keyboardType: TextInputType.number,
+                onChanged: (text) => bloc.add(ChangeOutsideSurfaceEvent(outsideSurface: text)),
               ),
               const SizedBox(height: 16),
 
@@ -41,6 +43,7 @@ class HouseWidgets extends StatelessWidget {
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.numberOfFloorsHintText,
                 keyboardType: TextInputType.number,
+                onChanged: (text) => bloc.add(ChangeNumberOfFloorsEvent(numberOfFloors: text)),
               ),
             ],
           );

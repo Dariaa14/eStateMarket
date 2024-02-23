@@ -56,7 +56,7 @@ class HouseEntityImpl extends ResidenceEntityImpl implements HouseEntity {
     return HouseEntityImpl(
       insideSurface: (json['insideSurface'] as num).toDouble(),
       outsideSurface: (json['outsideSurface'] as num).toDouble(),
-      numberOfFloors: (json['floor'] as num).toInt(),
+      numberOfFloors: (json['numberOfFloors'] as num).toInt(),
       numberOfRooms: (json['numberOfRooms'] as num).toInt(),
       numberOfBathrooms: (json['numberOfBathrooms'] as num).toInt(),
       furnishingLevel: FurnishingLevel.values[json['furnishingLevel'] as int],

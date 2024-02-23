@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:estate_market/main_page/category_item.dart';
 import 'package:estate_market/main_page/main_page_bloc.dart';
@@ -64,33 +65,44 @@ class MainPageView extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  BlocBuilder<MainPageBloc, MainPageState>(
-                    bloc: bloc,
-                    builder: (context, state) {
-                      return FutureBuilder<List<AdEntity>>(
-                        future: bloc.getAdsTest(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(
-                              child: Text(snapshot.error.toString()),
-                            );
-                          }
-                          if (!snapshot.hasData) {
-                            return const Center(child: CircularProgressIndicator());
-                          }
+                  StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance.collection('ad').snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
 
-                          final data = snapshot.requireData;
-                          return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                return AdItem(ad: data[index]);
-                              });
-                        },
-                      );
-                    },
-                  ),
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Text('Loading...');
+                        }
+                        return BlocBuilder<MainPageBloc, MainPageState>(
+                          bloc: bloc,
+                          builder: (context, state) {
+                            return FutureBuilder<List<AdEntity>>(
+                              future: bloc.getAdsTest(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Center(
+                                    child: Text(snapshot.error.toString()),
+                                  );
+                                }
+                                if (!snapshot.hasData) {
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+
+                                final data = snapshot.requireData;
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: data.length,
+                                    itemBuilder: (context, index) {
+                                      return AdItem(ad: data[index]);
+                                    });
+                              },
+                            );
+                          },
+                        );
+                      }),
                 ],
               ),
             ),

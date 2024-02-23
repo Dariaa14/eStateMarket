@@ -35,26 +35,84 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     on<ChangePartitioningEvent>(_changePartitioningEventHandler);
 
     on<ChangeDepositTypeEvent>(_changeDepositTypeEventHandler);
+
+    on<ChangeNumberOfRoomsEvent>(_changeNumberOfRoomsEventHandler);
+    on<ChangeNumberOfBathroomsEvent>(_changeNumberOfBathroomsEventHandler);
+    on<ChangeFloorEvent>(_changeFloorEventHandler);
+
+    on<ChangeInsideSurfaceEvent>(_changeInsideSurfaceEventHandler);
+    on<ChangeOutsideSurfaceEvent>(_changeOutsideSurfaceEventHandler);
+    on<ChangeNumberOfFloorsEvent>(_changeNumberOfFloorsEventHandler);
   }
 
   _insertInDatabaseEventHandler(InsertInDatabaseEvent event, Emitter<CreateAdState> emit) async {
+    // TODO: verify if all fields are filled
     late DocumentReferenceEntity propertyReference;
     switch (state.currentCategory) {
       case AdCategory.garage:
         {
           propertyReference = await _databaseUseCase.insertGarageEntity(
-              double.parse(event.surface),
-              double.parse(event.price),
-              state.isNegotiable,
-              (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
-              state.parkingType,
-              state.parkingCapacity!);
+              surface: double.parse(event.surface),
+              price: double.parse(event.price),
+              isNegotiable: state.isNegotiable,
+              constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+              parkingType: state.parkingType,
+              capacity: state.parkingCapacity!);
+          break;
         }
+      case AdCategory.terrain:
+        {
+          propertyReference = await _databaseUseCase.insertTerrainEntity(
+            surface: double.parse(event.surface),
+            price: double.parse(event.price),
+            isNegotiable: state.isNegotiable,
+            constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+            isInBuildUpArea: state.isInBuildUpArea,
+            landUseCategory: state.landUseCategory,
+          );
+          break;
+        }
+      case AdCategory.apartament:
+        {
+          propertyReference = await _databaseUseCase.insertApartmentEntity(
+            surface: double.parse(event.surface),
+            price: double.parse(event.price),
+            isNegotiable: state.isNegotiable,
+            constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+            partitioning: state.partitioning,
+            furnishingLevel: state.furnishingLevel,
+            floor: state.floor!,
+            numberOfBathrooms: state.numberOfBathrooms!,
+            numberOfRooms: state.numberOfRooms!,
+          );
+          break;
+        }
+      case AdCategory.house:
+        {
+          propertyReference = await _databaseUseCase.insertHouseEntity(
+            surface: double.parse(event.surface),
+            price: double.parse(event.price),
+            isNegotiable: state.isNegotiable,
+            constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+            furnishingLevel: state.furnishingLevel,
+            numberOfBathrooms: state.numberOfBathrooms!,
+            numberOfRooms: state.numberOfRooms!,
+            insideSurface: state.insideSurface!,
+            outsideSurface: state.outsideSurface!,
+            numberOfFloors: state.numberOfFloors!,
+          );
+          break;
+        }
+
       default:
         break;
     }
     await _databaseUseCase.insertAdEntity(
-        event.title, state.currentCategory, event.description, propertyReference, state.listingType);
+        title: event.title,
+        category: state.currentCategory,
+        description: event.description,
+        property: propertyReference,
+        listingType: state.listingType);
   }
 
   _changeIsNegotiableEventHandler(ChangeIsNegotiableEvent event, Emitter<CreateAdState> emit) {
@@ -100,4 +158,24 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   _changeDepositTypeEventHandler(ChangeDepositTypeEvent event, Emitter<CreateAdState> emit) {
     emit(state.copyWith(depositType: event.depositType));
   }
+
+  _changeNumberOfRoomsEventHandler(ChangeNumberOfRoomsEvent event, Emitter<CreateAdState> emit) {
+    emit(state.copyWith(numberOfRooms: int.parse(event.numberOfRooms)));
+    print(state.numberOfRooms);
+  }
+
+  _changeNumberOfBathroomsEventHandler(ChangeNumberOfBathroomsEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(numberOfBathrooms: int.parse(event.numberOfBathooms)));
+
+  _changeFloorEventHandler(ChangeFloorEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(floor: int.parse(event.floor)));
+
+  _changeNumberOfFloorsEventHandler(ChangeNumberOfFloorsEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(numberOfFloors: int.parse(event.numberOfFloors)));
+
+  _changeInsideSurfaceEventHandler(ChangeInsideSurfaceEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(insideSurface: double.parse(event.insideSurface)));
+
+  _changeOutsideSurfaceEventHandler(ChangeOutsideSurfaceEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(outsideSurface: double.parse(event.outsideSurface)));
 }

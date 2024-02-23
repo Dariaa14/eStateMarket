@@ -12,9 +12,16 @@ class CreateAdState extends Equatable {
   final ParkingType parkingType;
   final int? parkingCapacity;
 
-  final FurnishingLevel furnishingLevel;
+  final int? numberOfRooms;
+  final int? numberOfBathrooms;
 
+  final int? floor;
+  final FurnishingLevel furnishingLevel;
   final Partitioning partitioning;
+
+  final double? insideSurface;
+  final double? outsideSurface;
+  final int? numberOfFloors;
 
   final DepositType depositType;
 
@@ -29,6 +36,12 @@ class CreateAdState extends Equatable {
     this.furnishingLevel = FurnishingLevel.furnished,
     this.partitioning = Partitioning.selfContained,
     this.depositType = DepositType.deposit,
+    this.numberOfRooms,
+    this.numberOfBathrooms,
+    this.floor,
+    this.insideSurface,
+    this.outsideSurface,
+    this.numberOfFloors,
   });
 
   CreateAdState copyWith({
@@ -42,6 +55,12 @@ class CreateAdState extends Equatable {
     FurnishingLevel? furnishingLevel,
     Partitioning? partitioning,
     DepositType? depositType,
+    int? numberOfRooms,
+    int? numberOfBathrooms,
+    int? floor,
+    double? insideSurface,
+    double? outsideSurface,
+    int? numberOfFloors,
   }) =>
       CreateAdState(
         isNegotiable: isNegotiable ?? this.isNegotiable,
@@ -54,6 +73,12 @@ class CreateAdState extends Equatable {
         furnishingLevel: furnishingLevel ?? this.furnishingLevel,
         partitioning: partitioning ?? this.partitioning,
         depositType: depositType ?? this.depositType,
+        numberOfBathrooms: numberOfBathrooms ?? this.numberOfBathrooms,
+        numberOfRooms: numberOfRooms ?? this.numberOfRooms,
+        floor: floor ?? this.floor,
+        insideSurface: insideSurface ?? this.insideSurface,
+        outsideSurface: outsideSurface ?? this.outsideSurface,
+        numberOfFloors: numberOfFloors ?? this.numberOfFloors,
       );
 
   CreateAdState copyWithParkingCapacityNull() => CreateAdState(
@@ -67,6 +92,12 @@ class CreateAdState extends Equatable {
         furnishingLevel: furnishingLevel,
         partitioning: partitioning,
         depositType: depositType,
+        numberOfBathrooms: numberOfBathrooms,
+        numberOfRooms: numberOfRooms,
+        floor: floor,
+        insideSurface: insideSurface,
+        outsideSurface: outsideSurface,
+        numberOfFloors: numberOfFloors,
       );
 
   @override
@@ -81,5 +112,11 @@ class CreateAdState extends Equatable {
         furnishingLevel,
         partitioning,
         depositType,
+        numberOfRooms,
+        numberOfBathrooms,
+        floor,
+        insideSurface,
+        outsideSurface,
+        numberOfFloors
       ];
 }
