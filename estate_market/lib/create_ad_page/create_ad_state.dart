@@ -1,8 +1,27 @@
 part of 'create_ad_bloc.dart';
 
-class CreateAdState extends Equatable {
-  final bool isNegotiable;
+enum CreateAdFields {
+  title,
+  description,
+  surface,
+  price,
+  numberOfRooms,
+  numberOfBathrooms,
+  floorNumber,
+  insideSurface,
+  outsideSurface,
+  numberOfFloors,
+  garageCapacity,
+  height,
+  usableSurface,
+  administrativeSurface,
+  parkingSpaces,
+}
 
+class CreateAdState extends Equatable {
+  final List<CreateAdFields> emptyFields;
+
+  final bool isNegotiable;
   final AdCategory currentCategory;
   final ListingType listingType;
 
@@ -30,7 +49,8 @@ class CreateAdState extends Equatable {
   final int? parkingSpaces;
 
   const CreateAdState(
-      {this.isNegotiable = true,
+      {this.emptyFields = CreateAdFields.values,
+      this.isNegotiable = true,
       this.currentCategory = AdCategory.apartament,
       this.listingType = ListingType.sale,
       this.landUseCategory = LandUseCategories.urban,
@@ -52,7 +72,8 @@ class CreateAdState extends Equatable {
       this.parkingSpaces});
 
   CreateAdState copyWith(
-          {bool? isNegotiable,
+          {List<CreateAdFields>? emptyFields,
+          bool? isNegotiable,
           AdCategory? currentCategory,
           ListingType? listingType,
           LandUseCategories? landUseCategory,
@@ -73,6 +94,7 @@ class CreateAdState extends Equatable {
           double? administrativeSurface,
           int? parkingSpaces}) =>
       CreateAdState(
+        emptyFields: emptyFields ?? this.emptyFields,
         isNegotiable: isNegotiable ?? this.isNegotiable,
         currentCategory: currentCategory ?? this.currentCategory,
         listingType: listingType ?? this.listingType,
@@ -95,31 +117,83 @@ class CreateAdState extends Equatable {
         parkingSpaces: parkingSpaces ?? this.parkingSpaces,
       );
 
-  CreateAdState copyWithParkingCapacityNull() => CreateAdState(
+  CreateAdState copyGarage({int? parkingCapacity}) => CreateAdState(
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
-        landUseCategory: landUseCategory,
-        isInBuildUpArea: isInBuildUpArea,
-        parkingCapacity: null,
+        parkingCapacity: parkingCapacity,
         parkingType: parkingType,
-        furnishingLevel: furnishingLevel,
+      );
+
+  CreateAdState copyResidence({
+    int? numberOfBathrooms,
+    int? numberOfRooms,
+  }) =>
+      CreateAdState(
+        isNegotiable: isNegotiable,
+        currentCategory: currentCategory,
+        listingType: listingType,
         partitioning: partitioning,
-        depositType: depositType,
+        furnishingLevel: furnishingLevel,
+        floor: floor,
         numberOfBathrooms: numberOfBathrooms,
         numberOfRooms: numberOfRooms,
-        floor: floor,
+        numberOfFloors: numberOfFloors,
         insideSurface: insideSurface,
         outsideSurface: outsideSurface,
+      );
+
+  CreateAdState copyApartment({
+    int? floor,
+  }) =>
+      CreateAdState(
+        isNegotiable: isNegotiable,
+        currentCategory: currentCategory,
+        listingType: listingType,
+        partitioning: partitioning,
+        furnishingLevel: furnishingLevel,
+        floor: floor,
+        numberOfBathrooms: numberOfBathrooms,
+        numberOfRooms: numberOfRooms,
+      );
+
+  CreateAdState copyHouse({
+    int? numberOfFloors,
+    double? insideSurface,
+    double? outsideSurface,
+  }) =>
+      CreateAdState(
+        isNegotiable: isNegotiable,
+        currentCategory: currentCategory,
+        listingType: listingType,
+        furnishingLevel: furnishingLevel,
+        numberOfBathrooms: numberOfBathrooms,
+        numberOfRooms: numberOfRooms,
         numberOfFloors: numberOfFloors,
+        insideSurface: insideSurface,
+        outsideSurface: outsideSurface,
+      );
+
+  CreateAdState copyDeposit({
+    int? parkingSpaces,
+    double? height,
+    double? usableSurface,
+    double? administrativeSurface,
+  }) =>
+      CreateAdState(
+        isNegotiable: isNegotiable,
+        currentCategory: currentCategory,
+        listingType: listingType,
         height: height,
         usableSurface: usableSurface,
         administrativeSurface: administrativeSurface,
+        depositType: depositType,
         parkingSpaces: parkingSpaces,
       );
 
   @override
   List<Object?> get props => [
+        emptyFields,
         isNegotiable,
         currentCategory,
         listingType,

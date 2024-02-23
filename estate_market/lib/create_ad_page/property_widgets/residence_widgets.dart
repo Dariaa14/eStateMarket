@@ -31,7 +31,7 @@ class ResidenceWidgets extends StatelessWidget {
           CreateAdTextfield(
             hintText: AppLocalizations.of(context)!.numberOfBathroomsHintText,
             keyboardType: TextInputType.number,
-            onChanged: (text) => bloc.add(ChangeNumberOfBathroomsEvent(numberOfBathooms: text)),
+            onChanged: (text) => bloc.add(ChangeNumberOfBathroomsEvent(numberOfBathrooms: text)),
           ),
           const SizedBox(height: 16),
 

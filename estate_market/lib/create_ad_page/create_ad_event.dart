@@ -84,9 +84,9 @@ class ChangeNumberOfRoomsEvent extends CreateAdEvent {
 }
 
 class ChangeNumberOfBathroomsEvent extends CreateAdEvent {
-  final String numberOfBathooms;
+  final String numberOfBathrooms;
 
-  ChangeNumberOfBathroomsEvent({required this.numberOfBathooms});
+  ChangeNumberOfBathroomsEvent({required this.numberOfBathrooms});
 }
 
 class ChangeFloorEvent extends CreateAdEvent {
@@ -135,4 +135,11 @@ class ChangeParkingSpacesEvent extends CreateAdEvent {
   final String parkingSpaces;
 
   ChangeParkingSpacesEvent({required this.parkingSpaces});
+}
+
+class SetEmptyFieldsEvent extends CreateAdEvent {
+  final CreateAdFields field;
+  final bool shouldRemove;
+
+  SetEmptyFieldsEvent({required this.field, required this.shouldRemove});
 }

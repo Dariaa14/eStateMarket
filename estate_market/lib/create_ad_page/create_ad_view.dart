@@ -63,6 +63,8 @@ class CreateAdView extends StatelessWidget {
                   CreateAdTextfield(
                     hintText: AppLocalizations.of(context)!.adTitleHintText,
                     controller: _titleController,
+                    onChanged: (title) =>
+                        bloc.add(SetEmptyFieldsEvent(field: CreateAdFields.title, shouldRemove: title.isNotEmpty)),
                   ),
                   const SizedBox(height: 16.0),
 
@@ -84,6 +86,8 @@ class CreateAdView extends StatelessWidget {
                   CreateAdTextfield(
                     hintText: AppLocalizations.of(context)!.adDescriptionHintText,
                     controller: _descriptionController,
+                    onChanged: (description) => bloc
+                        .add(SetEmptyFieldsEvent(field: CreateAdFields.title, shouldRemove: description.isNotEmpty)),
                   ),
                   const SizedBox(height: 16.0),
 
@@ -123,6 +127,8 @@ class CreateAdView extends StatelessWidget {
                     hintText: AppLocalizations.of(context)!.surfaceHintText,
                     controller: _surfaceController,
                     keyboardType: TextInputType.number,
+                    onChanged: (surface) =>
+                        bloc.add(SetEmptyFieldsEvent(field: CreateAdFields.title, shouldRemove: surface.isNotEmpty)),
                   ),
                   const SizedBox(
                     height: 16.0,
@@ -134,6 +140,8 @@ class CreateAdView extends StatelessWidget {
                     hintText: AppLocalizations.of(context)!.priceHintText,
                     controller: _priceController,
                     keyboardType: TextInputType.number,
+                    onChanged: (price) =>
+                        bloc.add(SetEmptyFieldsEvent(field: CreateAdFields.title, shouldRemove: price.isNotEmpty)),
                   ),
                   const SizedBox(
                     height: 16.0,
