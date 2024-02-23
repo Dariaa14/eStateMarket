@@ -112,3 +112,27 @@ class ChangeNumberOfFloorsEvent extends CreateAdEvent {
 
   ChangeNumberOfFloorsEvent({required this.numberOfFloors});
 }
+
+class ChangeHeightEvent extends CreateAdEvent {
+  final String height;
+
+  ChangeHeightEvent({required this.height});
+}
+
+class ChangeUsableSurfaceEvent extends CreateAdEvent {
+  final String usableSurface;
+
+  ChangeUsableSurfaceEvent({required this.usableSurface});
+}
+
+class ChangeAdministrativeSurfaceEvent extends CreateAdEvent {
+  final String administrativeSurface;
+
+  ChangeAdministrativeSurfaceEvent({required this.administrativeSurface});
+}
+
+class ChangeParkingSpacesEvent extends CreateAdEvent {
+  final String parkingSpaces;
+
+  ChangeParkingSpacesEvent({required this.parkingSpaces});
+}

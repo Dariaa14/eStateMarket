@@ -24,44 +24,54 @@ class CreateAdState extends Equatable {
   final int? numberOfFloors;
 
   final DepositType depositType;
+  final double? height;
+  final double? usableSurface;
+  final double? administrativeSurface;
+  final int? parkingSpaces;
 
-  const CreateAdState({
-    this.isNegotiable = true,
-    this.currentCategory = AdCategory.apartament,
-    this.listingType = ListingType.sale,
-    this.landUseCategory = LandUseCategories.urban,
-    this.isInBuildUpArea = true,
-    this.parkingType = ParkingType.interiorParking,
-    this.parkingCapacity,
-    this.furnishingLevel = FurnishingLevel.furnished,
-    this.partitioning = Partitioning.selfContained,
-    this.depositType = DepositType.deposit,
-    this.numberOfRooms,
-    this.numberOfBathrooms,
-    this.floor,
-    this.insideSurface,
-    this.outsideSurface,
-    this.numberOfFloors,
-  });
+  const CreateAdState(
+      {this.isNegotiable = true,
+      this.currentCategory = AdCategory.apartament,
+      this.listingType = ListingType.sale,
+      this.landUseCategory = LandUseCategories.urban,
+      this.isInBuildUpArea = true,
+      this.parkingType = ParkingType.interiorParking,
+      this.parkingCapacity,
+      this.furnishingLevel = FurnishingLevel.furnished,
+      this.partitioning = Partitioning.selfContained,
+      this.depositType = DepositType.deposit,
+      this.numberOfRooms,
+      this.numberOfBathrooms,
+      this.floor,
+      this.insideSurface,
+      this.outsideSurface,
+      this.numberOfFloors,
+      this.height,
+      this.usableSurface,
+      this.administrativeSurface,
+      this.parkingSpaces});
 
-  CreateAdState copyWith({
-    bool? isNegotiable,
-    AdCategory? currentCategory,
-    ListingType? listingType,
-    LandUseCategories? landUseCategory,
-    bool? isInBuildUpArea,
-    ParkingType? parkingType,
-    int? parkingCapacity,
-    FurnishingLevel? furnishingLevel,
-    Partitioning? partitioning,
-    DepositType? depositType,
-    int? numberOfRooms,
-    int? numberOfBathrooms,
-    int? floor,
-    double? insideSurface,
-    double? outsideSurface,
-    int? numberOfFloors,
-  }) =>
+  CreateAdState copyWith(
+          {bool? isNegotiable,
+          AdCategory? currentCategory,
+          ListingType? listingType,
+          LandUseCategories? landUseCategory,
+          bool? isInBuildUpArea,
+          ParkingType? parkingType,
+          int? parkingCapacity,
+          FurnishingLevel? furnishingLevel,
+          Partitioning? partitioning,
+          DepositType? depositType,
+          int? numberOfRooms,
+          int? numberOfBathrooms,
+          int? floor,
+          double? insideSurface,
+          double? outsideSurface,
+          int? numberOfFloors,
+          double? height,
+          double? usableSurface,
+          double? administrativeSurface,
+          int? parkingSpaces}) =>
       CreateAdState(
         isNegotiable: isNegotiable ?? this.isNegotiable,
         currentCategory: currentCategory ?? this.currentCategory,
@@ -79,6 +89,10 @@ class CreateAdState extends Equatable {
         insideSurface: insideSurface ?? this.insideSurface,
         outsideSurface: outsideSurface ?? this.outsideSurface,
         numberOfFloors: numberOfFloors ?? this.numberOfFloors,
+        height: height ?? this.height,
+        usableSurface: usableSurface ?? this.usableSurface,
+        administrativeSurface: administrativeSurface ?? this.administrativeSurface,
+        parkingSpaces: parkingSpaces ?? this.parkingSpaces,
       );
 
   CreateAdState copyWithParkingCapacityNull() => CreateAdState(
@@ -98,6 +112,10 @@ class CreateAdState extends Equatable {
         insideSurface: insideSurface,
         outsideSurface: outsideSurface,
         numberOfFloors: numberOfFloors,
+        height: height,
+        usableSurface: usableSurface,
+        administrativeSurface: administrativeSurface,
+        parkingSpaces: parkingSpaces,
       );
 
   @override
@@ -117,6 +135,10 @@ class CreateAdState extends Equatable {
         floor,
         insideSurface,
         outsideSurface,
-        numberOfFloors
+        numberOfFloors,
+        height,
+        usableSurface,
+        administrativeSurface,
+        parkingSpaces,
       ];
 }

@@ -11,11 +11,7 @@ abstract class DepositEntity extends PropertyEntity {
   final double usableSurface;
   final double administrativeSurface;
   final DepositType depositType;
-  // security
-  // access
   final int parkingSpaces;
-  // infrastructure
-  // facilities
 
   DepositEntity(
       {required this.height,

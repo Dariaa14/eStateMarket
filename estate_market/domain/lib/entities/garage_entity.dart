@@ -9,7 +9,6 @@ enum ParkingType {
 abstract class GarageEntity extends PropertyEntity {
   final ParkingType parkingType;
   final int capacity;
-  // security
 
   GarageEntity(
       {required this.parkingType,

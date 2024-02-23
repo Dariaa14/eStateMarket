@@ -3,6 +3,7 @@ import 'package:domain/repositories/database_repository.dart';
 
 import '../entities/ad_entity.dart';
 import '../entities/apartment_entity.dart';
+import '../entities/deposit_entity.dart';
 import '../entities/document_reference_entity.dart';
 import '../entities/residence_entity.dart';
 import '../entities/terrain_entity.dart';
@@ -99,6 +100,29 @@ class DatabaseUseCase {
       numberOfBathrooms: numberOfBathrooms,
       furnishingLevel: furnishingLevel,
     );
+  }
+
+  Future<DocumentReferenceEntity> insertDepositEntity({
+    required double surface,
+    required double price,
+    required bool isNegotiable,
+    required int? constructionYear,
+    required double height,
+    required double usableSurface,
+    required double administrativeSurface,
+    required DepositType depositType,
+    required int parkingSpaces,
+  }) async {
+    return await _databaseRepository.insertDepositEntity(
+        surface: surface,
+        price: price,
+        isNegotiable: isNegotiable,
+        constructionYear: constructionYear,
+        height: height,
+        usableSurface: usableSurface,
+        administrativeSurface: administrativeSurface,
+        depositType: depositType,
+        parkingSpaces: parkingSpaces);
   }
 
   Future<void> insertAdEntity({

@@ -43,6 +43,11 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     on<ChangeInsideSurfaceEvent>(_changeInsideSurfaceEventHandler);
     on<ChangeOutsideSurfaceEvent>(_changeOutsideSurfaceEventHandler);
     on<ChangeNumberOfFloorsEvent>(_changeNumberOfFloorsEventHandler);
+
+    on<ChangeHeightEvent>(_changeHeightEventHandler);
+    on<ChangeUsableSurfaceEvent>(_changeUsableSurfaceEventHandler);
+    on<ChangeAdministrativeSurfaceEvent>(_changeAdministrativeSurfaceEventHandler);
+    on<ChangeParkingSpacesEvent>(_changeParkingSpacesEventHandler);
   }
 
   _insertInDatabaseEventHandler(InsertInDatabaseEvent event, Emitter<CreateAdState> emit) async {
@@ -100,6 +105,21 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
             insideSurface: state.insideSurface!,
             outsideSurface: state.outsideSurface!,
             numberOfFloors: state.numberOfFloors!,
+          );
+          break;
+        }
+      case AdCategory.deposit:
+        {
+          propertyReference = await _databaseUseCase.insertDepositEntity(
+            surface: double.parse(event.surface),
+            price: double.parse(event.price),
+            isNegotiable: state.isNegotiable,
+            constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+            height: state.height!,
+            usableSurface: state.usableSurface!,
+            administrativeSurface: state.administrativeSurface!,
+            depositType: state.depositType,
+            parkingSpaces: state.parkingSpaces!,
           );
           break;
         }
@@ -178,4 +198,16 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
 
   _changeOutsideSurfaceEventHandler(ChangeOutsideSurfaceEvent event, Emitter<CreateAdState> emit) =>
       emit(state.copyWith(outsideSurface: double.parse(event.outsideSurface)));
+
+  _changeHeightEventHandler(ChangeHeightEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(height: double.parse(event.height)));
+
+  _changeUsableSurfaceEventHandler(ChangeUsableSurfaceEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(usableSurface: double.parse(event.usableSurface)));
+
+  _changeAdministrativeSurfaceEventHandler(ChangeAdministrativeSurfaceEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(administrativeSurface: double.parse(event.administrativeSurface)));
+
+  _changeParkingSpacesEventHandler(ChangeParkingSpacesEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(parkingSpaces: int.parse(event.parkingSpaces)));
 }

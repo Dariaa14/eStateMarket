@@ -23,6 +23,9 @@ class DepositWidgets extends StatelessWidget {
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.heightHintText,
                 keyboardType: TextInputType.number,
+                onChanged: (height) {
+                  bloc.add(ChangeHeightEvent(height: height));
+                },
               ),
               const SizedBox(height: 16),
 
@@ -31,6 +34,9 @@ class DepositWidgets extends StatelessWidget {
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.usableSurfaceHintText,
                 keyboardType: TextInputType.number,
+                onChanged: (usableSurface) {
+                  bloc.add(ChangeUsableSurfaceEvent(usableSurface: usableSurface));
+                },
               ),
               const SizedBox(height: 16),
 
@@ -39,6 +45,9 @@ class DepositWidgets extends StatelessWidget {
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText,
                 keyboardType: TextInputType.number,
+                onChanged: (administrativeSurface) {
+                  bloc.add(ChangeAdministrativeSurfaceEvent(administrativeSurface: administrativeSurface));
+                },
               ),
               const SizedBox(height: 16),
 
@@ -60,6 +69,9 @@ class DepositWidgets extends StatelessWidget {
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.parkingSpacesHintText,
                 keyboardType: TextInputType.number,
+                onChanged: (parkingSpaces) {
+                  bloc.add(ChangeParkingSpacesEvent(parkingSpaces: parkingSpaces));
+                },
               ),
             ],
           );

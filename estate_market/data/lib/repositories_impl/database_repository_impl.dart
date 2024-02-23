@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data/entities_impl/apartment_entity_impl.dart';
+import 'package:data/entities_impl/deposit_entity_impl.dart';
 import 'package:data/entities_impl/document_reference_entity_impl.dart';
 import 'package:data/entities_impl/garage_entity_impl.dart';
 import 'package:data/entities_impl/house_entity_impl.dart';
 import 'package:data/entities_impl/terrain_entity_impl.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
+import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/document_reference_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/house_entity.dart';
@@ -144,6 +146,33 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         numberOfFloors: numberOfFloors,
         constructionYear: constructionYear);
     final ref = await properties.add((house as HouseEntityImpl).toJson());
+    return DocumentReferenceEntityImpl(ref: ref);
+  }
+
+  @override
+  Future<DocumentReferenceEntity> insertDepositEntity(
+      {required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required double height,
+      required double usableSurface,
+      required double administrativeSurface,
+      required DepositType depositType,
+      required int parkingSpaces}) async {
+    CollectionReference properties = FirebaseFirestore.instance.collection('properties');
+    DepositEntity deposit = DepositEntityImpl(
+      surface: surface,
+      price: price,
+      isNegotiable: isNegotiable,
+      constructionYear: constructionYear,
+      height: height,
+      usableSurface: usableSurface,
+      administrativeSurface: administrativeSurface,
+      depositType: depositType,
+      parkingSpaces: parkingSpaces,
+    );
+    final ref = await properties.add((deposit as DepositEntityImpl).toJson());
     return DocumentReferenceEntityImpl(ref: ref);
   }
 }

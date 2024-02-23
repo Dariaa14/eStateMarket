@@ -1,4 +1,5 @@
 import 'package:domain/entities/apartment_entity.dart';
+import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 
 import '../entities/ad_entity.dart';
@@ -50,6 +51,18 @@ abstract class DatabaseRepository {
     required int? constructionYear,
     required bool isInBuildUpArea,
     required LandUseCategories landUseCategory,
+  });
+
+  Future<DocumentReferenceEntity> insertDepositEntity({
+    required double surface,
+    required double price,
+    required bool isNegotiable,
+    required int? constructionYear,
+    required double height,
+    required double usableSurface,
+    required double administrativeSurface,
+    required DepositType depositType,
+    required int parkingSpaces,
   });
 
   Future<void> insertAdEntity({
