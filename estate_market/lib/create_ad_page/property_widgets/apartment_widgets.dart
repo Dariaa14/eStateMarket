@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../utils/translate_enums.dart';
 import '../create_ad_bloc.dart';
 import '../widgets/create_ad_textfield.dart';
 
@@ -27,7 +28,7 @@ class ApartmentWidgets extends StatelessWidget {
                 value: state.partitioning,
                 items: [
                   for (final partitioning in Partitioning.values)
-                    DropdownMenuItem(value: partitioning, child: Text(partitioning.name)),
+                    DropdownMenuItem(value: partitioning, child: Text(partitioningTranslate(partitioning, context))),
                 ],
                 onChanged: (partitioning) {
                   bloc.add(ChangePartitioningEvent(partitioning: partitioning));

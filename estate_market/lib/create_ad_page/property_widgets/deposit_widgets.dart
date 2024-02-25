@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../utils/translate_enums.dart';
 import '../create_ad_bloc.dart';
 import '../widgets/create_ad_textfield.dart';
 
@@ -59,7 +60,7 @@ class DepositWidgets extends StatelessWidget {
                 value: state.depositType,
                 items: [
                   for (final depositType in DepositType.values)
-                    DropdownMenuItem(value: depositType, child: Text(depositType.name)),
+                    DropdownMenuItem(value: depositType, child: Text(depositTypesTranslate(depositType, context))),
                 ],
                 onChanged: (depositType) {
                   bloc.add(ChangeDepositTypeEvent(depositType: depositType));

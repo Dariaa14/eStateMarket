@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../utils/translate_enums.dart';
+
 class TerrainWidget extends StatelessWidget {
   final CreateAdBloc bloc;
   const TerrainWidget({super.key, required this.bloc});
@@ -22,7 +24,7 @@ class TerrainWidget extends StatelessWidget {
                 value: state.landUseCategory,
                 items: [
                   for (final category in LandUseCategories.values)
-                    DropdownMenuItem(value: category, child: Text(category.name)),
+                    DropdownMenuItem(value: category, child: Text(landUseCategoriesTranslate(category, context))),
                 ],
                 onChanged: (category) {
                   bloc.add(ChangeLandUseCategoryEvent(landUseCategory: category));

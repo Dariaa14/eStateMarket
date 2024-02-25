@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../utils/translate_enums.dart';
 import 'create_ad_bloc.dart';
 import 'widgets/create_ad_textfield.dart';
 
@@ -82,7 +83,7 @@ class CreateAdView extends StatelessWidget {
                         value: state.currentCategory,
                         items: [
                           for (final category in AdCategory.values)
-                            DropdownMenuItem(value: category, child: Text(category.name)),
+                            DropdownMenuItem(value: category, child: Text(adCategoryTranslate(category, context))),
                         ],
                         onChanged: (category) {
                           bloc.add(ChangeCurrentCategoryEvent(category: category));
@@ -108,7 +109,7 @@ class CreateAdView extends StatelessWidget {
                       children: [
                         for (final value in ListingType.values)
                           ListTile(
-                            title: Text(value.name),
+                            title: Text(listingTypeTranslate(value, context)),
                             leading: Radio<ListingType>(
                               value: value,
                               groupValue: state.listingType,

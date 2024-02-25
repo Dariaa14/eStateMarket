@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../utils/translate_enums.dart';
 import '../create_ad_bloc.dart';
 import '../widgets/create_ad_textfield.dart';
 
@@ -42,7 +43,8 @@ class ResidenceWidgets extends StatelessWidget {
           DropdownButton<FurnishingLevel>(
             value: state.furnishingLevel,
             items: [
-              for (final level in FurnishingLevel.values) DropdownMenuItem(value: level, child: Text(level.name)),
+              for (final level in FurnishingLevel.values)
+                DropdownMenuItem(value: level, child: Text(furnishingLevelTranslate(level, context))),
             ],
             onChanged: (level) {
               bloc.add(ChangeFurnishingLevelCategoryEvent(furnishingLevel: level));

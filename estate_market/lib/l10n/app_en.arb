@@ -329,5 +329,135 @@
     "requiredField": "Field is required",
     "@requiredField":{
         "description": "Error in case field wasn't filled but it should be"
+    },
+
+    "apartment": "Apartment",
+    "@apartment": {
+        "description": "Apartment"
+    },
+
+    "house": "House",
+    "@house": {
+        "description": "House"
+    },
+
+    "terrain": "Terrain",
+    "@terrain": {
+        "description": "Terrain"
+    },
+
+    "garage": "Garage",
+    "@garage": {
+        "description": "Garage"
+    },
+
+    "deposit": "Deposit",
+    "@deposit": {
+        "description": "Deposit"
+    },
+
+    "sale": "Sale",
+    "@sale": {
+        "description": "Sale"
+    },
+
+    "rent": "Rent",
+    "@rent": {
+        "description": "Rent"
+    },
+
+    "furnished": "Furnished",
+    "@furnished": {
+        "description": "Furnished"
+    },
+
+    "semiFurnished": "Semi-furnished",
+    "@semiFurnished": {
+        "description": "Semi-furnished"
+    },
+
+    "unfurnished": "Unfurnished",
+    "@unfurnished": {
+        "description": "Unfurnished"
+    },
+
+    "selfContained": "Self-contained",
+    "@selfContained": {
+        "description": "Self-contained"
+    },
+
+    "semiSelfContained": "Semi self-contained",
+    "@semiSelfContained": {
+        "description": "Semi self-contained"
+    },
+
+    "nonSelfContained": "Non self-contained",
+    "@nonSelfContained": {
+        "description": "Non self-contained"
+    },
+
+    "circular": "Circular",
+    "@circular": {
+        "description": "Circular"
+    },
+
+    "urban": "Urban",
+    "@urban": {
+        "description": "Urban"
+    },
+
+    "agriculture": "Agriculture",
+    "@agriculture": {
+        "description": "Agriculture"
+    },
+
+    "rangeland": "Rangeland",
+    "@rangeland": {
+        "description": "Rangeland"
+    },
+
+    "forestland": "Forestland",
+    "@forestland": {
+        "description": "Forestland"
+    },
+
+    "water": "Water",
+    "@water": {
+        "description": "Water"
+    },
+
+    "wetland": "Wetland",
+    "@wetland": {
+        "description": "Wetland"
+    },
+
+    "barren": "Barren",
+    "@barren": {
+        "description": "Barren"
+    },
+
+    "interiorParking": "Interior Parking",
+    "@interiorParking": {
+        "description": "Interior Parking"
+    },
+
+    "exteriorParking": "Exterior Parking",
+    "@exteriorParking": {
+        "description": "Exterior Parking"
+    },
+
+    "deposit": "Deposit",
+    "@deposit": {
+        "description": "Deposit"
+    },
+
+    "distribution": "Distribution",
+    "@distribution": {
+        "description": "Distribution"
+    },
+
+    "production": "Production",
+    "@production": {
+        "description": "Production"
     }
 }
