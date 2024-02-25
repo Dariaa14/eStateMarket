@@ -37,6 +37,7 @@ class GarageWidgets extends StatelessWidget {
               hintText: AppLocalizations.of(context)!.capacityOfGarageHintText,
               keyboardType: TextInputType.number,
               onChanged: (value) => bloc.add(ChangeParkingCapacityEvent(parkingCapacity: value)),
+              showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.garageCapacity),
             ),
           ],
         );

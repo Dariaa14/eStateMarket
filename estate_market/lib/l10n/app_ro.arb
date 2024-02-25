@@ -62,8 +62,9 @@
     "surfaceHintText": "Adăugați suprafața",
     "price": "Preț*",
     "priceHintText": "Adăugați prețul",
-    "constructionYear": "Anul construcției*",
+    "constructionYear": "Anul construcției",
     "constructionYearHintText": "Adăugați anul construcției",
     "negotiable": "Negociabil",
-    "nonNegotiable": "Non-negociabil"
+    "nonNegotiable": "Non-negociabil",
+    "requiredField": "Câmpul este obligatoriu"
 }

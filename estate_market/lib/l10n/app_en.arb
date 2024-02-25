@@ -306,7 +306,7 @@
         "description": "Hint text for setting the price"
     },
 
-    "constructionYear": "Construction year*",
+    "constructionYear": "Construction year",
     "@constructionYear":{
         "description": "Construction year"
     },
@@ -324,5 +324,10 @@
     "nonNegotiable": "Non-negotiable",
     "@nonNegotiable":{
         "description": "Non-negotiable"
+    },
+
+    "requiredField": "Field is required",
+    "@requiredField":{
+        "description": "Error in case field wasn't filled but it should be"
     }
 }

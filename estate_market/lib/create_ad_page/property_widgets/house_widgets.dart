@@ -26,6 +26,7 @@ class HouseWidgets extends StatelessWidget {
                 hintText: AppLocalizations.of(context)!.insideSurfaceHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (text) => bloc.add(ChangeInsideSurfaceEvent(insideSurface: text)),
+                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.insideSurface),
               ),
               const SizedBox(height: 16),
 
@@ -35,6 +36,7 @@ class HouseWidgets extends StatelessWidget {
                 hintText: AppLocalizations.of(context)!.outsideSurfaceHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (text) => bloc.add(ChangeOutsideSurfaceEvent(outsideSurface: text)),
+                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.outsideSurface),
               ),
               const SizedBox(height: 16),
 
@@ -44,6 +46,7 @@ class HouseWidgets extends StatelessWidget {
                 hintText: AppLocalizations.of(context)!.numberOfFloorsHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (text) => bloc.add(ChangeNumberOfFloorsEvent(numberOfFloors: text)),
+                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.numberOfFloors),
               ),
             ],
           );

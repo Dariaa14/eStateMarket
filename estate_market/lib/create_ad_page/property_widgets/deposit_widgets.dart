@@ -26,6 +26,7 @@ class DepositWidgets extends StatelessWidget {
                 onChanged: (height) {
                   bloc.add(ChangeHeightEvent(height: height));
                 },
+                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.height),
               ),
               const SizedBox(height: 16),
 
@@ -37,6 +38,7 @@ class DepositWidgets extends StatelessWidget {
                 onChanged: (usableSurface) {
                   bloc.add(ChangeUsableSurfaceEvent(usableSurface: usableSurface));
                 },
+                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.usableSurface),
               ),
               const SizedBox(height: 16),
 
@@ -48,6 +50,7 @@ class DepositWidgets extends StatelessWidget {
                 onChanged: (administrativeSurface) {
                   bloc.add(ChangeAdministrativeSurfaceEvent(administrativeSurface: administrativeSurface));
                 },
+                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.administrativeSurface),
               ),
               const SizedBox(height: 16),
 
@@ -72,6 +75,7 @@ class DepositWidgets extends StatelessWidget {
                 onChanged: (parkingSpaces) {
                   bloc.add(ChangeParkingSpacesEvent(parkingSpaces: parkingSpaces));
                 },
+                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.parkingSpaces),
               ),
             ],
           );

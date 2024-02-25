@@ -41,6 +41,7 @@ class ApartmentWidgets extends StatelessWidget {
                 hintText: AppLocalizations.of(context)!.floorNumberHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (text) => bloc.add(ChangeFloorEvent(floor: text)),
+                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.floorNumber),
               ),
             ],
           );

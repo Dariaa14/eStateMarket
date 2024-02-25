@@ -22,6 +22,7 @@ class ResidenceWidgets extends StatelessWidget {
             hintText: AppLocalizations.of(context)!.numberOfRoomsHintText,
             keyboardType: TextInputType.number,
             onChanged: (text) => bloc.add(ChangeNumberOfRoomsEvent(numberOfRooms: text)),
+            showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.numberOfRooms),
           ),
 
           const SizedBox(height: 16),
@@ -32,6 +33,7 @@ class ResidenceWidgets extends StatelessWidget {
             hintText: AppLocalizations.of(context)!.numberOfBathroomsHintText,
             keyboardType: TextInputType.number,
             onChanged: (text) => bloc.add(ChangeNumberOfBathroomsEvent(numberOfBathrooms: text)),
+            showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.numberOfBathrooms),
           ),
           const SizedBox(height: 16),
 

@@ -20,6 +20,8 @@ enum CreateAdFields {
 
 class CreateAdState extends Equatable {
   final List<CreateAdFields> emptyFields;
+  final bool showErrors;
+  final bool insertSuccesful;
 
   final bool isNegotiable;
   final AdCategory currentCategory;
@@ -50,6 +52,8 @@ class CreateAdState extends Equatable {
 
   const CreateAdState(
       {this.emptyFields = CreateAdFields.values,
+      this.showErrors = false,
+      this.insertSuccesful = false,
       this.isNegotiable = true,
       this.currentCategory = AdCategory.apartament,
       this.listingType = ListingType.sale,
@@ -73,6 +77,8 @@ class CreateAdState extends Equatable {
 
   CreateAdState copyWith(
           {List<CreateAdFields>? emptyFields,
+          bool? showErrors,
+          bool? insertSuccesful,
           bool? isNegotiable,
           AdCategory? currentCategory,
           ListingType? listingType,
@@ -95,6 +101,8 @@ class CreateAdState extends Equatable {
           int? parkingSpaces}) =>
       CreateAdState(
         emptyFields: emptyFields ?? this.emptyFields,
+        showErrors: showErrors ?? this.showErrors,
+        insertSuccesful: insertSuccesful ?? this.insertSuccesful,
         isNegotiable: isNegotiable ?? this.isNegotiable,
         currentCategory: currentCategory ?? this.currentCategory,
         listingType: listingType ?? this.listingType,
@@ -118,6 +126,9 @@ class CreateAdState extends Equatable {
       );
 
   CreateAdState copyGarage({int? parkingCapacity}) => CreateAdState(
+        emptyFields: emptyFields,
+        showErrors: showErrors,
+        insertSuccesful: insertSuccesful,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -130,6 +141,9 @@ class CreateAdState extends Equatable {
     int? numberOfRooms,
   }) =>
       CreateAdState(
+        emptyFields: emptyFields,
+        showErrors: showErrors,
+        insertSuccesful: insertSuccesful,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -147,6 +161,9 @@ class CreateAdState extends Equatable {
     int? floor,
   }) =>
       CreateAdState(
+        emptyFields: emptyFields,
+        showErrors: showErrors,
+        insertSuccesful: insertSuccesful,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -163,6 +180,9 @@ class CreateAdState extends Equatable {
     double? outsideSurface,
   }) =>
       CreateAdState(
+        emptyFields: emptyFields,
+        showErrors: showErrors,
+        insertSuccesful: insertSuccesful,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -181,6 +201,9 @@ class CreateAdState extends Equatable {
     double? administrativeSurface,
   }) =>
       CreateAdState(
+        emptyFields: emptyFields,
+        showErrors: showErrors,
+        insertSuccesful: insertSuccesful,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -193,7 +216,9 @@ class CreateAdState extends Equatable {
 
   @override
   List<Object?> get props => [
+        showErrors,
         emptyFields,
+        insertSuccesful,
         isNegotiable,
         currentCategory,
         listingType,
