@@ -1,19 +1,21 @@
+import 'dart:io';
+
 import 'package:domain/entities/ad_entity.dart';
 import 'package:estate_market/create_ad_page/property_widgets/apartment_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/deposit_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/garage_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/house_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/terrain_widgets.dart';
+import 'package:estate_market/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../utils/translate_enums.dart';
 import 'create_ad_bloc.dart';
 import 'widgets/create_ad_textfield.dart';
-
-//TODO: internationalizare pentru enum-uri
 
 class CreateAdView extends StatelessWidget {
   final CreateAdBloc bloc = CreateAdBloc();
@@ -120,8 +122,29 @@ class CreateAdView extends StatelessWidget {
                           ),
                       ],
                     ),
-                    // Add images
+                    const SizedBox(height: 16.0),
 
+                    // Add images
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.transparent,
+                      ),
+                      height: 230,
+                      child: InkWell(
+                        onTap: () {
+                          _pickImageFromGallery(bloc);
+                        },
+                        child: state.images.isNotEmpty
+                            ? ImageSlider(images: state.images)
+                            : Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                      ),
+                    ),
                     const SizedBox(height: 20.0),
 
                     // Properties for all property types:
@@ -250,5 +273,11 @@ class CreateAdView extends StatelessWidget {
       default:
         return Container();
     }
+  }
+
+  Future _pickImageFromGallery(CreateAdBloc bloc) async {
+    final returnedImage = await ImagePicker().pickMultiImage();
+    List<File> images = returnedImage.map((imageData) => File(imageData.path)).toList();
+    bloc.add(SetImagesEvent(images: images));
   }
 }

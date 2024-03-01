@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/ad_entity.dart';
@@ -63,6 +65,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     on<ChangeParkingSpacesEvent>(_changeParkingSpacesEventHandler);
 
     on<SetEmptyFieldsEvent>(_setEmptyFieldsEventHandler);
+    on<SetImagesEvent>(_setImagesEventHandler);
   }
 
   _insertInDatabaseEventHandler(InsertInDatabaseEvent event, Emitter<CreateAdState> emit) async {
@@ -350,4 +353,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   bool fieldIsEmpty(CreateAdFields field) {
     return state.emptyFields.contains(field);
   }
+
+  _setImagesEventHandler(SetImagesEvent event, Emitter<CreateAdState> emit) =>
+      emit(state.copyWith(images: event.images));
 }

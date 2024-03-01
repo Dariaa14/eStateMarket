@@ -143,3 +143,9 @@ class SetEmptyFieldsEvent extends CreateAdEvent {
 
   SetEmptyFieldsEvent({required this.field, required this.shouldRemove});
 }
+
+class SetImagesEvent extends CreateAdEvent {
+  final List<File> images;
+
+  SetImagesEvent({required this.images});
+}

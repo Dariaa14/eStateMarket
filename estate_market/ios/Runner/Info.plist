@@ -44,6 +44,12 @@
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to add photos to ads</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to capture photos for ads</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>No need for it</string>
 	<true/>
 </dict>
 </plist>
