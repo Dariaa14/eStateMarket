@@ -459,5 +459,10 @@
     "production": "Production",
     "@production": {
         "description": "Production"
+    },
+
+    "addImages": "Add images",
+    "@addImages": {
+        "description": "Add images"
     }
 }

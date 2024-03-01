@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class ImageSlider extends StatefulWidget {
   final List<File> images;
+  final Function(int)? onPageChanged;
 
-  const ImageSlider({super.key, required this.images});
+  const ImageSlider({super.key, required this.images, this.onPageChanged});
 
   @override
   State<ImageSlider> createState() => _ImageSliderState();
@@ -26,6 +27,9 @@ class _ImageSliderState extends State<ImageSlider> {
                 setState(() {
                   currentIndex = pageIndex;
                 });
+                if (widget.onPageChanged != null) {
+                  widget.onPageChanged!(pageIndex);
+                }
               },
               itemBuilder: (context, index) {
                 return Container(

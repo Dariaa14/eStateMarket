@@ -46,6 +46,7 @@ class CreateAdView extends StatelessWidget {
       body: BlocBuilder<CreateAdBloc, CreateAdState>(
         bloc: bloc,
         builder: (context, state) {
+          int currentPhotoIndex = 0;
           return BlocListener<CreateAdBloc, CreateAdState>(
             bloc: bloc,
             listener: (context, state) {
@@ -132,15 +133,39 @@ class CreateAdView extends StatelessWidget {
                       ),
                       height: 230,
                       child: InkWell(
-                        onTap: () {
-                          _pickImageFromGallery(bloc);
+                        onTap: () async {
+                          if (state.images.isEmpty) {
+                            bloc.add(SetImagesEvent(images: await _pickImageFromGallery(bloc)));
+                          } else {
+                            _showImageModal(context, bloc, currentPhotoIndex);
+                          }
                         },
                         child: state.images.isNotEmpty
-                            ? ImageSlider(images: state.images)
+                            ? ImageSlider(
+                                images: state.images,
+                                onPageChanged: (index) => currentPhotoIndex = index,
+                              )
                             : Container(
                                 decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topRight,
+                                    end: Alignment.bottomLeft,
+                                    colors: [
+                                      Theme.of(context).colorScheme.primary,
+                                      Theme.of(context).colorScheme.primaryContainer,
+                                    ],
+                                  ),
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.addImages,
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
                                 ),
                               ),
                       ),
@@ -275,9 +300,81 @@ class CreateAdView extends StatelessWidget {
     }
   }
 
-  Future _pickImageFromGallery(CreateAdBloc bloc) async {
+  void _showImageModal(BuildContext context, CreateAdBloc bloc, int initialIndex) {
+    final PageController pageController = PageController(initialPage: initialIndex);
+    int currentIndex = initialIndex;
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Theme.of(context).colorScheme.primary,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: BlocBuilder<CreateAdBloc, CreateAdState>(
+                  bloc: bloc,
+                  builder: (context, state) {
+                    return PageView.builder(
+                        controller: pageController,
+                        itemCount: bloc.state.images.length,
+                        pageSnapping: true,
+                        onPageChanged: (index) => currentIndex = index,
+                        itemBuilder: (context, index) {
+                          return Image.file(
+                            bloc.state.images[index],
+                            fit: BoxFit.fitWidth,
+                          );
+                        });
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: ElevatedButton(
+                          onPressed: () async {},
+                          child: Text(
+                            'Add photos',
+                            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            List<File> newImagesList = List.from(bloc.state.images);
+                            newImagesList.removeAt(currentIndex);
+                            bloc.add(SetImagesEvent(images: newImagesList));
+                          },
+                          child: Text(
+                            'Delete photo',
+                            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<List<File>> _pickImageFromGallery(CreateAdBloc bloc) async {
     final returnedImage = await ImagePicker().pickMultiImage();
     List<File> images = returnedImage.map((imageData) => File(imageData.path)).toList();
-    bloc.add(SetImagesEvent(images: images));
+    return images;
   }
 }
