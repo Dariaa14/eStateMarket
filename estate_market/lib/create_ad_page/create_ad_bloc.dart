@@ -66,6 +66,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
 
     on<SetEmptyFieldsEvent>(_setEmptyFieldsEventHandler);
     on<SetImagesEvent>(_setImagesEventHandler);
+    on<AddImagesEvent>(_addImagesEventHandler);
   }
 
   _insertInDatabaseEventHandler(InsertInDatabaseEvent event, Emitter<CreateAdState> emit) async {
@@ -356,4 +357,15 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
 
   _setImagesEventHandler(SetImagesEvent event, Emitter<CreateAdState> emit) =>
       emit(state.copyWith(images: event.images));
+
+  _addImagesEventHandler(AddImagesEvent event, Emitter<CreateAdState> emit) {
+    List<File> allImages = List.from(event.images);
+    allImages.addAll(state.images);
+
+    Set<String> uniquePaths = allImages.map((image) => image.path.substring(image.path.lastIndexOf('/') + 1)).toSet();
+    List<File> uniqueImages =
+        uniquePaths.map((uniquePath) => allImages.firstWhere((image) => image.path.endsWith(uniquePath))).toList();
+
+    emit(state.copyWith(images: uniqueImages));
+  }
 }

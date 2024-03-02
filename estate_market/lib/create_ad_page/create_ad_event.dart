@@ -149,3 +149,9 @@ class SetImagesEvent extends CreateAdEvent {
 
   SetImagesEvent({required this.images});
 }
+
+class AddImagesEvent extends CreateAdEvent {
+  final List<File> images;
+
+  AddImagesEvent({required this.images});
+}

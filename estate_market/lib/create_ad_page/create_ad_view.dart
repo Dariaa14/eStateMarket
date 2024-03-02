@@ -126,6 +126,7 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 16.0),
 
                     // Add images
+                    // TODO: limit number of photos
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
@@ -316,17 +317,20 @@ class CreateAdView extends StatelessWidget {
                 child: BlocBuilder<CreateAdBloc, CreateAdState>(
                   bloc: bloc,
                   builder: (context, state) {
-                    return PageView.builder(
-                        controller: pageController,
-                        itemCount: bloc.state.images.length,
-                        pageSnapping: true,
-                        onPageChanged: (index) => currentIndex = index,
-                        itemBuilder: (context, index) {
-                          return Image.file(
-                            bloc.state.images[index],
-                            fit: BoxFit.fitWidth,
-                          );
-                        });
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: PageView.builder(
+                          controller: pageController,
+                          itemCount: bloc.state.images.length,
+                          pageSnapping: true,
+                          onPageChanged: (index) => currentIndex = index,
+                          itemBuilder: (context, index) {
+                            return Image.file(
+                              bloc.state.images[index],
+                              fit: BoxFit.contain,
+                            );
+                          }),
+                    );
                   },
                 ),
               ),
@@ -338,7 +342,10 @@ class CreateAdView extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: ElevatedButton(
-                          onPressed: () async {},
+                          onPressed: () async {
+                            List<File> newImagesFile = await _pickImageFromGallery(bloc);
+                            bloc.add(AddImagesEvent(images: newImagesFile));
+                          },
                           child: Text(
                             'Add photos',
                             style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
