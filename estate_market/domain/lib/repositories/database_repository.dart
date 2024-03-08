@@ -71,5 +71,6 @@ abstract class DatabaseRepository {
     required String description,
     required DocumentReferenceEntity property,
     required ListingType listingType,
+    required List<String> images,
   });
 }

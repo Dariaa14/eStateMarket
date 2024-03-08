@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:data/entities_impl/property_entity_impl.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/property_entity.dart';
@@ -22,7 +20,7 @@ class AdEntityImpl implements AdEntity {
   String description;
 
   @override
-  List<Uint8List> images;
+  List<String> imagesUrls;
 
   @override
   ListingType listingType;
@@ -33,7 +31,7 @@ class AdEntityImpl implements AdEntity {
   AdEntityImpl(
       {required this.title,
       required this.adCategory,
-      required this.images,
+      required this.imagesUrls,
       required this.description,
       this.property,
       required this.listingType,
@@ -45,7 +43,7 @@ class AdEntityImpl implements AdEntity {
     return {
       'title': title,
       'adCategory': adCategory.index,
-      'images': images.map((image) => image.toList()).toList(),
+      'images': imagesUrls,
       'description': description,
       'property': _propertyReference,
       'listingType': listingType.index,
@@ -57,7 +55,11 @@ class AdEntityImpl implements AdEntity {
     return AdEntityImpl(
       title: json['title'] as String,
       adCategory: AdCategory.values[json['adCategory'] as int],
-      images: [], // (json['images'] as List).map((image) => Uint8List.fromList(image.cast<int>())).toList(),
+      imagesUrls: (json.containsKey('images'))
+          ? ((json['images'] as List).isEmpty
+              ? List<String>.empty()
+              : (json['images'] as List<dynamic>).map((dynamic item) => item.toString()).toList())
+          : List<String>.empty(),
       description: json['description'] as String,
       listingType: ListingType.values[json['listingType'] as int],
       dateOfAd: (json['dateOfAd'] as Timestamp).toDate(),

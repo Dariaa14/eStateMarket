@@ -1,5 +1,7 @@
+import 'package:dartz/dartz.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/repositories/database_repository.dart';
+import 'package:domain/repositories/image_upload_repository.dart';
 
 import '../entities/ad_entity.dart';
 import '../entities/apartment_entity.dart';
@@ -7,11 +9,16 @@ import '../entities/deposit_entity.dart';
 import '../entities/document_reference_entity.dart';
 import '../entities/residence_entity.dart';
 import '../entities/terrain_entity.dart';
+import '../errors/failure.dart';
 
 class DatabaseUseCase {
   final DatabaseRepository _databaseRepository;
+  final ImageUploadRepository _imageUploadRepository;
 
-  DatabaseUseCase({required DatabaseRepository databaseRepository}) : _databaseRepository = databaseRepository;
+  DatabaseUseCase(
+      {required DatabaseRepository databaseRepository, required ImageUploadRepository imageUploadRepository})
+      : _databaseRepository = databaseRepository,
+        _imageUploadRepository = imageUploadRepository;
 
   Future<List<AdEntity>> getAllAds() async {
     final resp = await _databaseRepository.getAllAds();
@@ -131,8 +138,19 @@ class DatabaseUseCase {
     required String description,
     required DocumentReferenceEntity property,
     required ListingType listingType,
+    required List<String> images,
   }) async {
     await _databaseRepository.insertAdEntity(
-        title: title, category: category, description: description, property: property, listingType: listingType);
+        title: title,
+        category: category,
+        description: description,
+        property: property,
+        listingType: listingType,
+        images: images);
+  }
+
+  Future<Either<Failure, List<String>>> uploadImages(List<String> paths) async {
+    final result = await _imageUploadRepository.uploadImages(paths);
+    return result;
   }
 }

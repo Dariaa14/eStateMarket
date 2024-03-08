@@ -98,8 +98,8 @@ class CreateAdView extends StatelessWidget {
                     CreateAdTextfield(
                       hintText: AppLocalizations.of(context)!.adDescriptionHintText,
                       controller: _descriptionController,
-                      onChanged: (description) => bloc
-                          .add(SetEmptyFieldsEvent(field: CreateAdFields.title, shouldRemove: description.isNotEmpty)),
+                      onChanged: (description) => bloc.add(
+                          SetEmptyFieldsEvent(field: CreateAdFields.description, shouldRemove: description.isNotEmpty)),
                       showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.description),
                     ),
                     const SizedBox(height: 16.0),
@@ -186,8 +186,8 @@ class CreateAdView extends StatelessWidget {
                       hintText: AppLocalizations.of(context)!.surfaceHintText,
                       controller: _surfaceController,
                       keyboardType: TextInputType.number,
-                      onChanged: (surface) =>
-                          bloc.add(SetEmptyFieldsEvent(field: CreateAdFields.title, shouldRemove: surface.isNotEmpty)),
+                      onChanged: (surface) => bloc
+                          .add(SetEmptyFieldsEvent(field: CreateAdFields.surface, shouldRemove: surface.isNotEmpty)),
                       showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.surface),
                     ),
                     const SizedBox(

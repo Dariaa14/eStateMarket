@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
+import 'package:dartz/dartz.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
@@ -74,6 +75,13 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       emit(state.copyWith(showErrors: true));
       return;
     }
+
+    final imageUploadResult = await _databaseUseCase.uploadImages(state.images.map((image) => image.path).toList());
+    if (imageUploadResult.isLeft()) {
+      print("Error uploading images");
+      return;
+    }
+
     late DocumentReferenceEntity propertyReference;
     switch (state.currentCategory) {
       case AdCategory.garage:
@@ -178,7 +186,8 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
         category: state.currentCategory,
         description: event.description,
         property: propertyReference,
-        listingType: state.listingType);
+        listingType: state.listingType,
+        images: (imageUploadResult as Right).value);
     emit(state.copyWith(insertSuccesful: true));
   }
 

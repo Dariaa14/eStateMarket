@@ -56,18 +56,20 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
   }
 
   @override
-  Future<void> insertAdEntity(
-      {required String title,
-      required AdCategory category,
-      required String description,
-      required DocumentReferenceEntity property,
-      required ListingType listingType}) async {
+  Future<void> insertAdEntity({
+    required String title,
+    required AdCategory category,
+    required String description,
+    required DocumentReferenceEntity property,
+    required ListingType listingType,
+    required List<String> images,
+  }) async {
     CollectionReference ads = FirebaseFirestore.instance.collection('ad');
     AdEntity ad = AdEntityImpl(
         title: title,
         adCategory: category,
         description: description,
-        images: [],
+        imagesUrls: images,
         propertyReference: (property as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>,
         listingType: listingType,
         dateOfAd: DateTime.now());

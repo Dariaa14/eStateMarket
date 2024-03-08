@@ -1,9 +1,12 @@
+import 'package:cloudinary_flutter/image/cld_image.dart';
+import 'package:core/config.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AdItem extends StatelessWidget {
   final AdEntity? ad;
+
   const AdItem({super.key, this.ad});
 
   @override
@@ -20,10 +23,22 @@ class AdItem extends StatelessWidget {
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
-              height: 150,
+              height: 190,
+              width: MediaQuery.of(context).size.width - 16,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                 color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                ),
+                child: CldImageWidget(
+                  publicId: ad!.imagesUrls.isEmpty ? "licenta/z87gl6lpok5lqqs2pmxc" : ad!.imagesUrls[0],
+                  cloudinary: cloudinary,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
             Row(
