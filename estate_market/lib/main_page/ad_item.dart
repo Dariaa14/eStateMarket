@@ -22,25 +22,56 @@ class AdItem extends StatelessWidget {
             color: Theme.of(context).colorScheme.surface,
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Container(
-              height: 190,
-              width: MediaQuery.of(context).size.width - 16,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                color: Theme.of(context).colorScheme.primaryContainer,
+            if (ad!.imagesUrls.isNotEmpty)
+              SizedBox(
+                height: 190,
+                width: MediaQuery.of(context).size.width - 16,
+                child: PageView.builder(
+                    itemCount: ad!.imagesUrls.length,
+                    pageSnapping: true,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        height: 190,
+                        width: MediaQuery.of(context).size.width - 16,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
+                          ),
+                          child: CldImageWidget(
+                            publicId: ad!.imagesUrls[index],
+                            cloudinary: cloudinary,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      );
+                    }),
               ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
+            if (ad!.imagesUrls.isEmpty)
+              Container(
+                height: 190,
+                width: MediaQuery.of(context).size.width - 16,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                  color: Theme.of(context).colorScheme.primaryContainer,
                 ),
-                child: CldImageWidget(
-                  publicId: ad!.imagesUrls.isEmpty ? "licenta/z87gl6lpok5lqqs2pmxc" : ad!.imagesUrls[0],
-                  cloudinary: cloudinary,
-                  fit: BoxFit.fitWidth,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    topRight: Radius.circular(10.0),
+                  ),
+                  child: CldImageWidget(
+                    publicId: ad!.imagesUrls.isEmpty ? "licenta/z87gl6lpok5lqqs2pmxc" : ad!.imagesUrls[0],
+                    cloudinary: cloudinary,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
-            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
