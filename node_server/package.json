@@ -1,0 +1,24 @@
+{
+  "name": "node_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dariaa14/eStateMarket.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dariaa14/eStateMarket/issues"
+  },
+  "homepage": "https://github.com/Dariaa14/eStateMarket#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.18.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

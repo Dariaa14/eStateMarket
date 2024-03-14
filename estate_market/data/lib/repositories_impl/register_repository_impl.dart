@@ -38,7 +38,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
     if (hasNumber) strength++;
     if (hasSpecialChar) strength++;
 
-    if (strength <= 1 || length < lengthThreshold) {
+    if (strength <= 1) {
       return PasswordStrength.veryWeak;
     } else if (strength <= 2) {
       return PasswordStrength.weak;

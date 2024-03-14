@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data/entities_impl/account_entity_impl.dart';
 import 'package:data/entities_impl/apartment_entity_impl.dart';
 import 'package:data/entities_impl/deposit_entity_impl.dart';
 import 'package:data/entities_impl/document_reference_entity_impl.dart';
 import 'package:data/entities_impl/garage_entity_impl.dart';
 import 'package:data/entities_impl/house_entity_impl.dart';
 import 'package:data/entities_impl/terrain_entity_impl.dart';
+import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
@@ -176,5 +178,21 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
     );
     final ref = await properties.add((deposit as DepositEntityImpl).toJson());
     return DocumentReferenceEntityImpl(ref: ref);
+  }
+
+  @override
+  Future<void> insertAccountEntity(
+      {required String email,
+      required String password,
+      required String phoneNumber,
+      required SellerType sellerType}) async {
+    CollectionReference accounts = FirebaseFirestore.instance.collection('accounts');
+    AccountEntity account = AccountEntityImpl(
+      email: email,
+      password: password,
+      phoneNumber: phoneNumber,
+      sellerType: sellerType,
+    );
+    await accounts.add((account as AccountEntityImpl).toJson());
   }
 }

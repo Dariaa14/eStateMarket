@@ -3,6 +3,7 @@ import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/repositories/database_repository.dart';
 import 'package:domain/repositories/image_upload_repository.dart';
 
+import '../entities/account_entity.dart';
 import '../entities/ad_entity.dart';
 import '../entities/apartment_entity.dart';
 import '../entities/deposit_entity.dart';
@@ -147,6 +148,16 @@ class DatabaseUseCase {
         property: property,
         listingType: listingType,
         images: images);
+  }
+
+  Future<void> insertAccountEntity({
+    required String email,
+    required String password,
+    required String phoneNumber,
+    required SellerType sellerType,
+  }) async {
+    await _databaseRepository.insertAccountEntity(
+        email: email, password: password, phoneNumber: phoneNumber, sellerType: sellerType);
   }
 
   Future<Either<Failure, List<String>>> uploadImages(List<String> paths) async {

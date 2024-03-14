@@ -1,5 +1,7 @@
 import 'package:domain/entities/account_entity.dart';
 
+import '../utils/encrypt.dart';
+
 class AccountEntityImpl implements AccountEntity {
   @override
   String email;
@@ -23,7 +25,7 @@ class AccountEntityImpl implements AccountEntity {
   Map<String, dynamic> toJson() {
     return {
       'email': email,
-      'password': password,
+      'password': encryptedPassword(),
       'phoneNumber': phoneNumber,
       'sellerType': sellerType.index,
     };
@@ -32,9 +34,12 @@ class AccountEntityImpl implements AccountEntity {
   factory AccountEntityImpl.fromJson(Map<String, Object?> json) {
     return AccountEntityImpl(
       email: json['email'] as String,
-      password: json['password'] as String,
+      password: decryptValue(json['password'] as String),
       phoneNumber: json['phoneNumber'] as String,
       sellerType: SellerType.values[json['sellerType'] as int],
     );
   }
+
+  @override
+  String encryptedPassword() => encryptValue(password);
 }

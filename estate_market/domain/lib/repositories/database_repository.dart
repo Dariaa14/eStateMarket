@@ -2,6 +2,7 @@ import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 
+import '../entities/account_entity.dart';
 import '../entities/ad_entity.dart';
 import '../entities/document_reference_entity.dart';
 import '../entities/garage_entity.dart';
@@ -72,5 +73,12 @@ abstract class DatabaseRepository {
     required DocumentReferenceEntity property,
     required ListingType listingType,
     required List<String> images,
+  });
+
+  Future<void> insertAccountEntity({
+    required String email,
+    required String password,
+    required String phoneNumber,
+    required SellerType sellerType,
   });
 }
