@@ -31,9 +31,9 @@ class CreateAccountEvent extends RegisterPageEvent {
   CreateAccountEvent({required this.email, required this.password});
 }
 
-class SignInEvent extends RegisterPageEvent {
+class LoginEvent extends RegisterPageEvent {
   final String email;
   final String password;
 
-  SignInEvent({required this.email, required this.password});
+  LoginEvent({required this.email, required this.password});
 }

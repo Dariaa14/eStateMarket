@@ -209,7 +209,7 @@ class RegisterPage extends StatelessWidget {
                                     email: _emailController.text, password: _passwordController.text));
                                 // Navigator.pop(context);
                               } else {
-                                bloc.add(SignInEvent(email: _emailController.text, password: _passwordController.text));
+                                bloc.add(LoginEvent(email: _emailController.text, password: _passwordController.text));
                               }
                             },
                             style: ElevatedButton.styleFrom(

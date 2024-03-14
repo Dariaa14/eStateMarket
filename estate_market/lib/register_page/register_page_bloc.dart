@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:domain/errors/failure.dart';
 
 import 'package:domain/repositories/register_repository.dart';
+import 'package:domain/use_cases/login_use_case.dart';
 import 'package:domain/use_cases/register_use_case.dart';
 import 'package:equatable/equatable.dart';
 
@@ -12,6 +13,7 @@ part 'register_page_state.dart';
 
 class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
   final RegisterUseCase _registerUseCase = sl.get<RegisterUseCase>();
+  final LoginUseCase _loginUseCase = sl.get<LoginUseCase>();
 
   RegisterPageBloc() : super(const RegisterPageState()) {
     on<InitRegisterPageEvent>(_initLoginPageEventHandler);
@@ -23,7 +25,7 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
     on<CalculatePasswordStrenghtEvent>(_calculatePasswordStrenghtEventHandler);
     on<CreateAccountEvent>(_createAccountEventHandler);
 
-    on<SignInEvent>(_signInEventHandler);
+    on<LoginEvent>(_loginEventHandler);
   }
 
   _initLoginPageEventHandler(InitRegisterPageEvent event, Emitter<RegisterPageState> emit) {}
@@ -57,8 +59,8 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
         {'email': event.email, 'password': event.password, 'phoneNumber': 'phoneNumber', 'sellerType': 'sellerType'});
   }
 
-  _signInEventHandler(SignInEvent event, Emitter<RegisterPageState> emit) async {
-    final result = await _registerUseCase.signIn(event.email, event.password);
+  _loginEventHandler(LoginEvent event, Emitter<RegisterPageState> emit) async {
+    final result = await _loginUseCase.login(event.email, event.password);
     if (result is Left) {
       final failure = (result as Left).value;
       emit(state.copyWith(failure: failure));

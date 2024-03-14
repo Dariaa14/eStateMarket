@@ -32,6 +32,7 @@ class RegisterUseCase {
   }
 
   Future<void> addAccount(Map accountData) async {
+    //TODO: make checks for email and password
     final String email = accountData['email'];
     final String password = accountData['password'];
 
