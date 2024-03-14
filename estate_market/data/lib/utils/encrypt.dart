@@ -1,7 +1,8 @@
 import 'package:data/config.dart';
 import 'package:encrypt/encrypt.dart';
-import 'package:domain/entities/encrypted_entity.dart';
-import 'package:data/entities_impl/encrypted_entity_impl.dart';
+
+import '../entities_impl/wrappers/encrypted_entity_impl.dart';
+import 'package:domain/entities/wrappers/encrypted_entity.dart';
 
 String encryptValue(String text) {
   final key = Key.fromUtf8(encriptedKey);

@@ -6,10 +6,10 @@ import 'package:dartz/dartz.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
-import 'package:domain/entities/document_reference_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
+import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/use_cases/database_use_case.dart';
 import 'package:equatable/equatable.dart';
 

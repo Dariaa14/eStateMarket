@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data/entities_impl/account_entity_impl.dart';
 import 'package:data/entities_impl/apartment_entity_impl.dart';
 import 'package:data/entities_impl/deposit_entity_impl.dart';
-import 'package:data/entities_impl/document_reference_entity_impl.dart';
 import 'package:data/entities_impl/garage_entity_impl.dart';
 import 'package:data/entities_impl/house_entity_impl.dart';
 import 'package:data/entities_impl/terrain_entity_impl.dart';
@@ -10,14 +9,15 @@ import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
-import 'package:domain/entities/document_reference_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/house_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
+import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/repositories/database_repository.dart';
 
 import '../entities_impl/ad_enitity_impl.dart';
+import '../entities_impl/wrappers/document_reference_entity_impl.dart';
 
 class DatabaseRepositoryImpl extends DatabaseRepository {
   final adRef = FirebaseFirestore.instance.collection('ad').withConverter<AdEntity>(

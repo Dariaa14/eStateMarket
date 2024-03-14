@@ -7,9 +7,9 @@ import '../entities/account_entity.dart';
 import '../entities/ad_entity.dart';
 import '../entities/apartment_entity.dart';
 import '../entities/deposit_entity.dart';
-import '../entities/document_reference_entity.dart';
 import '../entities/residence_entity.dart';
 import '../entities/terrain_entity.dart';
+import '../entities/wrappers/document_reference_entity.dart';
 import '../errors/failure.dart';
 
 class DatabaseUseCase {

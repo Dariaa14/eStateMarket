@@ -17,7 +17,6 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<Either<Failure, AccountEntity>> login(String email, String password) async {
     final result =
         await accountsRef.where("email", isEqualTo: email).where("password", isEqualTo: encryptValue(password)).get();
-
     if (result.docs.isEmpty) {
       print('Account was NOT found');
       return Left(AccountNotFound());

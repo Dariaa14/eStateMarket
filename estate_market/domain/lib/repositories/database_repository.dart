@@ -4,9 +4,9 @@ import 'package:domain/entities/residence_entity.dart';
 
 import '../entities/account_entity.dart';
 import '../entities/ad_entity.dart';
-import '../entities/document_reference_entity.dart';
 import '../entities/garage_entity.dart';
 import '../entities/terrain_entity.dart';
+import '../entities/wrappers/document_reference_entity.dart';
 
 abstract class DatabaseRepository {
   Future<List<AdEntity>> getAllAds();

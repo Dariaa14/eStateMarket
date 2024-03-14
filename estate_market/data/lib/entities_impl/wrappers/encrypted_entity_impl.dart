@@ -1,4 +1,4 @@
-import 'package:domain/entities/encrypted_entity.dart';
+import 'package:domain/entities/wrappers/encrypted_entity.dart';
 import 'package:encrypt/encrypt.dart';
 
 class EncryptedEntityImpl implements EncryptedEntity {
