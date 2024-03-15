@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/entities/ad_entity.dart';
+import 'package:data/entities_impl/wrappers/query_snapshot_entity_impl.dart';
 import 'package:domain/entities/wrappers/query_entity.dart';
-
-import '../ad_enitity_impl.dart';
+import 'package:domain/entities/wrappers/query_snapshot_entity.dart';
 
 class QueryEntityImpl implements QueryEntity {
   final Query ref;
@@ -11,15 +10,7 @@ class QueryEntityImpl implements QueryEntity {
 
   @override
   Future<List<T>> get<T>() async {
-    final items = await ref.get();
-    List<T> allItems = [];
-    for (int index = 0; index < items.size; index++) {
-      T item = items.docs[index].data() as T;
-      if (T is AdEntity) {
-        await (item as AdEntityImpl).setProperty();
-      }
-      allItems.add(item);
-    }
-    return allItems;
+    final QuerySnapshotEntity items = QuerySnapshotEntityImpl(ref: await ref.get());
+    return items.transformToList();
   }
 }

@@ -4,11 +4,13 @@ import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/entities/wrappers/query_entity.dart';
+import 'package:domain/entities/wrappers/query_snapshot_entity.dart';
 
 import '../account_entity_impl.dart';
 import '../ad_enitity_impl.dart';
 import 'document_reference_entity_impl.dart';
 import 'query_entity_impl.dart';
+import 'query_snapshot_entity_impl.dart';
 
 class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
   @override
@@ -21,16 +23,8 @@ class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
   @override
   Future<List<T>> get<T>(Collections collection) async {
     final currentCollection = _getCollection(collection);
-    final items = await currentCollection.get();
-    List<T> allItems = [];
-    for (int index = 0; index < items.size; index++) {
-      T item = items.docs[index].data() as T;
-      if (T is AdEntity) {
-        await (item as AdEntityImpl).setProperty();
-      }
-      allItems.add(item);
-    }
-    return allItems;
+    final QuerySnapshotEntity items = QuerySnapshotEntityImpl(ref: await currentCollection.get());
+    return items.transformToList();
   }
 
   @override
