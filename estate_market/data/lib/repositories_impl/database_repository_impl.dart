@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data/entities_impl/account_entity_impl.dart';
 import 'package:data/entities_impl/apartment_entity_impl.dart';
 import 'package:data/entities_impl/deposit_entity_impl.dart';
 import 'package:data/entities_impl/garage_entity_impl.dart';
 import 'package:data/entities_impl/house_entity_impl.dart';
 import 'package:data/entities_impl/terrain_entity_impl.dart';
+import 'package:data/entities_impl/wrappers/collection_reference_entity_impl.dart';
 import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
@@ -13,28 +13,17 @@ import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/house_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
+import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/repositories/database_repository.dart';
 
 import '../entities_impl/ad_enitity_impl.dart';
-import '../entities_impl/wrappers/document_reference_entity_impl.dart';
 
 class DatabaseRepositoryImpl extends DatabaseRepository {
-  final adRef = FirebaseFirestore.instance.collection('ad').withConverter<AdEntity>(
-        fromFirestore: (snapshots, _) => AdEntityImpl.fromJson(snapshots.data()!),
-        toFirestore: (ad, _) => (ad as AdEntityImpl).toJson(),
-      );
-
   @override
   Future<List<AdEntity>> getAllAds() async {
-    List<AdEntity> allAds = [];
-    final items = await adRef.get();
-    for (int index = 0; index < items.size; index++) {
-      AdEntity ad = items.docs[index].data();
-      await (ad as AdEntityImpl).setProperty();
-      allAds.add(ad);
-    }
-    return allAds;
+    CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad);
+    return await ads.get<AdEntity>();
   }
 
   @override
@@ -45,7 +34,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required int? constructionYear,
       required ParkingType parkingType,
       required int capacity}) async {
-    CollectionReference properties = FirebaseFirestore.instance.collection('properties');
+    CollectionReferenceEntity properties = CollectionReferenceEntityImpl(collection: Collections.properties);
     GarageEntity garage = GarageEntityImpl(
         parkingType: parkingType,
         capacity: capacity,
@@ -53,8 +42,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         price: price,
         isNegotiable: isNegotiable,
         constructionYear: constructionYear);
-    final ref = await properties.add((garage as GarageEntityImpl).toJson());
-    return DocumentReferenceEntityImpl(ref: ref);
+    return await properties.add((garage as GarageEntityImpl).toJson());
   }
 
   @override
@@ -66,13 +54,13 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
     required ListingType listingType,
     required List<String> images,
   }) async {
-    CollectionReference ads = FirebaseFirestore.instance.collection('ad');
+    CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);
     AdEntity ad = AdEntityImpl(
         title: title,
         adCategory: category,
         description: description,
         imagesUrls: images,
-        propertyReference: (property as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>,
+        propertyReference: property,
         listingType: listingType,
         dateOfAd: DateTime.now());
     await ad.setProperty();
@@ -87,7 +75,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required int? constructionYear,
       required bool isInBuildUpArea,
       required LandUseCategories landUseCategory}) async {
-    CollectionReference properties = FirebaseFirestore.instance.collection('properties');
+    CollectionReferenceEntity properties = CollectionReferenceEntityImpl(collection: Collections.properties);
     TerrainEntity terrain = TerrainEntityImpl(
         isInBuildUpArea: isInBuildUpArea,
         landUseCategory: landUseCategory,
@@ -95,8 +83,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         price: price,
         isNegotiable: isNegotiable,
         constructionYear: constructionYear);
-    final ref = await properties.add((terrain as TerrainEntityImpl).toJson());
-    return DocumentReferenceEntityImpl(ref: ref);
+    return await properties.add((terrain as TerrainEntityImpl).toJson());
   }
 
   @override
@@ -110,7 +97,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required int numberOfRooms,
       required int numberOfBathrooms,
       required FurnishingLevel furnishingLevel}) async {
-    CollectionReference properties = FirebaseFirestore.instance.collection('properties');
+    CollectionReferenceEntity properties = CollectionReferenceEntityImpl(collection: Collections.properties);
     ApartmentEntity apartment = ApartmentEntityImpl(
         surface: surface,
         price: price,
@@ -121,8 +108,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         numberOfBathrooms: numberOfBathrooms,
         furnishingLevel: furnishingLevel,
         constructionYear: constructionYear);
-    final ref = await properties.add((apartment as ApartmentEntityImpl).toJson());
-    return DocumentReferenceEntityImpl(ref: ref);
+    return await properties.add((apartment as ApartmentEntityImpl).toJson());
   }
 
   @override
@@ -137,7 +123,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required int numberOfRooms,
       required int numberOfBathrooms,
       required FurnishingLevel furnishingLevel}) async {
-    CollectionReference properties = FirebaseFirestore.instance.collection('properties');
+    CollectionReferenceEntity properties = CollectionReferenceEntityImpl(collection: Collections.properties);
     HouseEntity house = HouseEntityImpl(
         surface: surface,
         price: price,
@@ -149,8 +135,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         outsideSurface: outsideSurface,
         numberOfFloors: numberOfFloors,
         constructionYear: constructionYear);
-    final ref = await properties.add((house as HouseEntityImpl).toJson());
-    return DocumentReferenceEntityImpl(ref: ref);
+    return await properties.add((house as HouseEntityImpl).toJson());
   }
 
   @override
@@ -164,7 +149,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required double administrativeSurface,
       required DepositType depositType,
       required int parkingSpaces}) async {
-    CollectionReference properties = FirebaseFirestore.instance.collection('properties');
+    CollectionReferenceEntity properties = CollectionReferenceEntityImpl(collection: Collections.properties);
     DepositEntity deposit = DepositEntityImpl(
       surface: surface,
       price: price,
@@ -176,8 +161,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       depositType: depositType,
       parkingSpaces: parkingSpaces,
     );
-    final ref = await properties.add((deposit as DepositEntityImpl).toJson());
-    return DocumentReferenceEntityImpl(ref: ref);
+    return await properties.add((deposit as DepositEntityImpl).toJson());
   }
 
   @override
@@ -186,7 +170,8 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required String password,
       required String phoneNumber,
       required SellerType sellerType}) async {
-    CollectionReference accounts = FirebaseFirestore.instance.collection('accounts');
+    CollectionReferenceEntity accounts =
+        CollectionReferenceEntityImpl(collection: Collections.accounts, withConverter: false);
     AccountEntity account = AccountEntityImpl(
       email: email,
       password: password,

@@ -13,63 +13,72 @@ import 'query_entity_impl.dart';
 import 'query_snapshot_entity_impl.dart';
 
 class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
-  @override
-  Future<DocumentReferenceEntity> add(Collections collection, Map<String, dynamic> map) async {
-    final currentCollection = _getCollection(collection);
-    DocumentReference ref = await currentCollection.add(map);
-    return DocumentReferenceEntityImpl(ref: ref);
+  late final CollectionReference ref;
+
+  CollectionReferenceEntityImpl({required Collections collection, bool withConverter = true}) {
+    ref = _getCollection(collection, withConverter: withConverter);
   }
 
   @override
-  Future<List<T>> get<T>(Collections collection) async {
-    final currentCollection = _getCollection(collection);
-    final QuerySnapshotEntity items = QuerySnapshotEntityImpl(ref: await currentCollection.get());
+  Future<DocumentReferenceEntity> add(Map<String, dynamic> map) async {
+    DocumentReference docRef = await ref.add(map);
+    return DocumentReferenceEntityImpl(ref: docRef);
+  }
+
+  @override
+  Future<List<T>> get<T>() async {
+    final QuerySnapshotEntity items = QuerySnapshotEntityImpl(ref: await ref.get());
     return items.transformToList();
   }
 
   @override
-  QueryEntity where<T>(Collections collection, String field, WhereOperations operation, dynamic value) {
-    final currentCollection = _getCollection(collection);
+  QueryEntity where<T>(String field, WhereOperations operation, dynamic value) {
     switch (operation) {
       case WhereOperations.isEqualTo:
-        return QueryEntityImpl(ref: currentCollection.where(field, isEqualTo: value));
+        return QueryEntityImpl(ref: ref.where(field, isEqualTo: value));
       case WhereOperations.isNotEqualTo:
-        return QueryEntityImpl(ref: currentCollection.where(field, isNotEqualTo: value));
+        return QueryEntityImpl(ref: ref.where(field, isNotEqualTo: value));
       case WhereOperations.isLessThan:
-        return QueryEntityImpl(ref: currentCollection.where(field, isLessThan: value));
+        return QueryEntityImpl(ref: ref.where(field, isLessThan: value));
       case WhereOperations.isLessThanOrEqualTo:
-        return QueryEntityImpl(ref: currentCollection.where(field, isLessThanOrEqualTo: value));
+        return QueryEntityImpl(ref: ref.where(field, isLessThanOrEqualTo: value));
       case WhereOperations.isGreaterThan:
-        return QueryEntityImpl(ref: currentCollection.where(field, isGreaterThan: value));
+        return QueryEntityImpl(ref: ref.where(field, isGreaterThan: value));
       case WhereOperations.isGreaterThanOrEqualTo:
-        return QueryEntityImpl(ref: currentCollection.where(field, isGreaterThanOrEqualTo: value));
+        return QueryEntityImpl(ref: ref.where(field, isGreaterThanOrEqualTo: value));
       case WhereOperations.arrayContains:
-        return QueryEntityImpl(ref: currentCollection.where(field, arrayContains: value));
+        return QueryEntityImpl(ref: ref.where(field, arrayContains: value));
       case WhereOperations.arrayContainsAny:
-        return QueryEntityImpl(ref: currentCollection.where(field, arrayContainsAny: value));
+        return QueryEntityImpl(ref: ref.where(field, arrayContainsAny: value));
       case WhereOperations.whereIn:
-        return QueryEntityImpl(ref: currentCollection.where(field, whereIn: value));
+        return QueryEntityImpl(ref: ref.where(field, whereIn: value));
       case WhereOperations.whereNotIn:
-        return QueryEntityImpl(ref: currentCollection.where(field, whereNotIn: value));
+        return QueryEntityImpl(ref: ref.where(field, whereNotIn: value));
       case WhereOperations.isNull:
-        return QueryEntityImpl(ref: currentCollection.where(field, isNull: value));
+        return QueryEntityImpl(ref: ref.where(field, isNull: value));
       default:
         throw Exception('Unknown operation');
     }
   }
 
-  CollectionReference _getCollection(Collections collection) {
+  CollectionReference _getCollection(Collections collection, {bool withConverter = true}) {
     switch (collection) {
       case Collections.ad:
-        return FirebaseFirestore.instance.collection('ad').withConverter<AdEntity>(
-              fromFirestore: (snapshots, _) => AdEntityImpl.fromJson(snapshots.data()!),
-              toFirestore: (ad, _) => (ad as AdEntityImpl).toJson(),
-            );
+        if (withConverter) {
+          return FirebaseFirestore.instance.collection('ad').withConverter<AdEntity>(
+                fromFirestore: (snapshots, _) => AdEntityImpl.fromJson(snapshots.data()!),
+                toFirestore: (ad, _) => (ad as AdEntityImpl).toJson(),
+              );
+        }
+        return FirebaseFirestore.instance.collection('ad');
       case Collections.accounts:
-        return FirebaseFirestore.instance.collection('accounts').withConverter<AccountEntity>(
-              fromFirestore: (snapshots, _) => AccountEntityImpl.fromJson(snapshots.data()!),
-              toFirestore: (ad, _) => (ad as AccountEntityImpl).toJson(),
-            );
+        if (withConverter) {
+          return FirebaseFirestore.instance.collection('accounts').withConverter<AccountEntity>(
+                fromFirestore: (snapshots, _) => AccountEntityImpl.fromJson(snapshots.data()!),
+                toFirestore: (account, _) => (account as AccountEntityImpl).toJson(),
+              );
+        }
+        return FirebaseFirestore.instance.collection('accounts');
       case Collections.properties:
         return FirebaseFirestore.instance.collection('properties');
     }

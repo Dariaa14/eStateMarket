@@ -3,9 +3,12 @@ import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/property_entity.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:domain/entities/wrappers/document_reference_entity.dart';
+
+import 'wrappers/document_reference_entity_impl.dart';
 
 class AdEntityImpl implements AdEntity {
-  DocumentReference<Map<String, dynamic>>? _propertyReference;
+  DocumentReferenceEntity? _propertyReference;
 
   @override
   PropertyEntity? property;
@@ -36,7 +39,7 @@ class AdEntityImpl implements AdEntity {
       this.property,
       required this.listingType,
       required this.dateOfAd,
-      required DocumentReference<Map<String, dynamic>>? propertyReference})
+      required DocumentReferenceEntity? propertyReference})
       : _propertyReference = propertyReference;
 
   Map<String, dynamic> toJson() {
@@ -45,7 +48,7 @@ class AdEntityImpl implements AdEntity {
       'adCategory': adCategory.index,
       'images': imagesUrls,
       'description': description,
-      'property': _propertyReference,
+      'property': (_propertyReference as DocumentReferenceEntityImpl).ref,
       'listingType': listingType.index,
       'dateOfAd': Timestamp.fromDate(dateOfAd),
     };
@@ -63,15 +66,17 @@ class AdEntityImpl implements AdEntity {
       description: json['description'] as String,
       listingType: ListingType.values[json['listingType'] as int],
       dateOfAd: (json['dateOfAd'] as Timestamp).toDate(),
-      propertyReference:
-          (json.containsKey('property')) ? json['property'] as DocumentReference<Map<String, dynamic>> : null,
+      propertyReference: (json.containsKey('property'))
+          ? DocumentReferenceEntityImpl(ref: json['property'] as DocumentReference<Map<String, dynamic>>)
+          : null,
     );
   }
 
   @override
   Future<void> setProperty() async {
     if (_propertyReference == null) return;
-    PropertyEntity? property = await PropertyEntityImpl.getPropertyFromDocument(_propertyReference!);
+    PropertyEntity? property = await PropertyEntityImpl.getPropertyFromDocument(
+        (_propertyReference! as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>);
     this.property = property;
   }
 }
