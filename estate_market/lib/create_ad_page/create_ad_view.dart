@@ -262,12 +262,6 @@ class CreateAdView extends StatelessWidget {
                             surface: _surfaceController.text,
                             price: _priceController.text,
                             constructionYear: _constructionYearController.text));
-
-                        _titleController.clear();
-                        _descriptionController.clear();
-                        _surfaceController.clear();
-                        _priceController.clear();
-                        _constructionYearController.clear();
                       },
                       child: Text(
                         AppLocalizations.of(context)!.postAd,

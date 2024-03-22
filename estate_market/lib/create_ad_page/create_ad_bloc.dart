@@ -71,7 +71,10 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   }
 
   _insertInDatabaseEventHandler(InsertInDatabaseEvent event, Emitter<CreateAdState> emit) async {
-    if (state.emptyFields.contains(CreateAdFields.title) || state.emptyFields.contains(CreateAdFields.description)) {
+    if (state.emptyFields.contains(CreateAdFields.title) ||
+        state.emptyFields.contains(CreateAdFields.description) ||
+        state.emptyFields.contains(CreateAdFields.surface) ||
+        state.emptyFields.contains(CreateAdFields.price)) {
       emit(state.copyWith(showErrors: true));
       return;
     }
