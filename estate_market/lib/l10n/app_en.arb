@@ -41,9 +41,14 @@
         "description": "Error in case the email is invalid when registering"
     },
 
-    "invalidPassword": "The provided password is invalid. It must be at least 8 characters long.",
-    "@invalidPassword": {
-        "description": "Error in case the password is invalid when registering"
+    "passwordTooWeak": "The provided password is too weak.",
+    "@passwordTooWeak": {
+        "description": "Error in case the password is too weak when registering"
+    },
+
+    "passwordTooShort": "The provided password is too short. It must be at least 8 characters long.",
+    "@passwordTooShort": {
+        "description": "Error in case the password is too short when registering"
     },
 
     "invalidCredential": "Invalid email or password. Please check your credentials and try again.",

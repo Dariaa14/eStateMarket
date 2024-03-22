@@ -4,7 +4,9 @@ class EmailAlreadyInUse extends RegisterError {}
 
 class InvalidEmail extends RegisterError {}
 
-class InvalidPassword extends RegisterError {}
+class PasswordTooWeak extends RegisterError {}
+
+class PasswordTooShort extends RegisterError {}
 
 class InvalidCredential extends RegisterError {}
 
