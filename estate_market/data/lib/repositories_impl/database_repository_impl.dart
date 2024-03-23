@@ -51,6 +51,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
     required AdCategory category,
     required String description,
     required DocumentReferenceEntity property,
+    required DocumentReferenceEntity account,
     required ListingType listingType,
     required List<String> images,
   }) async {
@@ -61,9 +62,10 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         description: description,
         imagesUrls: images,
         propertyReference: property,
+        accountReference: account,
         listingType: listingType,
         dateOfAd: DateTime.now());
-    await ad.setProperty();
+    await ad.setReferences();
     await ads.add((ad as AdEntityImpl).toJson());
   }
 

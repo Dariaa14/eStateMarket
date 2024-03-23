@@ -71,6 +71,7 @@ abstract class DatabaseRepository {
     required AdCategory category,
     required String description,
     required DocumentReferenceEntity property,
+    required DocumentReferenceEntity account,
     required ListingType listingType,
     required List<String> images,
   });

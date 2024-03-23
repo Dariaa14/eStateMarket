@@ -53,7 +53,8 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
       final failure = (result as Left).value;
       emit(state.copyWith(failure: failure));
     } else {
-      emit(state.copyWithFailureNull());
+      emit(state.copyWith(wasLoginSuccessful: true));
+      // emit(state.copyWithFailureNull());
     }
   }
 
@@ -63,7 +64,7 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
       final failure = (result as Left).value;
       emit(state.copyWith(failure: failure));
     } else {
-      emit(state.copyWithFailureNull());
+      emit(state.copyWith(wasLoginSuccessful: true));
     }
   }
 }

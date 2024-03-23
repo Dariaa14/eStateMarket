@@ -30,7 +30,9 @@ void diRepositories() {
 
 void diUseCases() {
   sl.registerLazySingleton<DatabaseUseCase>(() => DatabaseUseCase(
-      databaseRepository: sl.get<DatabaseRepository>(), imageUploadRepository: sl.get<ImageUploadRepository>()));
+      databaseRepository: sl.get<DatabaseRepository>(),
+      imageUploadRepository: sl.get<ImageUploadRepository>(),
+      registerService: sl.get<RegisterService>()));
   sl.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(
       registerRepository: sl.get<RegisterRepository>(),
       registerService: sl.get<RegisterService>(),

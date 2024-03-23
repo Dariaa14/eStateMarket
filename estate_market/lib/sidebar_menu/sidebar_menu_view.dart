@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../main_page/main_page_bloc.dart';
+
+//TODO: Implement BlocProviders
 class SidebarMenu extends StatelessWidget {
   const SidebarMenu({
     super.key,
@@ -31,8 +34,15 @@ class SidebarMenu extends StatelessWidget {
             ListTile(
               leading: const Icon(CupertinoIcons.add),
               title: Text(AppLocalizations.of(context)!.addAdd),
-              onTap: () {
-                Navigator.pushNamed(context, RouteNames.createAdPage);
+              onTap: () async {
+                final mainPageBloc = MainPageBloc();
+                mainPageBloc.isUserLoggedIn().then((value) {
+                  if (value) {
+                    Navigator.pushNamed(context, RouteNames.createAdPage);
+                  } else {
+                    print("User is not logged in");
+                  }
+                });
               },
             ),
             ListTile(

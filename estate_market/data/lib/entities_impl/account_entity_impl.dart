@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:domain/entities/account_entity.dart';
 
 import '../utils/encrypt.dart';
@@ -38,6 +39,11 @@ class AccountEntityImpl implements AccountEntity {
       phoneNumber: json['phoneNumber'] as String,
       sellerType: SellerType.values[json['sellerType'] as int],
     );
+  }
+
+  static Future<AccountEntity?> getAccountFromDocument(DocumentReference<Map<String, dynamic>> document) async {
+    final account = await document.get();
+    return AccountEntityImpl.fromJson(account.data()!);
   }
 
   @override

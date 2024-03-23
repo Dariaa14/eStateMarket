@@ -1,4 +1,6 @@
+import 'package:data/entities_impl/account_entity_impl.dart';
 import 'package:data/entities_impl/property_entity_impl.dart';
+import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/property_entity.dart';
 
@@ -9,9 +11,13 @@ import 'wrappers/document_reference_entity_impl.dart';
 
 class AdEntityImpl implements AdEntity {
   DocumentReferenceEntity? _propertyReference;
+  DocumentReferenceEntity? _accountReference;
 
   @override
   PropertyEntity? property;
+
+  @override
+  AccountEntity? account;
 
   @override
   AdCategory adCategory;
@@ -37,10 +43,13 @@ class AdEntityImpl implements AdEntity {
       required this.imagesUrls,
       required this.description,
       this.property,
+      this.account,
       required this.listingType,
       required this.dateOfAd,
-      required DocumentReferenceEntity? propertyReference})
-      : _propertyReference = propertyReference;
+      required DocumentReferenceEntity? propertyReference,
+      required DocumentReferenceEntity? accountReference})
+      : _propertyReference = propertyReference,
+        _accountReference = accountReference;
 
   Map<String, dynamic> toJson() {
     return {
@@ -49,6 +58,7 @@ class AdEntityImpl implements AdEntity {
       'images': imagesUrls,
       'description': description,
       'property': (_propertyReference as DocumentReferenceEntityImpl).ref,
+      'account': (_accountReference as DocumentReferenceEntityImpl).ref,
       'listingType': listingType.index,
       'dateOfAd': Timestamp.fromDate(dateOfAd),
     };
@@ -69,14 +79,22 @@ class AdEntityImpl implements AdEntity {
       propertyReference: (json.containsKey('property'))
           ? DocumentReferenceEntityImpl(ref: json['property'] as DocumentReference<Map<String, dynamic>>)
           : null,
+      accountReference: (json.containsKey('account'))
+          ? DocumentReferenceEntityImpl(ref: json['account'] as DocumentReference<Map<String, dynamic>>)
+          : null,
     );
   }
 
   @override
-  Future<void> setProperty() async {
+  Future<void> setReferences() async {
     if (_propertyReference == null) return;
     PropertyEntity? property = await PropertyEntityImpl.getPropertyFromDocument(
         (_propertyReference! as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>);
     this.property = property;
+
+    if (_accountReference == null) return;
+    AccountEntity? account = await AccountEntityImpl.getAccountFromDocument(
+        (_accountReference! as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>);
+    this.account = account;
   }
 }

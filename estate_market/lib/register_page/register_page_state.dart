@@ -8,6 +8,8 @@ class RegisterPageState extends Equatable {
   final RegisterPageType registerPageType;
   final PasswordStrength passwordStrenght;
 
+  final bool wasLoginSuccessful;
+
   final Failure? failure;
 
   const RegisterPageState(
@@ -15,6 +17,7 @@ class RegisterPageState extends Equatable {
       this.isStayConnectedChecked = false,
       this.registerPageType = RegisterPageType.login,
       this.passwordStrenght = PasswordStrength.none,
+      this.wasLoginSuccessful = false,
       this.failure});
 
   RegisterPageState copyWith({
@@ -22,6 +25,7 @@ class RegisterPageState extends Equatable {
     bool? isStayConnectedChecked,
     RegisterPageType? registerPageType,
     PasswordStrength? passwordStrenght,
+    bool? wasLoginSuccessful,
     Failure? failure,
   }) =>
       RegisterPageState(
@@ -29,6 +33,7 @@ class RegisterPageState extends Equatable {
         isStayConnectedChecked: isStayConnectedChecked ?? this.isStayConnectedChecked,
         registerPageType: registerPageType ?? this.registerPageType,
         passwordStrenght: passwordStrenght ?? this.passwordStrenght,
+        wasLoginSuccessful: wasLoginSuccessful ?? this.wasLoginSuccessful,
         failure: failure ?? this.failure,
       );
 
@@ -37,8 +42,10 @@ class RegisterPageState extends Equatable {
       isStayConnectedChecked: isStayConnectedChecked,
       registerPageType: registerPageType,
       passwordStrenght: passwordStrenght,
+      wasLoginSuccessful: wasLoginSuccessful,
       failure: null);
 
   @override
-  List<Object?> get props => [isPasswordObscured, isStayConnectedChecked, registerPageType, passwordStrenght, failure];
+  List<Object?> get props =>
+      [isPasswordObscured, isStayConnectedChecked, registerPageType, passwordStrenght, failure, wasLoginSuccessful];
 }

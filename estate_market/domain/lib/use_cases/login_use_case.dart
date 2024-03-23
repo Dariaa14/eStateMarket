@@ -22,6 +22,11 @@ class LoginUseCase {
     if (token == null) {
       return Left(NetworkRequestFailed());
     }
+    await _registerService.saveToken(token);
     return Right(token);
+  }
+
+  Future<bool> isUserLoggedIn() async {
+    return await _registerService.getCurrentUserEmail() != null;
   }
 }
