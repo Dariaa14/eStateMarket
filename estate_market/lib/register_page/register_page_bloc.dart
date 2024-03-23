@@ -48,7 +48,7 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
   }
 
   _createAccountEventHandler(CreateAccountEvent event, Emitter<RegisterPageState> emit) async {
-    final result = await _registerUseCase.addAccount({'email': event.email.trim(), 'password': event.password.trim()});
+    final result = await _registerUseCase.addAccount(event.email.trim(), event.password.trim());
     if (result is Left) {
       final failure = (result as Left).value;
       emit(state.copyWith(failure: failure));

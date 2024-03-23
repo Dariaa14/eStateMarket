@@ -31,10 +31,7 @@ class RegisterUseCase {
   //   return await _registerRepository.signIn(email, password);
   // }
 
-  Future<Either<Failure, bool>> addAccount(Map accountData) async {
-    final String email = accountData['email'];
-    final String password = accountData['password'];
-
+  Future<Either<Failure, bool>> addAccount(String email, String password) async {
     final isEmailValid = await _registerRepository.isEmailValid(email);
     final isPasswordValid = _registerRepository.isPasswordValid(password);
     if (isEmailValid.isLeft()) {
@@ -46,7 +43,7 @@ class RegisterUseCase {
 
     await _databaseRepository.insertAccountEntity(
         email: email, password: password, phoneNumber: '', sellerType: SellerType.none);
-    await _registerService.addAccount(accountData);
+    await _registerService.login(email, password);
 
     return Right(true);
   }

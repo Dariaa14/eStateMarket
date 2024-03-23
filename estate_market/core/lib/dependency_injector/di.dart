@@ -35,5 +35,6 @@ void diUseCases() {
       registerRepository: sl.get<RegisterRepository>(),
       registerService: sl.get<RegisterService>(),
       databaseRepository: sl.get<DatabaseRepository>()));
-  sl.registerLazySingleton<LoginUseCase>(() => LoginUseCase(loginRepository: sl.get<LoginRepository>()));
+  sl.registerLazySingleton<LoginUseCase>(
+      () => LoginUseCase(loginRepository: sl.get<LoginRepository>(), registerService: sl.get<RegisterService>()));
 }

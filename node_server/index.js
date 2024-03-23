@@ -1,28 +1,27 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+
+const jwtSecret = process.env.JWT_SECRET;
+
+if (!jwtSecret) {
+    console.error('JWT secret key is not provided in environment variables.');
+    process.exit(1);
+}
 
 const app = express();
+const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.listen(2000, () => {
-    console.log('Server is running on port 2000');
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    const token = jwt.sign({ email }, jwtSecret, { expiresIn: '1h' });
+
+    res.json({ token });
 });
 
-
-const registerData = [];
-app.post('/api/register_account', (req, res) => {
-    console.log('Registering account');
-
-    const data = {
-        'email': req.body.email,
-        'password': req.body.password,
-        'phoneNumber': req.body.phoneNumber,
-        'sellerType': req.body.sellerType
-    };
-
-    registerData.push(data);
-    console.log('data', registerData);
-
-    res.status(200).send({ 'message': 'Account created successfully', 'status_code': 200, 'account': data });
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });

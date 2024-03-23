@@ -1,31 +1,30 @@
 import 'dart:convert';
 
-import 'package:data/entities_impl/account_entity_impl.dart';
-import 'package:domain/entities/account_entity.dart';
 import 'package:domain/services/register_service.dart';
 import 'package:http/http.dart' as http;
 
+import '../config.dart';
+
 class RegisterServiceImpl implements RegisterService {
   @override
-  Future<void> addAccount(Map accountData) async {
-    // AccountEntity account = AccountEntityImpl(
-    //     email: accountData['email'],
-    //     password: accountData['password'],
-    //     phoneNumber: '',
-    //     sellerType: SellerType.company);
+  Future<String?> login(String email, String password) async {
+    final Uri loginUri = Uri.parse('http://$nodeServer/login');
+    try {
+      final response = await http.post(
+        loginUri,
+        body: {'email': email, 'password': password},
+      );
 
-    // var url = Uri.parse('http://192.168.1.10:2000/api/register_account');
-
-    // try {
-    //   final res = await http.post(url, body: accountData);
-    //   if (res.statusCode == 200) {
-    //     var decodedData = jsonDecode(res.body.toString());
-    //     print(decodedData);
-    //   } else {
-    //     print('Failed to add account');
-    //   }
-    // } catch (e) {
-    //   print(e.toString());
-    // }
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseData = json.decode(response.body);
+        String token = responseData['token'];
+        return token;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }

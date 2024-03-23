@@ -1,3 +1,3 @@
 abstract class RegisterService {
-  Future<void> addAccount(Map accountData);
+  Future<String?> login(String email, String password);
 }
