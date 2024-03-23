@@ -8,12 +8,10 @@ class PasswordTooWeak extends RegisterError {}
 
 class PasswordTooShort extends RegisterError {}
 
-class InvalidCredential extends RegisterError {}
-
 class MissingEmail extends RegisterError {}
 
 class MissingPassword extends RegisterError {}
 
 class NetworkRequestFailed extends RegisterError {}
 
-class UnknownError extends RegisterError {}
+class InvalidCredential extends LoginError {}

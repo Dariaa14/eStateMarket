@@ -27,9 +27,9 @@ class RegisterUseCase {
   //   return await _registerRepository.createAccount(email, password);
   // }
 
-  Future<Either<Failure, String?>> signIn(String email, String password) async {
-    return await _registerRepository.signIn(email, password);
-  }
+  // Future<Either<Failure, String?>> signIn(String email, String password) async {
+  //   return await _registerRepository.signIn(email, password);
+  // }
 
   Future<Either<Failure, bool>> addAccount(Map accountData) async {
     final String email = accountData['email'];

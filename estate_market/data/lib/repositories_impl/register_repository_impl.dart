@@ -54,66 +54,66 @@ class RegisterRepositoryImpl implements RegisterRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, String?>> createAccount(String email, String password) async {
-    Completer<Either<Failure, String?>> completer = Completer<Either<Failure, String?>>();
-    try {
-      final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      final String? token = await user.user!.getIdToken();
-      completer.complete(Right(token));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        completer.complete(Left(PasswordTooWeak()));
-      } else if (e.code == 'email-already-in-use') {
-        completer.complete(Left(EmailAlreadyInUse()));
-      } else if (e.code == 'missing-password') {
-        completer.complete(Left(MissingPassword()));
-      } else if (e.code == 'invalid-email') {
-        completer.complete(Left(InvalidEmail()));
-      } else if (e.code == 'missing-email') {
-        completer.complete(Left(MissingEmail()));
-      } else if (e.code == 'network-request-failed') {
-        completer.complete(Left(NetworkRequestFailed()));
-      } else {
-        print('REGISTER ERROR: $e');
-        completer.complete(Left(UnknownError()));
-      }
-    } catch (e) {
-      print(e);
-    }
-    return completer.future;
-  }
+  // @override
+  // Future<Either<Failure, String?>> createAccount(String email, String password) async {
+  //   Completer<Either<Failure, String?>> completer = Completer<Either<Failure, String?>>();
+  //   try {
+  //     final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //     final String? token = await user.user!.getIdToken();
+  //     completer.complete(Right(token));
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'weak-password') {
+  //       completer.complete(Left(PasswordTooWeak()));
+  //     } else if (e.code == 'email-already-in-use') {
+  //       completer.complete(Left(EmailAlreadyInUse()));
+  //     } else if (e.code == 'missing-password') {
+  //       completer.complete(Left(MissingPassword()));
+  //     } else if (e.code == 'invalid-email') {
+  //       completer.complete(Left(InvalidEmail()));
+  //     } else if (e.code == 'missing-email') {
+  //       completer.complete(Left(MissingEmail()));
+  //     } else if (e.code == 'network-request-failed') {
+  //       completer.complete(Left(NetworkRequestFailed()));
+  //     } else {
+  //       print('REGISTER ERROR: $e');
+  //       completer.complete(Left(UnknownError()));
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   return completer.future;
+  // }
 
-  @override
-  Future<Either<Failure, String?>> signIn(String email, String password) async {
-    Completer<Either<Failure, String?>> completer = Completer<Either<Failure, String?>>();
-    try {
-      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-      final String? token = await user.user!.getIdToken();
-      completer.complete(Right(token));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'missing-password') {
-        completer.complete(Left(MissingPassword()));
-      } else if (e.code == 'invalid-email') {
-        completer.complete(Left(InvalidEmail()));
-      } else if (e.code == 'missing-email') {
-        completer.complete(Left(MissingEmail()));
-      } else if (e.code == 'network-request-failed') {
-        completer.complete(Left(NetworkRequestFailed()));
-      } else if (e.code == 'invalid-credential') {
-        completer.complete(Left(InvalidCredential()));
-      } else if (e.code == 'missing-password') {
-        completer.complete(Left(MissingPassword()));
-      } else {
-        print('REGISTER ERROR: $e');
-        completer.complete(Left(UnknownError()));
-      }
-    }
-    return completer.future;
-  }
+  // @override
+  // Future<Either<Failure, String?>> signIn(String email, String password) async {
+  //   Completer<Either<Failure, String?>> completer = Completer<Either<Failure, String?>>();
+  //   try {
+  //     final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+  //     final String? token = await user.user!.getIdToken();
+  //     completer.complete(Right(token));
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'missing-password') {
+  //       completer.complete(Left(MissingPassword()));
+  //     } else if (e.code == 'invalid-email') {
+  //       completer.complete(Left(InvalidEmail()));
+  //     } else if (e.code == 'missing-email') {
+  //       completer.complete(Left(MissingEmail()));
+  //     } else if (e.code == 'network-request-failed') {
+  //       completer.complete(Left(NetworkRequestFailed()));
+  //     } else if (e.code == 'invalid-credential') {
+  //       completer.complete(Left(InvalidCredential()));
+  //     } else if (e.code == 'missing-password') {
+  //       completer.complete(Left(MissingPassword()));
+  //     } else {
+  //       print('REGISTER ERROR: $e');
+  //       completer.complete(Left(UnknownError()));
+  //     }
+  //   }
+  //   return completer.future;
+  // }
 
   @override
   Future<Either<Failure, bool>> isEmailValid(String email) async {
