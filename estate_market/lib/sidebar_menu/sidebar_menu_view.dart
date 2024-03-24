@@ -56,7 +56,12 @@ class SidebarMenu extends StatelessWidget {
               leading: const Icon(Icons.account_circle),
               title: Text(AppLocalizations.of(context)!.profile),
               onTap: () {
-                Navigator.pushNamed(context, RouteNames.registerPage);
+                final mainPageBloc = MainPageBloc();
+                if (mainPageBloc.isUserLoggedIn()) {
+                  Navigator.pushNamed(context, RouteNames.profilePage);
+                } else {
+                  Navigator.pushNamed(context, RouteNames.registerPage);
+                }
               },
             ),
             ListTile(

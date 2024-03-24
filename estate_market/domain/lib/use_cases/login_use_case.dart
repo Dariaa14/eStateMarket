@@ -26,6 +26,10 @@ class LoginUseCase {
     return Right(token);
   }
 
+  Future<void> logout() async {
+    await _registerService.logout();
+  }
+
   bool isUserLoggedIn() {
     return _registerService.getCurrentUserEmail() != null;
   }

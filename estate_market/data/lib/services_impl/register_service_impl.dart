@@ -71,4 +71,10 @@ class RegisterServiceImpl implements RegisterService {
     String? token = await secureStorage.read(key: 'token');
     _currentToken = token;
   }
+
+  @override
+  Future<void> logout() async {
+    _currentToken = null;
+    await secureStorage.delete(key: 'token');
+  }
 }
