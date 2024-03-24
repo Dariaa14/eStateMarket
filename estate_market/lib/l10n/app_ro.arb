@@ -93,5 +93,10 @@
     "exteriorParking": "Parcare exterioară",
     "distribution": "Distribuție",
     "production": "Producție",
-    "addImages": "Adaugă imagini"
+    "addImages": "Adaugă imagini",
+    "individual": "Persoană fizică",
+    "company": "Firmă",
+    "save": "Salvează",
+    "phoneNumber": "Număr de telefon: ",
+    "typeOfSeller": "Tip de vânzător: "
 }

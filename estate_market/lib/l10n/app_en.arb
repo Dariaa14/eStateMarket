@@ -469,5 +469,30 @@
     "addImages": "Add images",
     "@addImages": {
         "description": "Add images"
+    },
+
+    "individual": "Individual",
+    "@individual": {
+        "description": "Individual"
+    },
+
+    "company": "Company",
+    "@company": {
+        "description": "Company"
+    },
+
+    "save": "Save",
+    "@save": {
+        "description": "Save"
+    },
+
+    "phoneNumber": "Phone number: ",
+    "@phoneNumber":{
+        "description": "Phone number"
+    },
+
+    "typeOfSeller": "Type of seller: ",
+    "@typeOfSeller":{
+        "description": "Type of seller"
     }
 }

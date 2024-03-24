@@ -1,3 +1,4 @@
+import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/profile_page/profile_page_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -33,17 +34,13 @@ class ProfilePageView extends StatelessWidget {
           ProfileListTile(
             icon: Icons.chat_rounded,
             title: 'Conversations',
-            onTap: () {
-              // Navigate to 'Conversations' page
-              // Add navigation logic here
-            },
+            onTap: () {},
           ),
           ProfileListTile(
             icon: Icons.edit,
             title: 'Edit Profile',
             onTap: () {
-              // Navigate to 'Edit Profile' page
-              // Add navigation logic here
+              Navigator.pushNamed(context, RouteNames.editProfilePage);
             },
           ),
           ProfileListTile(

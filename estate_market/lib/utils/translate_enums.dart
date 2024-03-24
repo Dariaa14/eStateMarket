@@ -1,3 +1,4 @@
+import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
@@ -101,5 +102,16 @@ String depositTypesTranslate(DepositType type, BuildContext context) {
       return AppLocalizations.of(context)!.distribution;
     case DepositType.production:
       return AppLocalizations.of(context)!.production;
+  }
+}
+
+String sellerTypeTranslate(SellerType type, BuildContext context) {
+  switch (type) {
+    case SellerType.individual:
+      return AppLocalizations.of(context)!.individual;
+    case SellerType.company:
+      return AppLocalizations.of(context)!.company;
+    default:
+      return '';
   }
 }
