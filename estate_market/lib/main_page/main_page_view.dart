@@ -76,7 +76,7 @@ class MainPageView extends StatelessWidget {
                           return const Text('Loading...');
                         }
                         return BlocBuilder<MainPageBloc, MainPageState>(
-                          bloc: bloc,
+                          bloc: bloc..add(InitMainPageEvent()),
                           builder: (context, state) {
                             return FutureBuilder<List<AdEntity>>(
                               future: bloc.getAdsTest(),

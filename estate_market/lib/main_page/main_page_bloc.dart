@@ -12,13 +12,21 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   final DatabaseUseCase _databaseUseCase = sl.get<DatabaseUseCase>();
   final LoginUseCase _loginUseCase = sl.get<LoginUseCase>();
 
-  MainPageBloc() : super(const MainPageState(ads: []));
+  MainPageBloc() : super(const MainPageState(ads: [])) {
+    on<InitMainPageEvent>(_initMainPageEventHandler);
+  }
+
+  _initMainPageEventHandler(InitMainPageEvent event, Emitter<MainPageState> emit) async {
+    await _loginUseCase.initializeCurrentToken();
+    // final ads = await _databaseUseCase.getAllAds();
+    // emit(state.copyWith(ads: ads));
+  }
 
   Future<List<AdEntity>> getAdsTest() async {
     return await _databaseUseCase.getAllAds();
   }
 
-  Future<bool> isUserLoggedIn() async {
-    return await _loginUseCase.isUserLoggedIn();
+  bool isUserLoggedIn() {
+    return _loginUseCase.isUserLoggedIn();
   }
 }

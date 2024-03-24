@@ -36,13 +36,11 @@ class SidebarMenu extends StatelessWidget {
               title: Text(AppLocalizations.of(context)!.addAdd),
               onTap: () async {
                 final mainPageBloc = MainPageBloc();
-                mainPageBloc.isUserLoggedIn().then((value) {
-                  if (value) {
-                    Navigator.pushNamed(context, RouteNames.createAdPage);
-                  } else {
-                    print("User is not logged in");
-                  }
-                });
+                if (mainPageBloc.isUserLoggedIn()) {
+                  Navigator.pushNamed(context, RouteNames.createAdPage);
+                } else {
+                  Navigator.pushNamed(context, RouteNames.registerPage);
+                }
               },
             ),
             ListTile(

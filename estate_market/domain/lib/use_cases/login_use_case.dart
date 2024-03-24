@@ -13,7 +13,7 @@ class LoginUseCase {
       : _loginRepository = loginRepository,
         _registerService = registerService;
 
-  Future<Either<Failure, String>> login(String email, String password) async {
+  Future<Either<Failure, String>> login(String email, String password, bool stayConnected) async {
     final account = await _loginRepository.login(email, password);
     if (account.isLeft()) {
       return Left((account as Left).value);
@@ -22,11 +22,15 @@ class LoginUseCase {
     if (token == null) {
       return Left(NetworkRequestFailed());
     }
-    await _registerService.saveToken(token);
+    await _registerService.saveToken(token, stayConnected);
     return Right(token);
   }
 
-  Future<bool> isUserLoggedIn() async {
-    return await _registerService.getCurrentUserEmail() != null;
+  bool isUserLoggedIn() {
+    return _registerService.getCurrentUserEmail() != null;
+  }
+
+  Future<void> initializeCurrentToken() async {
+    await _registerService.initializeCurrentToken();
   }
 }

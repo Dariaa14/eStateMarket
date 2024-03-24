@@ -9,6 +9,7 @@ class RegisterPageState extends Equatable {
   final PasswordStrength passwordStrenght;
 
   final bool wasLoginSuccessful;
+  final bool isLoading;
 
   final Failure? failure;
 
@@ -18,6 +19,7 @@ class RegisterPageState extends Equatable {
       this.registerPageType = RegisterPageType.login,
       this.passwordStrenght = PasswordStrength.none,
       this.wasLoginSuccessful = false,
+      this.isLoading = false,
       this.failure});
 
   RegisterPageState copyWith({
@@ -26,6 +28,7 @@ class RegisterPageState extends Equatable {
     RegisterPageType? registerPageType,
     PasswordStrength? passwordStrenght,
     bool? wasLoginSuccessful,
+    bool? isLoading,
     Failure? failure,
   }) =>
       RegisterPageState(
@@ -34,6 +37,7 @@ class RegisterPageState extends Equatable {
         registerPageType: registerPageType ?? this.registerPageType,
         passwordStrenght: passwordStrenght ?? this.passwordStrenght,
         wasLoginSuccessful: wasLoginSuccessful ?? this.wasLoginSuccessful,
+        isLoading: isLoading ?? this.isLoading,
         failure: failure ?? this.failure,
       );
 
@@ -43,9 +47,17 @@ class RegisterPageState extends Equatable {
       registerPageType: registerPageType,
       passwordStrenght: passwordStrenght,
       wasLoginSuccessful: wasLoginSuccessful,
+      isLoading: isLoading,
       failure: null);
 
   @override
-  List<Object?> get props =>
-      [isPasswordObscured, isStayConnectedChecked, registerPageType, passwordStrenght, failure, wasLoginSuccessful];
+  List<Object?> get props => [
+        isPasswordObscured,
+        isStayConnectedChecked,
+        registerPageType,
+        passwordStrenght,
+        failure,
+        wasLoginSuccessful,
+        isLoading
+      ];
 }

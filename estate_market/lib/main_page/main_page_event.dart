@@ -1,8 +1,5 @@
 part of 'main_page_bloc.dart';
 
-abstract class MainPageEvent extends Equatable {
-  const MainPageEvent();
+abstract class MainPageEvent {}
 
-  @override
-  List<Object> get props => [];
-}
+class InitMainPageEvent extends MainPageEvent {}

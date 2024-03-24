@@ -45,26 +45,29 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
 
   _changeRegisterTypeEventHandler(ChangeRegisterTypeEvent event, Emitter<RegisterPageState> emit) {
     emit(state.copyWith(registerPageType: event.type, passwordStrenght: PasswordStrength.none));
+    emit(state.copyWithFailureNull());
   }
 
   _createAccountEventHandler(CreateAccountEvent event, Emitter<RegisterPageState> emit) async {
+    emit(state.copyWith(isLoading: true));
     final result = await _registerUseCase.addAccount(event.email.trim(), event.password.trim());
     if (result is Left) {
       final failure = (result as Left).value;
-      emit(state.copyWith(failure: failure));
+      emit(state.copyWith(failure: failure, isLoading: false));
     } else {
-      emit(state.copyWith(wasLoginSuccessful: true));
-      // emit(state.copyWithFailureNull());
+      emit(state.copyWith(isLoading: false, registerPageType: RegisterPageType.login));
+      emit(state.copyWithFailureNull());
     }
   }
 
   _loginEventHandler(LoginEvent event, Emitter<RegisterPageState> emit) async {
-    final result = await _loginUseCase.login(event.email.trim(), event.password.trim());
+    emit(state.copyWith(isLoading: true));
+    final result = await _loginUseCase.login(event.email.trim(), event.password.trim(), state.isStayConnectedChecked);
     if (result is Left) {
       final failure = (result as Left).value;
-      emit(state.copyWith(failure: failure));
+      emit(state.copyWith(failure: failure, isLoading: false));
     } else {
-      emit(state.copyWith(wasLoginSuccessful: true));
+      emit(state.copyWith(wasLoginSuccessful: true, isLoading: false));
     }
   }
 }

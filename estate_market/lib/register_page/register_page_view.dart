@@ -219,9 +219,14 @@ class RegisterPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                             ),
-                            child: Text((state.registerPageType == RegisterPageType.login)
-                                ? AppLocalizations.of(context)!.login
-                                : AppLocalizations.of(context)!.signup),
+                            child: (state.isLoading)
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary),
+                                  )
+                                : Text((state.registerPageType == RegisterPageType.login)
+                                    ? AppLocalizations.of(context)!.login
+                                    : AppLocalizations.of(context)!.signup),
                           ),
 
                           Text(
