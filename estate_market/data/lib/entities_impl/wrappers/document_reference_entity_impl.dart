@@ -5,4 +5,9 @@ class DocumentReferenceEntityImpl implements DocumentReferenceEntity {
   DocumentReference ref;
 
   DocumentReferenceEntityImpl({required this.ref});
+
+  @override
+  Future<void> set(Map<String, Object?> json) async {
+    await ref.set(json);
+  }
 }

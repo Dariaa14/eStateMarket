@@ -4,13 +4,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateAdTextfield extends StatelessWidget {
   final TextEditingController? controller;
-  final String hintText;
+  final String? hintText;
   final TextInputType? keyboardType;
   final void Function(String)? onChanged;
   final bool showPrefix;
 
   const CreateAdTextfield(
-      {super.key, this.controller, required this.hintText, this.keyboardType, this.onChanged, this.showPrefix = false});
+      {super.key, this.controller, this.hintText, this.keyboardType, this.onChanged, this.showPrefix = false});
 
   @override
   Widget build(BuildContext context) {

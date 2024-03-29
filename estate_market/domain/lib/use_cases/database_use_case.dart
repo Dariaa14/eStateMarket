@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/entities/garage_entity.dart';
+import 'package:domain/repositories/account_repository.dart';
 import 'package:domain/repositories/database_repository.dart';
 import 'package:domain/repositories/image_upload_repository.dart';
-import 'package:domain/services/register_service.dart';
 
 import '../entities/account_entity.dart';
 import '../entities/ad_entity.dart';
@@ -16,15 +16,15 @@ import '../errors/failure.dart';
 class DatabaseUseCase {
   final DatabaseRepository _databaseRepository;
   final ImageUploadRepository _imageUploadRepository;
-  final RegisterService _registerService;
+  final AccountRepository _accountRepository;
 
   DatabaseUseCase(
       {required DatabaseRepository databaseRepository,
       required ImageUploadRepository imageUploadRepository,
-      required RegisterService registerService})
+      required AccountRepository accountRepository})
       : _databaseRepository = databaseRepository,
         _imageUploadRepository = imageUploadRepository,
-        _registerService = registerService;
+        _accountRepository = accountRepository;
 
   Future<List<AdEntity>> getAllAds() async {
     final resp = await _databaseRepository.getAllAds();
@@ -146,7 +146,7 @@ class DatabaseUseCase {
     required ListingType listingType,
     required List<String> images,
   }) async {
-    final currentUserRef = await _registerService.getCurrentUserDocumentReference();
+    final currentUserRef = await _accountRepository.getCurrentUserDocumentReference();
     if (currentUserRef == null) throw Exception('User not found');
 
     await _databaseRepository.insertAdEntity(

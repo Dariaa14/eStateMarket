@@ -32,6 +32,12 @@ class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
   }
 
   @override
+  Future<List<DocumentReferenceEntity>> getDocuments<T>() async {
+    final QuerySnapshotEntity items = QuerySnapshotEntityImpl(ref: await ref.get());
+    return items.transformToDocumentReferenceList();
+  }
+
+  @override
   QueryEntity where<T>(String field, WhereOperations operation, dynamic value) {
     switch (operation) {
       case WhereOperations.isEqualTo:

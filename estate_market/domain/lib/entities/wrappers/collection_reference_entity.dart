@@ -20,5 +20,6 @@ enum WhereOperations {
 abstract class CollectionReferenceEntity {
   Future<DocumentReferenceEntity> add(Map<String, dynamic> map);
   Future<List<T>> get<T>();
+  Future<List<DocumentReferenceEntity>> getDocuments<T>();
   QueryEntity where<T>(String field, WhereOperations operation, dynamic value);
 }

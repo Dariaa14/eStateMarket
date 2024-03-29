@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/ad_entity.dart';
+import 'package:domain/use_cases/account_use_case.dart';
 import 'package:domain/use_cases/database_use_case.dart';
 import 'package:domain/use_cases/login_use_case.dart';
 import 'package:equatable/equatable.dart';
@@ -11,6 +12,7 @@ part 'main_page_state.dart';
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   final DatabaseUseCase _databaseUseCase = sl.get<DatabaseUseCase>();
   final LoginUseCase _loginUseCase = sl.get<LoginUseCase>();
+  final AccountUseCase _accountUseCase = sl.get<AccountUseCase>();
 
   MainPageBloc() : super(const MainPageState(ads: [])) {
     on<InitMainPageEvent>(_initMainPageEventHandler);
@@ -27,6 +29,6 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   }
 
   bool isUserLoggedIn() {
-    return _loginUseCase.isUserLoggedIn();
+    return _accountUseCase.isUserLoggedIn();
   }
 }
