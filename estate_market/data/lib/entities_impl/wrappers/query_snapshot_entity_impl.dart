@@ -16,7 +16,7 @@ class QuerySnapshotEntityImpl extends QuerySnapshotEntity {
     List<T> allItems = [];
     for (int index = 0; index < ref.size; index++) {
       T item = ref.docs[index].data() as T;
-      if (T is AdEntity) {
+      if (item is AdEntity) {
         await (item as AdEntityImpl).setReferences();
       }
       allItems.add(item);

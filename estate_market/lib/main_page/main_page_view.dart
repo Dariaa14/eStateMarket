@@ -65,6 +65,7 @@ class MainPageView extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
+                  // TODO: Replace StreamBuilder with something else
                   StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance.collection('ad').snapshots(),
                       builder: (context, snapshot) {

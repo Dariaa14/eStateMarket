@@ -18,7 +18,7 @@ class ResidenceWidgets extends StatelessWidget {
       builder: (context, state) {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Number of rooms text field
-          Text(AppLocalizations.of(context)!.numberOfRooms),
+          Text('${AppLocalizations.of(context)!.numberOfRooms}*'),
           CreateAdTextfield(
             hintText: AppLocalizations.of(context)!.numberOfRoomsHintText,
             keyboardType: TextInputType.number,
@@ -29,7 +29,7 @@ class ResidenceWidgets extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Number of bathrooms text field
-          Text(AppLocalizations.of(context)!.numberOfBathrooms),
+          Text('${AppLocalizations.of(context)!.numberOfBathrooms}*'),
           CreateAdTextfield(
             hintText: AppLocalizations.of(context)!.numberOfBathroomsHintText,
             keyboardType: TextInputType.number,
@@ -39,7 +39,7 @@ class ResidenceWidgets extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Furnishing level dropbox
-          Text(AppLocalizations.of(context)!.furnishingLevel),
+          Text('${AppLocalizations.of(context)!.furnishingLevel}*'),
           DropdownButton<FurnishingLevel>(
             value: state.furnishingLevel,
             items: [

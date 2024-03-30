@@ -112,6 +112,6 @@ String sellerTypeTranslate(SellerType type, BuildContext context) {
     case SellerType.company:
       return AppLocalizations.of(context)!.company;
     default:
-      return '';
+      return 'Unknown'; // TODO: translate
   }
 }

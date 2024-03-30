@@ -4,6 +4,8 @@ import 'package:domain/entities/ad_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../config/route_names.dart';
+
 class AdItem extends StatelessWidget {
   final AdEntity? ad;
 
@@ -14,7 +16,9 @@ class AdItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(RouteNames.adPage, arguments: ad);
+        },
         child: Container(
           height: 300,
           decoration: BoxDecoration(

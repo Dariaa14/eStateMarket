@@ -19,7 +19,7 @@ class TerrainWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Land use categories dropbox
-            Text(AppLocalizations.of(context)!.landUseCategory),
+            Text('${AppLocalizations.of(context)!.landUseCategory}*'),
             DropdownButton<LandUseCategories>(
                 value: state.landUseCategory,
                 items: [

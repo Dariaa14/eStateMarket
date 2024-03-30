@@ -20,7 +20,7 @@ class GarageWidgets extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Parking type dropbox
-            Text(AppLocalizations.of(context)!.parkingType),
+            Text('${AppLocalizations.of(context)!.parkingType}*'),
             DropdownButton<ParkingType>(
               value: state.parkingType,
               items: [
@@ -34,7 +34,7 @@ class GarageWidgets extends StatelessWidget {
             const SizedBox(height: 16.0),
 
             // Set capacity
-            Text(AppLocalizations.of(context)!.capacityOfGarage),
+            Text('${AppLocalizations.of(context)!.capacityOfGarage}*'),
             CreateAdTextfield(
               hintText: AppLocalizations.of(context)!.capacityOfGarageHintText,
               keyboardType: TextInputType.number,

@@ -69,7 +69,7 @@ class CreateAdView extends StatelessWidget {
 
                     // Write title textbox
                     Text(
-                      AppLocalizations.of(context)!.adTitle,
+                      '${AppLocalizations.of(context)!.adTitle}*',
                     ),
                     CreateAdTextfield(
                       hintText: AppLocalizations.of(context)!.adTitleHintText,
@@ -94,7 +94,7 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 16.0),
 
                     // Write description textbox
-                    Text(AppLocalizations.of(context)!.adDescription),
+                    Text('${AppLocalizations.of(context)!.adDescription}*'),
                     CreateAdTextfield(
                       hintText: AppLocalizations.of(context)!.adDescriptionHintText,
                       controller: _descriptionController,
@@ -181,7 +181,7 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 20.0),
 
                     // Surface textfield
-                    Text(AppLocalizations.of(context)!.surface),
+                    Text('${AppLocalizations.of(context)!.surface}*'),
                     CreateAdTextfield(
                       hintText: AppLocalizations.of(context)!.surfaceHintText,
                       controller: _surfaceController,
@@ -195,7 +195,7 @@ class CreateAdView extends StatelessWidget {
                     ),
 
                     // Price textfield
-                    Text(AppLocalizations.of(context)!.price),
+                    Text('${AppLocalizations.of(context)!.price}*'),
                     CreateAdTextfield(
                       hintText: AppLocalizations.of(context)!.priceHintText,
                       controller: _priceController,

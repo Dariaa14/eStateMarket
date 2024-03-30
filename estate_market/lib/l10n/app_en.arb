@@ -106,7 +106,7 @@
         "description": "Details about the ad"
     },
 
-    "adTitle": "Ad title*",
+    "adTitle": "Title",
     "@adTitle":{
         "description": "Ad title"
     },
@@ -121,7 +121,7 @@
         "description": "Category"
     },
 
-    "adDescription": "Ad description*",
+    "adDescription": "Description",
     "@adDescription":{
         "description": "Ad description"
     },
@@ -141,7 +141,7 @@
         "description": "Listing type"
     },
 
-    "landUseCategory": "Land use category*",
+    "landUseCategory": "Land use category",
     "@landUseCategory":{
         "description": "Land use category"
     },
@@ -156,7 +156,7 @@
         "description": "Outside build-up area"
     },
 
-    "numberOfRooms": "Number of rooms*",
+    "numberOfRooms": "Number of rooms",
     "@numberOfRooms":{
         "description": "Number of rooms"
     },
@@ -166,7 +166,7 @@
         "description": "Hint text for setting the number of rooms"
     },
 
-    "numberOfBathrooms": "Number of bathrooms*",
+    "numberOfBathrooms": "Number of bathrooms",
     "@numberOfBathrooms":{
         "description": "Number of bathrooms"
     },
@@ -176,12 +176,12 @@
         "description": "Hint text for setting the number of bathrooms"
     },
 
-    "furnishingLevel": "Furnishing level*",
+    "furnishingLevel": "Furnishing level",
     "@furnishingLevel":{
         "description": "Furnishing level"
     },
 
-    "insideSurface": "Inside surface*",
+    "insideSurface": "Inside surface",
     "@insideSurface":{
         "description": "Inside surface"
     },
@@ -191,7 +191,7 @@
         "description": "Hint text for setting the inside surface"
     },
 
-    "outsideSurface": "Outside surface*",
+    "outsideSurface": "Outside surface",
     "@outsideSurface":{
         "description": "Outside surface"
     },
@@ -201,7 +201,7 @@
         "description": "Hint text for setting the outside surface"
     },
 
-    "numberOfFloors": "Number of floors*",
+    "numberOfFloors": "Number of floors",
     "@numberOfFloors":{
         "description": "Number of floors"
     },
@@ -211,12 +211,12 @@
         "description": "Hint text for setting the number of floors in the building"
     },
 
-    "parkingType": "Parking type*",
+    "parkingType": "Parking type",
     "@parkingType":{
         "description": "Parking type"
     },
 
-    "capacityOfGarage": "Capacity of garage*",
+    "capacityOfGarage": "Capacity of garage",
     "@capacityOfGarage":{
         "description": "Capacity of garage"
     },
@@ -226,7 +226,7 @@
         "description": "Hint text for setting the capacity of garage"
     },
 
-    "height": "Height*",
+    "height": "Height",
     "@height":{
         "description": "Height"
     },
@@ -236,7 +236,7 @@
         "description": "Hint text for setting the height"
     },
 
-    "usableSurface": "Usable surface*",
+    "usableSurface": "Usable surface",
     "@usableSurface":{
         "description": "Usable surface"
     },
@@ -246,7 +246,7 @@
         "description": "Hint text for setting the usable surface"
     },
 
-    "administrativeSurface": "Administrative surface*",
+    "administrativeSurface": "Administrative surface",
     "@administrativeSurface":{
         "description": "Administrative surface"
     },
@@ -256,12 +256,12 @@
         "description": "Hint text for setting the administrative surface"
     },
 
-    "depositType": "Deposit type*",
+    "depositType": "Deposit type",
     "@depositType":{
         "description": "Deposit type"
     },
 
-    "parkingSpaces": "Parking spaces*",
+    "parkingSpaces": "Parking spaces",
     "@parkingSpaces":{
         "description": "Parking spaces"
     },
@@ -271,12 +271,12 @@
         "description": "Hint text for setting the number of parking spaces"
     },
 
-    "partitioningLevel": "Partitioning level*",
+    "partitioningLevel": "Partitioning level",
     "@partitioningLevel":{
         "description": "Partitioning level"
     },
 
-    "floorNumber": "Floor number*",
+    "floorNumber": "Floor",
     "@floorNumber":{
         "description": "Floor"
     },
@@ -291,7 +291,7 @@
         "description": "Details about the property"
     },
 
-    "surface": "Surface*",
+    "surface": "Surface",
     "@surface":{
         "description": "Surface"
     },
@@ -301,7 +301,7 @@
         "description": "Hint text for setting the surface"
     },
 
-    "price": "Price*",
+    "price": "Price",
     "@price":{
         "description": "Price"
     },
@@ -451,11 +451,6 @@
         "description": "Exterior Parking"
     },
 
-    "deposit": "Deposit",
-    "@deposit": {
-        "description": "Deposit"
-    },
-
     "distribution": "Distribution",
     "@distribution": {
         "description": "Distribution"
@@ -494,5 +489,15 @@
     "typeOfSeller": "Type of seller: ",
     "@typeOfSeller":{
         "description": "Type of seller"
+    },
+
+    "aboutSeller": "About the seller: ",
+    "@aboutSeller":{
+        "description": "About the seller"
+    },
+
+    "contactSeller": "Contact seller",
+    "@contactSeller":{
+        "description": "Contact seller"
     }
 }

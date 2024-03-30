@@ -23,7 +23,7 @@ class ApartmentWidgets extends StatelessWidget {
               ResidenceWidgets(bloc: bloc),
 
               // Partitioning dropbox
-              Text(AppLocalizations.of(context)!.partitioningLevel),
+              Text('${AppLocalizations.of(context)!.partitioningLevel}*'),
               DropdownButton<Partitioning>(
                 value: state.partitioning,
                 items: [
@@ -37,7 +37,7 @@ class ApartmentWidgets extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Floor number textfield
-              Text(AppLocalizations.of(context)!.floorNumber),
+              Text("${AppLocalizations.of(context)!.floorNumber}*"),
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.floorNumberHintText,
                 keyboardType: TextInputType.number,

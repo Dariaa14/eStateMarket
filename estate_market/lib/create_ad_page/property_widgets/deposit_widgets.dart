@@ -20,7 +20,7 @@ class DepositWidgets extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Height textfield
-              Text(AppLocalizations.of(context)!.height),
+              Text('${AppLocalizations.of(context)!.height}*'),
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.heightHintText,
                 keyboardType: TextInputType.number,
@@ -32,7 +32,7 @@ class DepositWidgets extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Usable surface textfield
-              Text(AppLocalizations.of(context)!.usableSurface),
+              Text('${AppLocalizations.of(context)!.usableSurface}*'),
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.usableSurfaceHintText,
                 keyboardType: TextInputType.number,
@@ -44,7 +44,7 @@ class DepositWidgets extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Administrative surface textfield
-              Text(AppLocalizations.of(context)!.administrativeSurface),
+              Text('${AppLocalizations.of(context)!.administrativeSurface}*'),
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText,
                 keyboardType: TextInputType.number,
@@ -69,7 +69,7 @@ class DepositWidgets extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Parking spaces textfield
-              Text(AppLocalizations.of(context)!.parkingSpaces),
+              Text('${AppLocalizations.of(context)!.parkingSpaces}*'),
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.parkingSpacesHintText,
                 keyboardType: TextInputType.number,

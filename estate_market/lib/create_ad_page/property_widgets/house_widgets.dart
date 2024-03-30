@@ -21,7 +21,7 @@ class HouseWidgets extends StatelessWidget {
               ResidenceWidgets(bloc: bloc),
 
               // Inside surface textfield
-              Text(AppLocalizations.of(context)!.insideSurface),
+              Text('${AppLocalizations.of(context)!.insideSurface}*'),
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.insideSurfaceHintText,
                 keyboardType: TextInputType.number,
@@ -31,7 +31,7 @@ class HouseWidgets extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Outside surface textfield
-              Text(AppLocalizations.of(context)!.outsideSurface),
+              Text('${AppLocalizations.of(context)!.outsideSurface}*'),
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.outsideSurfaceHintText,
                 keyboardType: TextInputType.number,
@@ -41,7 +41,7 @@ class HouseWidgets extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Floors number textfield
-              Text(AppLocalizations.of(context)!.numberOfFloors),
+              Text('${AppLocalizations.of(context)!.numberOfFloors}*'),
               CreateAdTextfield(
                 hintText: AppLocalizations.of(context)!.numberOfFloorsHintText,
                 keyboardType: TextInputType.number,
