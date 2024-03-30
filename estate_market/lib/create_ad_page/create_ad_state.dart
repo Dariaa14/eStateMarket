@@ -18,10 +18,12 @@ enum CreateAdFields {
   parkingSpaces,
 }
 
+enum CreateAdStatus { normal, loading, finished }
+
 class CreateAdState extends Equatable {
   final List<CreateAdFields> emptyFields;
   final bool showErrors;
-  final bool insertSuccesful;
+  final CreateAdStatus status;
   final List<File> images;
 
   final bool isNegotiable;
@@ -54,7 +56,7 @@ class CreateAdState extends Equatable {
   const CreateAdState(
       {this.emptyFields = CreateAdFields.values,
       this.showErrors = false,
-      this.insertSuccesful = false,
+      this.status = CreateAdStatus.normal,
       this.images = const [],
       this.isNegotiable = true,
       this.currentCategory = AdCategory.apartament,
@@ -80,7 +82,7 @@ class CreateAdState extends Equatable {
   CreateAdState copyWith(
           {List<CreateAdFields>? emptyFields,
           bool? showErrors,
-          bool? insertSuccesful,
+          CreateAdStatus? status,
           List<File>? images,
           bool? isNegotiable,
           AdCategory? currentCategory,
@@ -105,7 +107,7 @@ class CreateAdState extends Equatable {
       CreateAdState(
         emptyFields: emptyFields ?? this.emptyFields,
         showErrors: showErrors ?? this.showErrors,
-        insertSuccesful: insertSuccesful ?? this.insertSuccesful,
+        status: status ?? this.status,
         images: images ?? this.images,
         isNegotiable: isNegotiable ?? this.isNegotiable,
         currentCategory: currentCategory ?? this.currentCategory,
@@ -133,7 +135,7 @@ class CreateAdState extends Equatable {
         emptyFields: emptyFields,
         showErrors: showErrors,
         images: images,
-        insertSuccesful: insertSuccesful,
+        status: status,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -149,7 +151,7 @@ class CreateAdState extends Equatable {
         emptyFields: emptyFields,
         showErrors: showErrors,
         images: images,
-        insertSuccesful: insertSuccesful,
+        status: status,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -170,7 +172,7 @@ class CreateAdState extends Equatable {
         emptyFields: emptyFields,
         showErrors: showErrors,
         images: images,
-        insertSuccesful: insertSuccesful,
+        status: status,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -190,7 +192,7 @@ class CreateAdState extends Equatable {
         emptyFields: emptyFields,
         showErrors: showErrors,
         images: images,
-        insertSuccesful: insertSuccesful,
+        status: status,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -212,7 +214,7 @@ class CreateAdState extends Equatable {
         emptyFields: emptyFields,
         showErrors: showErrors,
         images: images,
-        insertSuccesful: insertSuccesful,
+        status: status,
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
@@ -228,7 +230,7 @@ class CreateAdState extends Equatable {
         showErrors,
         emptyFields,
         images,
-        insertSuccesful,
+        status,
         isNegotiable,
         currentCategory,
         listingType,

@@ -136,7 +136,7 @@
         "description": "Post ad"
     },
 
-    "listingType": "Listing type*",
+    "listingType": "Listing type",
     "@listingType":{
         "description": "Listing type"
     },

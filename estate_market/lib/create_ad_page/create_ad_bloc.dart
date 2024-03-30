@@ -71,16 +71,18 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   }
 
   _insertInDatabaseEventHandler(InsertInDatabaseEvent event, Emitter<CreateAdState> emit) async {
+    emit(state.copyWith(status: CreateAdStatus.loading));
     if (state.emptyFields.contains(CreateAdFields.title) ||
         state.emptyFields.contains(CreateAdFields.description) ||
         state.emptyFields.contains(CreateAdFields.surface) ||
         state.emptyFields.contains(CreateAdFields.price)) {
-      emit(state.copyWith(showErrors: true));
+      emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
       return;
     }
 
     final imageUploadResult = await _databaseUseCase.uploadImages(state.images.map((image) => image.path).toList());
     if (imageUploadResult.isLeft()) {
+      emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
       print("Error uploading images");
       return;
     }
@@ -90,7 +92,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       case AdCategory.garage:
         {
           if (state.emptyFields.contains(CreateAdFields.garageCapacity)) {
-            emit(state.copyWith(showErrors: true));
+            emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
             return;
           }
           propertyReference = await _databaseUseCase.insertGarageEntity(
@@ -119,7 +121,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
           if (state.emptyFields.contains(CreateAdFields.floorNumber) ||
               state.emptyFields.contains(CreateAdFields.numberOfBathrooms) ||
               state.emptyFields.contains(CreateAdFields.numberOfRooms)) {
-            emit(state.copyWith(showErrors: true));
+            emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
             return;
           }
           propertyReference = await _databaseUseCase.insertApartmentEntity(
@@ -142,7 +144,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
               state.emptyFields.contains(CreateAdFields.numberOfRooms) ||
               state.emptyFields.contains(CreateAdFields.insideSurface) ||
               state.emptyFields.contains(CreateAdFields.outsideSurface)) {
-            emit(state.copyWith(showErrors: true));
+            emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
             return;
           }
           propertyReference = await _databaseUseCase.insertHouseEntity(
@@ -164,7 +166,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
           if (state.emptyFields.contains(CreateAdFields.usableSurface) ||
               state.emptyFields.contains(CreateAdFields.administrativeSurface) ||
               state.emptyFields.contains(CreateAdFields.parkingSpaces)) {
-            emit(state.copyWith(showErrors: true));
+            emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
             return;
           }
           propertyReference = await _databaseUseCase.insertDepositEntity(
@@ -191,7 +193,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
         property: propertyReference,
         listingType: state.listingType,
         images: (imageUploadResult as Right).value);
-    emit(state.copyWith(insertSuccesful: true));
+    emit(state.copyWith(status: CreateAdStatus.finished));
   }
 
   _changeIsNegotiableEventHandler(ChangeIsNegotiableEvent event, Emitter<CreateAdState> emit) {

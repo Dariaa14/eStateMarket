@@ -50,7 +50,7 @@ class CreateAdView extends StatelessWidget {
           return BlocListener<CreateAdBloc, CreateAdState>(
             bloc: bloc,
             listener: (context, state) {
-              if (state.insertSuccesful == true) {
+              if (state.status == CreateAdStatus.finished) {
                 Navigator.pop(context);
               }
             },
@@ -105,7 +105,7 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 16.0),
 
                     // Listing type radio buttons
-                    Text(AppLocalizations.of(context)!.listingType),
+                    Text('${AppLocalizations.of(context)!.listingType}*'),
 
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -209,7 +209,7 @@ class CreateAdView extends StatelessWidget {
                     ),
 
                     // Is negotiable radio button
-                    const Text('Is negotiable*'),
+                    Text('${AppLocalizations.of(context)!.negotiable}*'),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -263,10 +263,15 @@ class CreateAdView extends StatelessWidget {
                             price: _priceController.text,
                             constructionYear: _constructionYearController.text));
                       },
-                      child: Text(
-                        AppLocalizations.of(context)!.postAd,
-                        style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                      ),
+                      child: (state.status == CreateAdStatus.normal)
+                          ? Text(
+                              AppLocalizations.of(context)!.postAd,
+                              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary),
+                            ),
                     ),
                   ],
                 ),
