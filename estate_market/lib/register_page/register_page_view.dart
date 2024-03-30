@@ -162,19 +162,29 @@ class RegisterPage extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           PasswordStrenghtContainer(
-                                            colored: (state.passwordStrenght.index >= 1) ? Colors.red : Colors.grey,
+                                            colored: (state.passwordStrenght.index >= 1)
+                                                ? Colors.red
+                                                : Theme.of(context).colorScheme.onSurfaceVariant,
                                           ),
                                           PasswordStrenghtContainer(
-                                            colored: (state.passwordStrenght.index >= 2) ? Colors.orange : Colors.grey,
+                                            colored: (state.passwordStrenght.index >= 2)
+                                                ? Colors.orange
+                                                : Theme.of(context).colorScheme.onSurfaceVariant,
                                           ),
                                           PasswordStrenghtContainer(
-                                            colored: (state.passwordStrenght.index >= 3) ? Colors.yellow : Colors.grey,
+                                            colored: (state.passwordStrenght.index >= 3)
+                                                ? Colors.yellow
+                                                : Theme.of(context).colorScheme.onSurfaceVariant,
                                           ),
                                           PasswordStrenghtContainer(
-                                            colored: (state.passwordStrenght.index >= 4) ? Colors.lime : Colors.grey,
+                                            colored: (state.passwordStrenght.index >= 4)
+                                                ? Colors.lime
+                                                : Theme.of(context).colorScheme.onSurfaceVariant,
                                           ),
                                           PasswordStrenghtContainer(
-                                            colored: (state.passwordStrenght.index >= 5) ? Colors.green : Colors.grey,
+                                            colored: (state.passwordStrenght.index >= 5)
+                                                ? Colors.green
+                                                : Theme.of(context).colorScheme.onSurfaceVariant,
                                           ),
                                         ],
                                       ),

@@ -32,8 +32,8 @@ class CreateAdTextfield extends StatelessWidget {
 
 CupertinoTextFieldData getCupertinoTextfieldData(BuildContext context, PlatformTarget target, bool showPrefix) {
   return CupertinoTextFieldData(
-    style: const TextStyle(fontSize: 15, color: Colors.grey),
-    placeholderStyle: const TextStyle(fontSize: 15, color: Colors.grey),
+    style: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.onSurfaceVariant),
+    placeholderStyle: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.onSurfaceVariant),
     textAlignVertical: TextAlignVertical.center,
     padding: EdgeInsets.zero,
     decoration: BoxDecoration(
@@ -46,7 +46,7 @@ CupertinoTextFieldData getCupertinoTextfieldData(BuildContext context, PlatformT
 MaterialTextFieldData getMaterialTextfieldData(BuildContext context, PlatformTarget target, bool showPrefix) {
   return MaterialTextFieldData(
     textAlignVertical: TextAlignVertical.center,
-    style: const TextStyle(fontSize: 15, color: Colors.grey),
+    style: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.onSurfaceVariant),
     decoration: InputDecoration(
       errorText: showPrefix ? AppLocalizations.of(context)!.requiredField : null,
       prefixIcon: showPrefix

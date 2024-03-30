@@ -99,8 +99,8 @@ CupertinoTextFieldData getCupertinoSearchBarData(
           width: 1.0,
         ),
     suffix: Padding(padding: const EdgeInsets.symmetric(horizontal: 3.0), child: suffix),
-    style: const TextStyle(fontSize: 20, color: Colors.grey),
-    placeholderStyle: const TextStyle(fontSize: 20, color: Colors.grey),
+    style: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
+    placeholderStyle: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
     textAlignVertical: TextAlignVertical.center,
     padding: EdgeInsets.zero,
     decoration: BoxDecoration(
@@ -114,7 +114,7 @@ MaterialTextFieldData getMaterialSearchBarData(
     BuildContext context, PlatformTarget target, Widget? prefix, Widget? suffix) {
   return MaterialTextFieldData(
     textAlignVertical: TextAlignVertical.center,
-    style: const TextStyle(fontSize: 20, color: Colors.grey),
+    style: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
     decoration: InputDecoration(
       prefixIcon: prefix ??
           const SizedBox(
