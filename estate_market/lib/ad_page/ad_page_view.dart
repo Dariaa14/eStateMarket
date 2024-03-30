@@ -55,15 +55,26 @@ class AdPageView extends StatelessWidget {
               if (ad.imagesUrls.isEmpty)
                 SizedBox(
                   height: 250,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary,
+                        ],
+                      ),
                     ),
-                    child: CldImageWidget(
-                      publicId: "licenta/z87gl6lpok5lqqs2pmxc",
-                      cloudinary: cloudinary,
-                      fit: BoxFit.fitWidth,
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.noImages,
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 ),

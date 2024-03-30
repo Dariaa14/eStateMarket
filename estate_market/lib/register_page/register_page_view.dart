@@ -50,7 +50,7 @@ class RegisterPage extends StatelessWidget {
                         },
                         icon: Icon(
                           Icons.arrow_back_ios_new,
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),

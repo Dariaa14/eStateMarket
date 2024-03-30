@@ -100,5 +100,6 @@
     "phoneNumber": "Număr de telefon: ",
     "typeOfSeller": "Tip de vânzător: ",
     "aboutSeller": "Despre vânzător: ",
-    "contactSeller": "Contactează vânzătorul"
+    "contactSeller": "Contactează vânzătorul",
+    "noImages": "Nu există imagini"
 }

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 ColorScheme lightColorScheme = const ColorScheme.light(
-  primary: Color.fromARGB(255, 52, 85, 11),
-  primaryContainer: Color.fromARGB(255, 40, 64, 9),
-  secondary: Color.fromARGB(255, 0, 128, 255),
-  secondaryContainer: Color.fromARGB(255, 0, 102, 204),
+  primary: Color.fromARGB(255, 76, 175, 80),
+  primaryContainer: Color.fromARGB(255, 129, 199, 132),
+  secondary: Color.fromARGB(255, 0, 150, 136),
+  secondaryContainer: Color.fromARGB(255, 77, 182, 172),
   surface: Color.fromARGB(255, 255, 255, 255),
-  surfaceVariant: Color.fromARGB(255, 214, 214, 214),
-  onSurfaceVariant: Color.fromARGB(255, 165, 165, 165),
-  background: Color.fromARGB(255, 243, 246, 189),
-  error: Color.fromARGB(255, 255, 0, 0),
-  onPrimary: Color.fromARGB(255, 221, 233, 185),
+  surfaceVariant: Color.fromARGB(255, 237, 237, 237),
+  onSurfaceVariant: Color.fromARGB(255, 150, 150, 150),
+  background: Color.fromARGB(255, 250, 250, 250),
+  error: Color.fromARGB(255, 211, 47, 47),
+  onPrimary: Color.fromARGB(255, 255, 255, 255),
   onSecondary: Color.fromARGB(255, 255, 255, 255),
   onSurface: Color.fromARGB(255, 0, 0, 0),
   onBackground: Color.fromARGB(255, 0, 0, 0),
@@ -19,5 +19,27 @@ ColorScheme lightColorScheme = const ColorScheme.light(
 
 ThemeData lightThemeData = ThemeData(
   colorScheme: lightColorScheme,
+  useMaterial3: true,
+);
+
+ColorScheme darkColorScheme = const ColorScheme.dark(
+  primary: Color.fromARGB(255, 0, 200, 83),
+  primaryContainer: Color.fromARGB(255, 0, 150, 13),
+  secondary: Color.fromARGB(255, 29, 233, 182),
+  secondaryContainer: Color.fromARGB(255, 38, 166, 154),
+  surface: Color.fromARGB(255, 18, 18, 18),
+  surfaceVariant: Color.fromARGB(255, 55, 55, 55),
+  onSurfaceVariant: Color.fromARGB(255, 150, 150, 150),
+  background: Color.fromARGB(255, 24, 24, 24),
+  error: Color.fromARGB(255, 255, 79, 79),
+  onPrimary: Color.fromARGB(255, 0, 0, 0),
+  onSecondary: Color.fromARGB(255, 0, 0, 0),
+  onSurface: Color.fromARGB(255, 255, 255, 255),
+  onBackground: Color.fromARGB(255, 255, 255, 255),
+  onError: Color.fromARGB(255, 0, 0, 0),
+);
+
+ThemeData darkThemeData = ThemeData(
+  colorScheme: darkColorScheme,
   useMaterial3: true,
 );

@@ -5,6 +5,7 @@ import '../entities/wrappers/document_reference_entity.dart';
 abstract class AccountRepository {
   AccountEntity? currentAccount;
 
+  void removeCurrentAccount();
   Future<void> setCurrentAccountByEmail(String email);
   Future<void> updateAccount(String? phoneNumber, SellerType? sellerType);
 

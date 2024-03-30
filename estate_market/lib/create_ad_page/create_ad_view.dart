@@ -153,7 +153,7 @@ class CreateAdView extends StatelessWidget {
                                     end: Alignment.bottomLeft,
                                     colors: [
                                       Theme.of(context).colorScheme.primary,
-                                      Theme.of(context).colorScheme.primaryContainer,
+                                      Theme.of(context).colorScheme.secondary,
                                     ],
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),

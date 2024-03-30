@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'eState Market',
       theme: lightThemeData,
+      darkTheme: darkThemeData,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

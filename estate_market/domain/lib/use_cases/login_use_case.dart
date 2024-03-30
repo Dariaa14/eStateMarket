@@ -36,6 +36,7 @@ class LoginUseCase {
 
   Future<void> logout() async {
     await _registerService.logout();
+    _accountRepository.removeCurrentAccount();
   }
 
   Future<void> initializeCurrentToken() async {

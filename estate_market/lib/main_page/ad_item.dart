@@ -3,6 +3,7 @@ import 'package:core/config.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../config/route_names.dart';
 
@@ -64,15 +65,27 @@ class AdItem extends StatelessWidget {
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                   color: Theme.of(context).colorScheme.primaryContainer,
                 ),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Theme.of(context).colorScheme.primary,
+                        Theme.of(context).colorScheme.secondary,
+                      ],
+                    ),
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                   ),
-                  child: CldImageWidget(
-                    publicId: ad!.imagesUrls.isEmpty ? "licenta/z87gl6lpok5lqqs2pmxc" : ad!.imagesUrls[0],
-                    cloudinary: cloudinary,
-                    fit: BoxFit.fitWidth,
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.noImages,
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -85,7 +98,10 @@ class AdItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(ad!.title),
+                        Text(
+                          ad!.title,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         Text((ad!.property == null) ? "Price" : "${ad!.property!.price}"),
                         const Text("Location"),
                         Text(DateFormat.yMd(Localizations.localeOf(context).toString()).format(ad!.dateOfAd)),

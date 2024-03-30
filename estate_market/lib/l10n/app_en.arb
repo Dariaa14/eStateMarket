@@ -499,5 +499,10 @@
     "contactSeller": "Contact seller",
     "@contactSeller":{
         "description": "Contact seller"
+    },
+
+    "noImages": "No images available",
+    "@noImages": {
+        "description": "No images in ad"
     }
 }

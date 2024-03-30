@@ -46,4 +46,9 @@ class AccountRepositoryImpl implements AccountRepository {
     if (accountsWithGivenEmail.isEmpty) return null;
     return accountsWithGivenEmail.first;
   }
+
+  @override
+  void removeCurrentAccount() {
+    currentAccount = null;
+  }
 }
