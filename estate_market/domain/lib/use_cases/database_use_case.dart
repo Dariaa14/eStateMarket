@@ -146,7 +146,7 @@ class DatabaseUseCase {
     required ListingType listingType,
     required List<String> images,
   }) async {
-    final currentUserRef = await _accountRepository.getCurrentUserDocumentReference();
+    final currentUserRef = _accountRepository.currentAccountDocument;
     if (currentUserRef == null) throw Exception('User not found');
 
     await _databaseRepository.insertAdEntity(

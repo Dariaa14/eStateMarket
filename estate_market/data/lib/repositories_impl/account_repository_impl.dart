@@ -10,6 +10,9 @@ class AccountRepositoryImpl implements AccountRepository {
   AccountEntity? currentAccount;
 
   @override
+  DocumentReferenceEntity? currentAccountDocument;
+
+  @override
   Future<void> updateAccount(String? phoneNumber, SellerType? sellerType) async {
     final AccountEntity newAccountData = AccountEntityImpl(
         email: currentAccount!.email,
@@ -17,14 +20,10 @@ class AccountRepositoryImpl implements AccountRepository {
         sellerType: sellerType ?? currentAccount!.sellerType,
         password: currentAccount!.password);
 
-    CollectionReferenceEntity collection =
-        CollectionReferenceEntityImpl(collection: Collections.accounts, withConverter: false);
-    final currentAccountDoc =
-        await collection.where('email', WhereOperations.isEqualTo, currentAccount!.email).getDocuments<AccountEntity>();
-    if (currentAccountDoc.isEmpty) {
-      throw Exception('Account not found');
+    if (currentAccountDocument == null) {
+      throw Exception('Account document not set');
     }
-    await currentAccountDoc.first.set((newAccountData as AccountEntityImpl).toJson());
+    await currentAccountDocument!.set((newAccountData as AccountEntityImpl).toJson());
   }
 
   @override
@@ -34,10 +33,10 @@ class AccountRepositoryImpl implements AccountRepository {
     final accountsWithGivenEmail = await accounts.where('email', WhereOperations.isEqualTo, email).get<AccountEntity>();
     if (accountsWithGivenEmail.isEmpty) currentAccount = null;
     currentAccount = accountsWithGivenEmail.first;
+    currentAccountDocument = await _getCurrentUserDocumentReference();
   }
 
-  @override
-  Future<DocumentReferenceEntity?> getCurrentUserDocumentReference() async {
+  Future<DocumentReferenceEntity?> _getCurrentUserDocumentReference() async {
     if (currentAccount == null) return null;
     CollectionReferenceEntity accounts =
         CollectionReferenceEntityImpl(collection: Collections.accounts, withConverter: false);
@@ -50,5 +49,6 @@ class AccountRepositoryImpl implements AccountRepository {
   @override
   void removeCurrentAccount() {
     currentAccount = null;
+    currentAccountDocument = null;
   }
 }

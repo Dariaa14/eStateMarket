@@ -504,5 +504,10 @@
     "noImages": "No images available",
     "@noImages": {
         "description": "No images in ad"
+    },
+
+    "unknown": "Unknown",
+    "@unknown": {
+        "description": "Unknown"
     }
 }

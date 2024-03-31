@@ -101,5 +101,6 @@
     "typeOfSeller": "Tip de vânzător: ",
     "aboutSeller": "Despre vânzător: ",
     "contactSeller": "Contactează vânzătorul",
-    "noImages": "Nu există imagini"
+    "noImages": "Nu există imagini",
+    "unknown": "Necunoscut"
 }
