@@ -10,4 +10,9 @@ class DocumentReferenceEntityImpl implements DocumentReferenceEntity {
   Future<void> set(Map<String, Object?> json) async {
     await ref.set(json);
   }
+
+  @override
+  Future<void> delete() async {
+    await ref.delete();
+  }
 }

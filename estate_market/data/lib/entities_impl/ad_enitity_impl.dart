@@ -104,9 +104,4 @@ class AdEntityImpl implements AdEntity {
     await ad.setReferences();
     return ad;
   }
-
-  @override
-  List<Object> get props => [title, adCategory, imagesUrls, description, listingType, dateOfAd];
-
-  bool? get stringify => true;
 }

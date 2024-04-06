@@ -206,4 +206,28 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       'ad': (adDocument.first as DocumentReferenceEntityImpl).ref,
     });
   }
+
+  @override
+  Future<void> removeFavoriteAd({required AccountEntity account, required AdEntity ad}) async {
+    CollectionReferenceEntity accounts =
+        CollectionReferenceEntityImpl(collection: Collections.accounts, withConverter: false);
+    CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);
+    CollectionReferenceEntity favorites = CollectionReferenceEntityImpl(collection: Collections.favorites);
+
+    final accountDocument = await accounts.where('email', WhereOperations.isEqualTo, account.email).getDocuments();
+    final adDocument =
+        await ads.where('dateOfAd', WhereOperations.isEqualTo, convertDateTimeToTimestamp(ad.dateOfAd)).getDocuments();
+
+    if (accountDocument.isEmpty || adDocument.isEmpty) {
+      throw Exception('Account or Ad not found');
+    }
+    final favoriteDocument = await favorites
+        .where('account', WhereOperations.isEqualTo, (accountDocument.first as DocumentReferenceEntityImpl).ref)
+        .where('ad', WhereOperations.isEqualTo, (adDocument.first as DocumentReferenceEntityImpl).ref)
+        .getDocuments();
+    if (favoriteDocument.isEmpty) {
+      throw Exception('Favorite not found');
+    }
+    await favoriteDocument.first.delete();
+  }
 }

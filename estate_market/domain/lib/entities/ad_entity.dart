@@ -1,14 +1,11 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/property_entity.dart';
-import 'package:equatable/equatable.dart';
 
 enum AdCategory { apartament, house, terrain, garage, deposit }
 
 enum ListingType { sale, rent }
 
-abstract class AdEntity extends Equatable {
+abstract class AdEntity {
   final String title;
   final AdCategory adCategory;
   final List<String> imagesUrls;
@@ -29,7 +26,4 @@ abstract class AdEntity extends Equatable {
       required this.dateOfAd});
 
   Future<void> setReferences();
-
-  @override
-  List<Object> get props => [title, adCategory, imagesUrls, description, listingType, dateOfAd];
 }

@@ -27,6 +27,13 @@ class AccountUseCase {
     _databaseRepository.insertFavoriteAd(account: _accountRepository.currentAccount!, ad: ad);
   }
 
+  Future<void> removeFavoriteAd(AdEntity ad) async {
+    if (_accountRepository.currentAccount == null) throw Exception("User is not logged in");
+
+    _accountRepository.removeFavoriteAd(ad);
+    _databaseRepository.removeFavoriteAd(account: _accountRepository.currentAccount!, ad: ad);
+  }
+
   AccountEntity? get currentAccount {
     return _accountRepository.currentAccount;
   }

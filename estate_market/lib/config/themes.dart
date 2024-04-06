@@ -8,7 +8,7 @@ ColorScheme lightColorScheme = const ColorScheme.light(
   surface: Color.fromARGB(255, 255, 255, 255),
   surfaceVariant: Color.fromARGB(255, 237, 237, 237),
   onSurfaceVariant: Color.fromARGB(255, 150, 150, 150),
-  background: Color.fromARGB(255, 250, 250, 250),
+  background: Color.fromARGB(255, 245, 245, 245),
   error: Color.fromARGB(255, 211, 47, 47),
   onPrimary: Color.fromARGB(255, 255, 255, 255),
   onSecondary: Color.fromARGB(255, 255, 255, 255),

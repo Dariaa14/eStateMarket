@@ -27,7 +27,8 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
 
   _favoritesButtonPressedEventHandler(FavoritesButtonPressedEvent event, Emitter<MainPageState> emit) async {
     if (_accountUseCase.isUserLoggedIn()) {
-      if (_accountUseCase.favoriteAds!.contains(event.ad)) {
+      if (isAdFavorite(event.ad)) {
+        _accountUseCase.removeFavoriteAd(event.ad);
       } else {
         _accountUseCase.addFavoriteAd(event.ad);
       }
@@ -45,6 +46,9 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
 
   bool isAdFavorite(AdEntity ad) {
     if (_accountUseCase.favoriteAds == null) return false;
-    return _accountUseCase.favoriteAds!.contains(ad);
+    for (final favouriteAd in _accountUseCase.favoriteAds!) {
+      if (favouriteAd.dateOfAd.compareTo(ad.dateOfAd) == 0) return true;
+    }
+    return false;
   }
 }

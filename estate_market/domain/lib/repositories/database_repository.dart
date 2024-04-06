@@ -84,4 +84,6 @@ abstract class DatabaseRepository {
   });
 
   Future<void> insertFavoriteAd({required AccountEntity account, required AdEntity ad});
+
+  Future<void> removeFavoriteAd({required AccountEntity account, required AdEntity ad});
 }

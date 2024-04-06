@@ -49,7 +49,12 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   void removeFavoriteAd(AdEntity ad) {
-    favoriteAds!.remove(ad);
+    for (int index = 0; index < favoriteAds!.length; index++) {
+      if (favoriteAds![index].dateOfAd.compareTo(ad.dateOfAd) == 0) {
+        favoriteAds!.removeAt(index);
+        return;
+      }
+    }
   }
 
   @override
