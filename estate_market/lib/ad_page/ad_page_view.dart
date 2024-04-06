@@ -18,6 +18,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'property_widgets/terrain_view.dart';
 
+//TODO: Implement adding to favorites from here
 class AdPageView extends StatelessWidget {
   final AdEntity ad;
   const AdPageView({super.key, required this.ad});

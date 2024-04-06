@@ -83,4 +83,13 @@ class AccountRepositoryImpl implements AccountRepository {
     final favoriteAds = (favorites.map((favorite) => favorite.ad!)).toList();
     return favoriteAds;
   }
+
+  @override
+  Future<List<AdEntity>> getAccountsAds() async {
+    if (currentAccountDocument == null) throw Exception('Current account is not set');
+    CollectionReferenceEntity adsCollection = CollectionReferenceEntityImpl(collection: Collections.ad);
+    final reference = (currentAccountDocument as DocumentReferenceEntityImpl).ref;
+    final ads = await adsCollection.where('account', WhereOperations.isEqualTo, reference).get<AdEntity>();
+    return ads;
+  }
 }

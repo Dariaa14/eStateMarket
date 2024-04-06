@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../sidebar_menu/sidebar_menu_view.dart';
 
+//TODO: when logout/login change state so favorite button is(not) visible
 class MainPageView extends StatelessWidget {
   final MainPageBloc bloc = MainPageBloc();
   MainPageView({super.key});
@@ -97,7 +98,11 @@ class MainPageView extends StatelessWidget {
                                     physics: const NeverScrollableScrollPhysics(),
                                     itemCount: data.length,
                                     itemBuilder: (context, index) {
-                                      return AdItem(ad: data[index], mainBloc: bloc);
+                                      return AdItem(
+                                        ad: data[index],
+                                        mainBloc: bloc,
+                                        canAddToFavorites: bloc.isUserLoggedIn(),
+                                      );
                                     });
                               },
                             );

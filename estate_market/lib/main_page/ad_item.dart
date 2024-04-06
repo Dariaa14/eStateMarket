@@ -11,8 +11,9 @@ import 'main_page_bloc.dart';
 class AdItem extends StatelessWidget {
   final MainPageBloc mainBloc;
   final AdEntity ad;
+  final bool canAddToFavorites;
 
-  const AdItem({super.key, required this.ad, required this.mainBloc});
+  const AdItem({super.key, required this.ad, required this.mainBloc, required this.canAddToFavorites});
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +113,13 @@ class AdItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      mainBloc.add(FavoritesButtonPressedEvent(ad: ad));
-                    },
-                    icon: mainBloc.isAdFavorite(ad) ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline)),
+                if (canAddToFavorites)
+                  IconButton(
+                      onPressed: () {
+                        mainBloc.add(FavoritesButtonPressedEvent(ad: ad));
+                      },
+                      icon:
+                          mainBloc.isAdFavorite(ad) ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline)),
               ],
             ),
           ]),
