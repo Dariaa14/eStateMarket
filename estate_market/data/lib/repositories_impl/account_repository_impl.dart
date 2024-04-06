@@ -1,6 +1,9 @@
 import 'package:data/entities_impl/account_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/collection_reference_entity_impl.dart';
+import 'package:data/entities_impl/wrappers/document_reference_entity_impl.dart';
 import 'package:domain/entities/account_entity.dart';
+import 'package:domain/entities/ad_entity.dart';
+import 'package:domain/entities/favorites_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/repositories/account_repository.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
@@ -11,6 +14,9 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   DocumentReferenceEntity? currentAccountDocument;
+
+  @override
+  List<AdEntity>? favoriteAds;
 
   @override
   Future<void> updateAccount(String? phoneNumber, SellerType? sellerType) async {
@@ -28,27 +34,48 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   Future<void> setCurrentAccountByEmail(String email) async {
-    CollectionReferenceEntity accounts =
-        CollectionReferenceEntityImpl(collection: Collections.accounts, withConverter: true);
+    CollectionReferenceEntity accounts = CollectionReferenceEntityImpl(collection: Collections.accounts);
     final accountsWithGivenEmail = await accounts.where('email', WhereOperations.isEqualTo, email).get<AccountEntity>();
     if (accountsWithGivenEmail.isEmpty) currentAccount = null;
     currentAccount = accountsWithGivenEmail.first;
     currentAccountDocument = await _getCurrentUserDocumentReference();
+    favoriteAds = await _getFavoriteAds();
   }
 
-  Future<DocumentReferenceEntity?> _getCurrentUserDocumentReference() async {
-    if (currentAccount == null) return null;
-    CollectionReferenceEntity accounts =
-        CollectionReferenceEntityImpl(collection: Collections.accounts, withConverter: false);
-    final accountsWithGivenEmail =
-        await accounts.where('email', WhereOperations.isEqualTo, currentAccount!.email).getDocuments();
-    if (accountsWithGivenEmail.isEmpty) return null;
-    return accountsWithGivenEmail.first;
+  @override
+  void addFavoriteAd(AdEntity ad) {
+    favoriteAds!.add(ad);
+  }
+
+  @override
+  void removeFavoriteAd(AdEntity ad) {
+    favoriteAds!.remove(ad);
   }
 
   @override
   void removeCurrentAccount() {
     currentAccount = null;
     currentAccountDocument = null;
+    favoriteAds = null;
+  }
+
+  Future<DocumentReferenceEntity?> _getCurrentUserDocumentReference() async {
+    if (currentAccount == null) throw Exception('Current account is not set');
+    CollectionReferenceEntity accounts =
+        CollectionReferenceEntityImpl(collection: Collections.accounts, withConverter: false);
+    final accountsWithGivenEmail =
+        await accounts.where('email', WhereOperations.isEqualTo, currentAccount!.email).getDocuments();
+    if (accountsWithGivenEmail.isEmpty) throw Exception('Account was not found');
+    return accountsWithGivenEmail.first;
+  }
+
+  Future<List<AdEntity>?> _getFavoriteAds() async {
+    if (currentAccountDocument == null) throw Exception('Current account is not set');
+    CollectionReferenceEntity favoriteAdsCollection = CollectionReferenceEntityImpl(collection: Collections.favorites);
+    final reference = (currentAccountDocument as DocumentReferenceEntityImpl).ref;
+    final favorites =
+        await favoriteAdsCollection.where('account', WhereOperations.isEqualTo, reference).get<FavoritesEntity>();
+    final favoriteAds = (favorites.map((favorite) => favorite.ad!)).toList();
+    return favoriteAds;
   }
 }

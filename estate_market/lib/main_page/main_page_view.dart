@@ -97,7 +97,7 @@ class MainPageView extends StatelessWidget {
                                     physics: const NeverScrollableScrollPhysics(),
                                     itemCount: data.length,
                                     itemBuilder: (context, index) {
-                                      return AdItem(ad: data[index]);
+                                      return AdItem(ad: data[index], mainBloc: bloc);
                                     });
                               },
                             );

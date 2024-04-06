@@ -6,11 +6,13 @@ import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../config/route_names.dart';
+import 'main_page_bloc.dart';
 
 class AdItem extends StatelessWidget {
-  final AdEntity? ad;
+  final MainPageBloc mainBloc;
+  final AdEntity ad;
 
-  const AdItem({super.key, this.ad});
+  const AdItem({super.key, required this.ad, required this.mainBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +29,12 @@ class AdItem extends StatelessWidget {
             color: Theme.of(context).colorScheme.surface,
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            if (ad!.imagesUrls.isNotEmpty)
+            if (ad.imagesUrls.isNotEmpty)
               SizedBox(
                 height: 190,
                 width: MediaQuery.of(context).size.width - 16,
                 child: PageView.builder(
-                    itemCount: ad!.imagesUrls.length,
+                    itemCount: ad.imagesUrls.length,
                     pageSnapping: true,
                     itemBuilder: (context, index) {
                       return Container(
@@ -49,7 +51,7 @@ class AdItem extends StatelessWidget {
                             topRight: Radius.circular(10.0),
                           ),
                           child: CldImageWidget(
-                            publicId: ad!.imagesUrls[index],
+                            publicId: ad.imagesUrls[index],
                             cloudinary: cloudinary,
                             fit: BoxFit.fitWidth,
                           ),
@@ -57,7 +59,7 @@ class AdItem extends StatelessWidget {
                       );
                     }),
               ),
-            if (ad!.imagesUrls.isEmpty)
+            if (ad.imagesUrls.isEmpty)
               Container(
                 height: 190,
                 width: MediaQuery.of(context).size.width - 16,
@@ -99,18 +101,22 @@ class AdItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          ad!.title,
+                          ad.title,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        Text((ad!.property == null) ? "Price" : "${ad!.property!.price}"),
+                        Text((ad.property == null) ? "Price" : "${ad.property!.price}"),
                         const Text("Location"),
-                        Text(DateFormat.yMd(Localizations.localeOf(context).toString()).format(ad!.dateOfAd)),
-                        Text((ad!.property == null) ? "Surface" : "${ad!.property!.surface}"),
+                        Text(DateFormat.yMd(Localizations.localeOf(context).toString()).format(ad.dateOfAd)),
+                        Text((ad.property == null) ? "Surface" : "${ad.property!.surface}"),
                       ],
                     ),
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
+                IconButton(
+                    onPressed: () {
+                      mainBloc.add(FavoritesButtonPressedEvent(ad: ad));
+                    },
+                    icon: mainBloc.isAdFavorite(ad) ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline)),
               ],
             ),
           ]),

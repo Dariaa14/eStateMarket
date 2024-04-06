@@ -82,4 +82,6 @@ abstract class DatabaseRepository {
     required String phoneNumber,
     required SellerType sellerType,
   });
+
+  Future<void> insertFavoriteAd({required AccountEntity account, required AdEntity ad});
 }

@@ -97,4 +97,16 @@ class AdEntityImpl implements AdEntity {
         (_accountReference! as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>);
     this.account = account;
   }
+
+  static Future<AdEntity?> getAdFromDocument(DocumentReference<Map<String, dynamic>> document) async {
+    final adDocument = await document.get();
+    final ad = AdEntityImpl.fromJson(adDocument.data()!);
+    await ad.setReferences();
+    return ad;
+  }
+
+  @override
+  List<Object> get props => [title, adCategory, imagesUrls, description, listingType, dateOfAd];
+
+  bool? get stringify => true;
 }

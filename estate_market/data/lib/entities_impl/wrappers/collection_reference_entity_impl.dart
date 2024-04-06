@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data/entities_impl/favorites_entity_impl.dart';
 import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
+import 'package:domain/entities/favorites_entity.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/entities/wrappers/query_entity.dart';
@@ -87,6 +89,14 @@ class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
         return FirebaseFirestore.instance.collection('accounts');
       case Collections.properties:
         return FirebaseFirestore.instance.collection('properties');
+      case Collections.favorites:
+        if (withConverter) {
+          return FirebaseFirestore.instance.collection('favorites').withConverter<FavoritesEntity>(
+                fromFirestore: (snapshots, _) => FavoritesEntityImpl.fromJson(snapshots.data()!),
+                toFirestore: (favorites, _) => (favorites as FavoritesEntityImpl).toJson(),
+              );
+        }
+        return FirebaseFirestore.instance.collection('favorites');
     }
   }
 }

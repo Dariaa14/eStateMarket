@@ -18,6 +18,8 @@ import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/repositories/database_repository.dart';
 
 import '../entities_impl/ad_enitity_impl.dart';
+import '../entities_impl/wrappers/document_reference_entity_impl.dart';
+import '../utils/convert.dart';
 
 class DatabaseRepositoryImpl extends DatabaseRepository {
   @override
@@ -181,5 +183,27 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       sellerType: sellerType,
     );
     await accounts.add((account as AccountEntityImpl).toJson());
+  }
+
+  @override
+  Future<void> insertFavoriteAd({required AccountEntity account, required AdEntity ad}) async {
+    CollectionReferenceEntity accounts =
+        CollectionReferenceEntityImpl(collection: Collections.accounts, withConverter: false);
+    CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);
+    CollectionReferenceEntity favorites =
+        CollectionReferenceEntityImpl(collection: Collections.favorites, withConverter: false);
+
+    final accountDocument = await accounts.where('email', WhereOperations.isEqualTo, account.email).getDocuments();
+    final adDocument =
+        await ads.where('dateOfAd', WhereOperations.isEqualTo, convertDateTimeToTimestamp(ad.dateOfAd)).getDocuments();
+
+    if (accountDocument.isEmpty || adDocument.isEmpty) {
+      throw Exception('Account or Ad not found');
+    }
+
+    favorites.add({
+      'account': (accountDocument.first as DocumentReferenceEntityImpl).ref,
+      'ad': (adDocument.first as DocumentReferenceEntityImpl).ref,
+    });
   }
 }

@@ -16,6 +16,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
 
   MainPageBloc() : super(const MainPageState(ads: [])) {
     on<InitMainPageEvent>(_initMainPageEventHandler);
+    on<FavoritesButtonPressedEvent>(_favoritesButtonPressedEventHandler);
   }
 
   _initMainPageEventHandler(InitMainPageEvent event, Emitter<MainPageState> emit) async {
@@ -24,11 +25,26 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     // emit(state.copyWith(ads: ads));
   }
 
+  _favoritesButtonPressedEventHandler(FavoritesButtonPressedEvent event, Emitter<MainPageState> emit) async {
+    if (_accountUseCase.isUserLoggedIn()) {
+      if (_accountUseCase.favoriteAds!.contains(event.ad)) {
+      } else {
+        _accountUseCase.addFavoriteAd(event.ad);
+      }
+      emit(state.copyWith(favoritesChanged: !state.favoritesChanged));
+    }
+  }
+
   Future<List<AdEntity>> getAdsTest() async {
     return await _databaseUseCase.getAllAds();
   }
 
   bool isUserLoggedIn() {
     return _accountUseCase.isUserLoggedIn();
+  }
+
+  bool isAdFavorite(AdEntity ad) {
+    if (_accountUseCase.favoriteAds == null) return false;
+    return _accountUseCase.favoriteAds!.contains(ad);
   }
 }
