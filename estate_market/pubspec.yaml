@@ -23,6 +23,9 @@ dependencies:
 
   core:
     path: core
+
+  gem_kit:
+    path: plugins/gem_kit
     
   bloc: ^8.1.2
   flutter_localizations:
@@ -32,7 +35,6 @@ dependencies:
   firebase_storage: ^11.5.3
   firebase_core: ^2.24.0
   get_it: ^7.6.4
-  firebase_auth: ^4.15.2
   dartz: ^0.10.1
   image_picker: ^1.0.7
   cloudinary_flutter: ^1.3.0

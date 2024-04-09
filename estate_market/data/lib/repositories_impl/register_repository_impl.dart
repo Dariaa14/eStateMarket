@@ -5,21 +5,11 @@ import 'package:domain/errors/failure.dart';
 import 'package:domain/errors/register_errors.dart';
 import 'package:domain/repositories/register_repository.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dartz/dartz.dart';
 
 import '../entities_impl/wrappers/collection_reference_entity_impl.dart';
 
 class RegisterRepositoryImpl implements RegisterRepository {
-  RegisterRepositoryImpl() {
-    FirebaseAuth.instance.authStateChanges().listen((user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-      }
-    });
-  }
   @override
   PasswordStrength calculatePasswordStrenght(String password) {
     if (password.isEmpty) {

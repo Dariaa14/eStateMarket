@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application
-        android:label="estate_market"
+   <application
+        android:label="AddressSearch"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

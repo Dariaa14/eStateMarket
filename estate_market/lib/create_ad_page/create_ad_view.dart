@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:domain/entities/ad_entity.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:gem_kit/d3Scene.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../utils/translate_enums.dart';
@@ -26,7 +29,13 @@ class CreateAdView extends StatelessWidget {
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _constructionYearController = TextEditingController();
 
+  late GemMapController _mapController;
+
   CreateAdView({super.key});
+
+  _onMapCreatedCallback(GemMapController controller) async {
+    _mapController = controller;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,6 +259,14 @@ class CreateAdView extends StatelessWidget {
 
                     // Specific properties based on category:
                     _buildPropertyTypeWidgets(bloc),
+                    const SizedBox(height: 16.0),
+
+                    const SizedBox(
+                      height: 250.0,
+                      child: GemMap(
+                        onMapCreated: _onMapCreatedCallback,
+                      ),
+                    ),
                     const SizedBox(height: 16.0),
 
                     // Submit button

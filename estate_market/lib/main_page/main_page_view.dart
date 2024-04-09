@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../sidebar_menu/sidebar_menu_view.dart';
 
 //TODO: when logout/login change state so favorite button is(not) visible
+//TODO: when no internet connection show something
 class MainPageView extends StatelessWidget {
   final MainPageBloc bloc = MainPageBloc();
   MainPageView({super.key});
