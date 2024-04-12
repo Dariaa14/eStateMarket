@@ -509,5 +509,10 @@
     "unknown": "Unknown",
     "@unknown": {
         "description": "Unknown"
+    },
+
+    "selectAddress": "Select address",
+    "@selectAddress": {
+        "description": "Select address"
     }
 }

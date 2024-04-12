@@ -102,5 +102,6 @@
     "aboutSeller": "Despre vânzător: ",
     "contactSeller": "Contactează vânzătorul",
     "noImages": "Nu există imagini",
-    "unknown": "Necunoscut"
+    "unknown": "Necunoscut",
+    "selectAddress": "Selectează adresa"
 }

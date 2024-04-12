@@ -60,7 +60,7 @@ class RegisterPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Image.asset(
-                            'assets/app_logo/logo_with_title.png',
+                            'assets/icon/icon_with_title.png',
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,

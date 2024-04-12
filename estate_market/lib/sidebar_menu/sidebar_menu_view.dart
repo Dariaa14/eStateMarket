@@ -19,7 +19,7 @@ class SidebarMenu extends StatelessWidget {
         child: Column(
           children: [
             DrawerHeader(
-              child: Image.asset('assets/app_logo/logo_with_title.png'),
+              child: Image.asset('assets/icon/icon_with_title.png'),
             ),
             ListTile(
               leading: const Icon(Icons.explore),
