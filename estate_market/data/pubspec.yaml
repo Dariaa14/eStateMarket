@@ -20,6 +20,10 @@ dependencies:
   http: ^1.2.0
   jwt_decoder: ^2.0.1
 
+  gem_kit:
+    path: ../plugins/gem_kit
+  permission_handler: ^11.3.1
+
 dev_dependencies:
   lints: ^2.0.0
   test: ^1.21.0

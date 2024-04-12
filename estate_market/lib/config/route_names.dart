@@ -2,7 +2,7 @@ import 'package:domain/entities/ad_entity.dart';
 import 'package:estate_market/ad_page/ad_page_view.dart';
 import 'package:estate_market/create_ad_page/create_ad_view.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
-import 'package:estate_market/map_selection_page/map_selection_page_view.dart';
+import 'package:estate_market/address_selection_page/address_selection_page_view.dart';
 import 'package:estate_market/profile_page/subpages/edit_profile_page/edit_profile_page_view.dart';
 import 'package:estate_market/register_page/register_page_view.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class RouteNames {
   static const String registerPage = '/register';
 
   static const String createAdPage = '/createAdPage';
-  static const String mapSelectionPage = '/createAdPage/mapSelection';
+  static const String addressSelectionPage = '/createAdPage/addressSelection';
 
   static const String profilePage = '/profile';
   static const String editProfilePage = '/profile/editProfile';
@@ -38,8 +38,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return routeBuilder(AdPageView(
         ad: settings.arguments as AdEntity,
       ));
-    case RouteNames.mapSelectionPage:
-      return routeBuilder(const MapSelectionPageView());
+    case RouteNames.addressSelectionPage:
+      return routeBuilder(AddressSelectionPageView());
   }
   return null;
 }

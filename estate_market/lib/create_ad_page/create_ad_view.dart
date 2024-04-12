@@ -264,7 +264,7 @@ class CreateAdView extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RouteNames.mapSelectionPage);
+                          Navigator.pushNamed(context, RouteNames.addressSelectionPage);
                         },
                         child: Center(
                           child: Text(AppLocalizations.of(context)!.selectAddress),
