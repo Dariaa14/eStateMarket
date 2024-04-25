@@ -1,3 +1,5 @@
+import '../entities/wrappers/landmark_entity.dart';
+
 enum LocationPermissionStatus {
   granted,
   denied,
@@ -7,4 +9,5 @@ enum LocationPermissionStatus {
 abstract class MapRepository {
   void startFollowingPosition();
   Future<LocationPermissionStatus> requestLocationPermission();
+  void registerMapGestureCallbacks(Function(LandmarkEntity) onTap);
 }
