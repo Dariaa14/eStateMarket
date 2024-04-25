@@ -1,3 +1,4 @@
+import '../entities/wrappers/landmark_entity.dart';
 import '../repositories/map_repository.dart';
 
 class MapUseCase {
@@ -11,5 +12,9 @@ class MapUseCase {
 
   Future<LocationPermissionStatus> requestLocationPermission() async {
     return await _mapRepository.requestLocationPermission();
+  }
+
+  void registerMapGestureCallbacks(Function(LandmarkEntity) onTap) {
+    _mapRepository.registerMapGestureCallbacks(onTap);
   }
 }

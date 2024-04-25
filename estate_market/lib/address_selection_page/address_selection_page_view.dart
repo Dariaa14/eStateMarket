@@ -24,41 +24,48 @@ class AddressSelectionPageView extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: true,
       ),
-      body: Stack(
-        children: [
-          GemMap(
-            onMapCreated: (controller) => onMapCreated(controller, context),
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: BlocBuilder<AddressSelectionBloc, AddressSelectionState>(
-              bloc: bloc,
-              builder: (context, state) {
-                return Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                        color: (state.status == LocationPermissionStatus.granted)
-                            ? Theme.of(context).colorScheme.primary
-                            : Colors.red,
-                        shape: BoxShape.circle),
-                    margin: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () {
-                        if (state.status == LocationPermissionStatus.granted) {
-                          bloc.add(FollowPositionEvent());
-                        } else {
-                          bloc.add(RequestLocationPermissionEvent());
-                        }
-                      },
-                      child: (state.status == LocationPermissionStatus.granted)
-                          ? Icon(Icons.location_on, color: Theme.of(context).colorScheme.onPrimary, size: 40)
-                          : Icon(Icons.location_off, color: Theme.of(context).colorScheme.onPrimary, size: 40),
-                    ));
-              },
+      body: BlocListener<AddressSelectionBloc, AddressSelectionState>(
+        bloc: bloc,
+        listenWhen: (previous, current) => previous.landmark != current.landmark,
+        listener: (context, state) {
+          if (state.landmark != null) {}
+        },
+        child: Stack(
+          children: [
+            GemMap(
+              onMapCreated: (controller) => onMapCreated(controller, context),
             ),
-          )
-        ],
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: BlocBuilder<AddressSelectionBloc, AddressSelectionState>(
+                bloc: bloc,
+                builder: (context, state) {
+                  return Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                          color: (state.status == LocationPermissionStatus.granted)
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.red,
+                          shape: BoxShape.circle),
+                      margin: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          if (state.status == LocationPermissionStatus.granted) {
+                            bloc.add(FollowPositionEvent());
+                          } else {
+                            bloc.add(RequestLocationPermissionEvent());
+                          }
+                        },
+                        child: (state.status == LocationPermissionStatus.granted)
+                            ? Icon(Icons.location_on, color: Theme.of(context).colorScheme.onPrimary, size: 40)
+                            : Icon(Icons.location_off, color: Theme.of(context).colorScheme.onPrimary, size: 40),
+                      ));
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
