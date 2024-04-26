@@ -155,3 +155,9 @@ class AddImagesEvent extends CreateAdEvent {
 
   AddImagesEvent({required this.images});
 }
+
+class SetLandmarkEvent extends CreateAdEvent {
+  final LandmarkEntity? landmark;
+
+  SetLandmarkEvent({required this.landmark});
+}

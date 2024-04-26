@@ -8,8 +8,10 @@ import 'package:equatable/equatable.dart';
 part 'address_selection_event.dart';
 part 'address_selection_state.dart';
 
+//TODO: modify landmark logic
 class AddressSelectionBloc extends Bloc<AddressSelectionEvent, AddressSelectionState> {
   late MapUseCase? _mapUseCase;
+  LandmarkEntity? _landmark;
 
   AddressSelectionBloc() : super(const AddressSelectionState()) {
     on<RequestLocationPermissionEvent>(_requestLocationPermissionEventHandler);
@@ -21,8 +23,8 @@ class AddressSelectionBloc extends Bloc<AddressSelectionEvent, AddressSelectionS
     _mapUseCase = sl.get<MapUseCase>();
 
     _mapUseCase!.registerMapGestureCallbacks((landmark) {
-      //TODO: finish this:
-      // emit(state.copyWith(landmark: landmark));
+      _landmark = landmark;
+      //emit(state.copyWith(landmark: landmark));
     });
   }
 
@@ -34,5 +36,9 @@ class AddressSelectionBloc extends Bloc<AddressSelectionEvent, AddressSelectionS
       RequestLocationPermissionEvent event, Emitter<AddressSelectionState> emit) async {
     final status = await _mapUseCase!.requestLocationPermission();
     emit(state.copyWith(status: status));
+  }
+
+  getCurrentLandmark() {
+    return _landmark;
   }
 }

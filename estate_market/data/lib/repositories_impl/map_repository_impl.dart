@@ -6,7 +6,7 @@ import 'package:domain/repositories/map_repository.dart';
 import 'package:gem_kit/d3Scene.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-// COMPLETE FOLLOW POSITION:
+// TODO: COMPLETE FOLLOW POSITION:
 class MapRepositoryImpl implements MapRepository {
   final MapControllerEntity mapController;
 
@@ -40,19 +40,19 @@ class MapRepositoryImpl implements MapRepository {
   void registerMapGestureCallbacks(Function(LandmarkEntity) onTap) {
     mapController.registerTouchCallback((pos) async {
       await mapController.selectMapObjects(pos);
-      final landmarks = mapController.cursorSelectionLandmarks();
-      if (landmarks.isNotEmpty) {
-        final landmark = landmarks.first;
-        onTap(landmark);
-        return;
-      }
+      //final landmarks = mapController.cursorSelectionLandmarks();
+      // if (landmarks.isNotEmpty) {
+      //   final landmark = landmarks.first;
+      //   onTap(landmark);
+      //   return;
+      // }
 
-      final overlays = mapController.cursorSelectionOverlayItems();
-      if (overlays.isNotEmpty) {
-        final overlay = overlays.first;
-        onTap(overlay);
-        return;
-      }
+      // final overlays = mapController.cursorSelectionOverlayItems();
+      // if (overlays.isNotEmpty) {
+      //   final overlay = overlays.first;
+      //   onTap(overlay);
+      //   return;
+      // }
 
       final streets = mapController.cursorSelectionStreets();
       if (streets.isNotEmpty) {

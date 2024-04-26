@@ -25,6 +25,7 @@ class CreateAdState extends Equatable {
   final bool showErrors;
   final CreateAdStatus status;
   final List<File> images;
+  final LandmarkEntity? landmark;
 
   final bool isNegotiable;
   final AdCategory currentCategory;
@@ -77,7 +78,8 @@ class CreateAdState extends Equatable {
       this.height,
       this.usableSurface,
       this.administrativeSurface,
-      this.parkingSpaces});
+      this.parkingSpaces,
+      this.landmark});
 
   CreateAdState copyWith(
           {List<CreateAdFields>? emptyFields,
@@ -103,7 +105,8 @@ class CreateAdState extends Equatable {
           double? height,
           double? usableSurface,
           double? administrativeSurface,
-          int? parkingSpaces}) =>
+          int? parkingSpaces,
+          LandmarkEntity? landmark}) =>
       CreateAdState(
         emptyFields: emptyFields ?? this.emptyFields,
         showErrors: showErrors ?? this.showErrors,
@@ -129,6 +132,7 @@ class CreateAdState extends Equatable {
         usableSurface: usableSurface ?? this.usableSurface,
         administrativeSurface: administrativeSurface ?? this.administrativeSurface,
         parkingSpaces: parkingSpaces ?? this.parkingSpaces,
+        landmark: landmark ?? this.landmark,
       );
 
   CreateAdState copyGarage({int? parkingCapacity}) => CreateAdState(
@@ -141,6 +145,7 @@ class CreateAdState extends Equatable {
         listingType: listingType,
         parkingCapacity: parkingCapacity,
         parkingType: parkingType,
+        landmark: landmark,
       );
 
   CreateAdState copyResidence({
@@ -163,6 +168,7 @@ class CreateAdState extends Equatable {
         numberOfFloors: numberOfFloors,
         insideSurface: insideSurface,
         outsideSurface: outsideSurface,
+        landmark: landmark,
       );
 
   CreateAdState copyApartment({
@@ -181,6 +187,7 @@ class CreateAdState extends Equatable {
         floor: floor,
         numberOfBathrooms: numberOfBathrooms,
         numberOfRooms: numberOfRooms,
+        landmark: landmark,
       );
 
   CreateAdState copyHouse({
@@ -202,6 +209,7 @@ class CreateAdState extends Equatable {
         numberOfFloors: numberOfFloors,
         insideSurface: insideSurface,
         outsideSurface: outsideSurface,
+        landmark: landmark,
       );
 
   CreateAdState copyDeposit({
@@ -223,6 +231,7 @@ class CreateAdState extends Equatable {
         administrativeSurface: administrativeSurface,
         depositType: depositType,
         parkingSpaces: parkingSpaces,
+        landmark: landmark,
       );
 
   @override
@@ -251,5 +260,6 @@ class CreateAdState extends Equatable {
         usableSurface,
         administrativeSurface,
         parkingSpaces,
+        landmark,
       ];
 }

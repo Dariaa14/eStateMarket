@@ -10,6 +10,7 @@ import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/use_cases/database_use_case.dart';
 import 'package:equatable/equatable.dart';
 
@@ -68,6 +69,8 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     on<SetEmptyFieldsEvent>(_setEmptyFieldsEventHandler);
     on<SetImagesEvent>(_setImagesEventHandler);
     on<AddImagesEvent>(_addImagesEventHandler);
+
+    on<SetLandmarkEvent>(_setLandmarkEventHandler);
   }
 
   _insertInDatabaseEventHandler(InsertInDatabaseEvent event, Emitter<CreateAdState> emit) async {
@@ -381,5 +384,9 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
         uniquePaths.map((uniquePath) => allImages.firstWhere((image) => image.path.endsWith(uniquePath))).toList();
 
     emit(state.copyWith(images: uniqueImages));
+  }
+
+  _setLandmarkEventHandler(SetLandmarkEvent event, Emitter<CreateAdState> emit) {
+    emit(state.copyWith(landmark: event.landmark));
   }
 }

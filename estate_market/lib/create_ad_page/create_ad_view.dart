@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:domain/entities/ad_entity.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/create_ad_page/property_widgets/apartment_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/deposit_widgets.dart';
@@ -264,10 +265,16 @@ class CreateAdView extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RouteNames.addressSelectionPage);
+                          Navigator.pushNamed(context, RouteNames.addressSelectionPage).then((value) {
+                            if (value != null) bloc.add(SetLandmarkEvent(landmark: value as LandmarkEntity));
+                          });
                         },
                         child: Center(
-                          child: Text(AppLocalizations.of(context)!.selectAddress),
+                          child: Text(
+                            (state.landmark == null)
+                                ? AppLocalizations.of(context)!.selectAddress
+                                : state.landmark!.getAddress(),
+                          ),
                         ),
                       ),
                     ),
