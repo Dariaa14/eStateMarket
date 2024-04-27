@@ -1,6 +1,7 @@
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 
 import '../entities/account_entity.dart';
 import '../entities/ad_entity.dart';
@@ -72,6 +73,7 @@ abstract class DatabaseRepository {
     required String description,
     required DocumentReferenceEntity property,
     required DocumentReferenceEntity account,
+    required DocumentReferenceEntity landmark,
     required ListingType listingType,
     required List<String> images,
   });
@@ -82,6 +84,8 @@ abstract class DatabaseRepository {
     required String phoneNumber,
     required SellerType sellerType,
   });
+
+  Future<DocumentReferenceEntity> insertLandmarkEntity({required LandmarkEntity landmark});
 
   Future<void> insertFavoriteAd({required AccountEntity account, required AdEntity ad});
 

@@ -1,7 +1,7 @@
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/entities/wrappers/query_entity.dart';
 
-enum Collections { ad, accounts, properties, favorites }
+enum Collections { ad, accounts, properties, favorites, landmarks }
 
 enum WhereOperations {
   isEqualTo,

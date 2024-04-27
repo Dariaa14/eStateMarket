@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data/entities_impl/favorites_entity_impl.dart';
+import 'package:data/entities_impl/wrappers/landmark_entity_impl.dart';
 import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/favorites_entity.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/entities/wrappers/query_entity.dart';
 import 'package:domain/entities/wrappers/query_snapshot_entity.dart';
 
@@ -97,6 +99,14 @@ class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
               );
         }
         return FirebaseFirestore.instance.collection('favorites');
+      case Collections.landmarks:
+        if (withConverter) {
+          return FirebaseFirestore.instance.collection('landmarks').withConverter<LandmarkEntity>(
+                fromFirestore: (snapshots, _) => LandmarkEntityImpl.fromJson(snapshots.data()!),
+                toFirestore: (landmark, _) => (landmark as LandmarkEntityImpl).toJson(),
+              );
+        }
+        return FirebaseFirestore.instance.collection('landmarks');
     }
   }
 }

@@ -6,12 +6,15 @@ import 'package:domain/entities/property_entity.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 
 import 'wrappers/document_reference_entity_impl.dart';
+import 'wrappers/landmark_entity_impl.dart';
 
 class AdEntityImpl implements AdEntity {
   DocumentReferenceEntity? _propertyReference;
   DocumentReferenceEntity? _accountReference;
+  DocumentReferenceEntity? _landmarkReference;
 
   @override
   PropertyEntity? property;
@@ -37,6 +40,9 @@ class AdEntityImpl implements AdEntity {
   @override
   String title;
 
+  @override
+  LandmarkEntity? landmark;
+
   AdEntityImpl(
       {required this.title,
       required this.adCategory,
@@ -47,9 +53,11 @@ class AdEntityImpl implements AdEntity {
       required this.listingType,
       required this.dateOfAd,
       required DocumentReferenceEntity? propertyReference,
-      required DocumentReferenceEntity? accountReference})
+      required DocumentReferenceEntity? accountReference,
+      required DocumentReferenceEntity? landmarkReference})
       : _propertyReference = propertyReference,
-        _accountReference = accountReference;
+        _accountReference = accountReference,
+        _landmarkReference = landmarkReference;
 
   Map<String, dynamic> toJson() {
     return {
@@ -59,6 +67,7 @@ class AdEntityImpl implements AdEntity {
       'description': description,
       'property': (_propertyReference as DocumentReferenceEntityImpl).ref,
       'account': (_accountReference as DocumentReferenceEntityImpl).ref,
+      'landmark': (_landmarkReference as DocumentReferenceEntityImpl).ref,
       'listingType': listingType.index,
       'dateOfAd': Timestamp.fromDate(dateOfAd),
     };
@@ -82,6 +91,9 @@ class AdEntityImpl implements AdEntity {
       accountReference: (json.containsKey('account'))
           ? DocumentReferenceEntityImpl(ref: json['account'] as DocumentReference<Map<String, dynamic>>)
           : null,
+      landmarkReference: (json.containsKey('landmark'))
+          ? DocumentReferenceEntityImpl(ref: json['landmark'] as DocumentReference<Map<String, dynamic>>)
+          : null,
     );
   }
 
@@ -96,6 +108,11 @@ class AdEntityImpl implements AdEntity {
     AccountEntity? account = await AccountEntityImpl.getAccountFromDocument(
         (_accountReference! as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>);
     this.account = account;
+
+    if (_landmarkReference == null) return;
+    LandmarkEntity? landmark = await LandmarkEntityImpl.getLandmarkFromDocument(
+        (_landmarkReference! as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>);
+    this.landmark = landmark;
   }
 
   static Future<AdEntity?> getAdFromDocument(DocumentReference<Map<String, dynamic>> document) async {

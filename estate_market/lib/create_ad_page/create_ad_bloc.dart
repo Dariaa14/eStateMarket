@@ -83,6 +83,11 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       return;
     }
 
+    if (state.landmark == null) {
+      emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
+      return;
+    }
+
     final imageUploadResult = await _databaseUseCase.uploadImages(state.images.map((image) => image.path).toList());
     if (imageUploadResult.isLeft()) {
       emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
@@ -189,11 +194,14 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       default:
         break;
     }
+    final landmarkReference = await _databaseUseCase.insertLandmarkEntity(landmark: state.landmark!);
+
     await _databaseUseCase.insertAdEntity(
         title: event.title,
         category: state.currentCategory,
         description: event.description,
         property: propertyReference,
+        landmark: landmarkReference,
         listingType: state.listingType,
         images: (imageUploadResult as Right).value);
     emit(state.copyWith(status: CreateAdStatus.finished));

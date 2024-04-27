@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/entities/garage_entity.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/repositories/account_repository.dart';
 import 'package:domain/repositories/database_repository.dart';
 import 'package:domain/repositories/image_upload_repository.dart';
@@ -143,6 +144,7 @@ class DatabaseUseCase {
     required AdCategory category,
     required String description,
     required DocumentReferenceEntity property,
+    required DocumentReferenceEntity landmark,
     required ListingType listingType,
     required List<String> images,
   }) async {
@@ -156,6 +158,7 @@ class DatabaseUseCase {
         property: property,
         account: currentUserRef,
         listingType: listingType,
+        landmark: landmark,
         images: images);
   }
 
@@ -167,6 +170,10 @@ class DatabaseUseCase {
   }) async {
     await _databaseRepository.insertAccountEntity(
         email: email, password: password, phoneNumber: phoneNumber, sellerType: sellerType);
+  }
+
+  Future<DocumentReferenceEntity> insertLandmarkEntity({required LandmarkEntity landmark}) async {
+    return await _databaseRepository.insertLandmarkEntity(landmark: landmark);
   }
 
   Future<Either<Failure, List<String>>> uploadImages(List<String> paths) async {

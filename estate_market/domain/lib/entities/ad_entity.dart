@@ -1,5 +1,6 @@
 import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/property_entity.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 
 enum AdCategory { apartament, house, terrain, garage, deposit }
 
@@ -12,6 +13,7 @@ abstract class AdEntity {
   final String description;
   PropertyEntity? property;
   AccountEntity? account;
+  LandmarkEntity? landmark;
   final ListingType listingType;
   final DateTime dateOfAd;
 
@@ -22,6 +24,7 @@ abstract class AdEntity {
       required this.description,
       this.property,
       this.account,
+      this.landmark,
       required this.listingType,
       required this.dateOfAd});
 

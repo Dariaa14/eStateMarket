@@ -15,10 +15,12 @@ import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/repositories/database_repository.dart';
 
 import '../entities_impl/ad_enitity_impl.dart';
 import '../entities_impl/wrappers/document_reference_entity_impl.dart';
+import '../entities_impl/wrappers/landmark_entity_impl.dart';
 import '../utils/convert.dart';
 
 class DatabaseRepositoryImpl extends DatabaseRepository {
@@ -54,6 +56,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
     required String description,
     required DocumentReferenceEntity property,
     required DocumentReferenceEntity account,
+    required DocumentReferenceEntity landmark,
     required ListingType listingType,
     required List<String> images,
   }) async {
@@ -65,6 +68,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         imagesUrls: images,
         propertyReference: property,
         accountReference: account,
+        landmarkReference: landmark,
         listingType: listingType,
         dateOfAd: DateTime.now());
     await ad.setReferences();
@@ -229,5 +233,12 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       throw Exception('Favorite not found');
     }
     await favoriteDocument.first.delete();
+  }
+
+  @override
+  Future<DocumentReferenceEntity> insertLandmarkEntity({required LandmarkEntity landmark}) async {
+    CollectionReferenceEntity landmarks =
+        CollectionReferenceEntityImpl(collection: Collections.landmarks, withConverter: false);
+    return await landmarks.add((landmark as LandmarkEntityImpl).toJson());
   }
 }
