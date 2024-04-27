@@ -273,7 +273,7 @@ class CreateAdView extends StatelessWidget {
                           child: Text(
                             (state.landmark == null)
                                 ? AppLocalizations.of(context)!.selectAddress
-                                : state.landmark!.getAddress(),
+                                : state.landmark!.getAddressString(),
                           ),
                         ),
                       ),

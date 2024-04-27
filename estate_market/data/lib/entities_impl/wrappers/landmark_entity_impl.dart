@@ -23,7 +23,7 @@ class LandmarkEntityImpl implements LandmarkEntity {
   String getName() => ref.getName();
 
   @override
-  String getAddress() {
+  String getAddressString() {
     final address = ref.getAddress();
     final country = address.getField(EAddressField.Country);
     final city = address.getField(EAddressField.City);
@@ -35,9 +35,26 @@ class LandmarkEntityImpl implements LandmarkEntity {
   @override
   CoordinatesEntity getCoordinates() => CoordinatesEntityImpl(ref: ref.getCoordinates());
 
-  static create() {
-    final landmark = Landmark.create();
-    landmark.setImageFromIconId(GemIcon.Search_Results_Pin);
-    return LandmarkEntityImpl(ref: landmark);
+  LandmarkEntityImpl.create() : ref = Landmark.create() {
+    ref.setImageFromIconId(GemIcon.Search_Results_Pin);
+  }
+
+  @override
+  void setAddressField(String value, AddressField field) {
+    final address = ref.getAddress();
+    switch (field) {
+      case AddressField.country:
+        address.setField(value, EAddressField.Country);
+        break;
+      case AddressField.city:
+        address.setField(value, EAddressField.City);
+        break;
+      case AddressField.streetName:
+        address.setField(value, EAddressField.StreetName);
+        break;
+      case AddressField.streetNumber:
+        address.setField(value, EAddressField.StreetNumber);
+        break;
+    }
   }
 }
