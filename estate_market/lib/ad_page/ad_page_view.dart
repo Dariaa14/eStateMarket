@@ -1,5 +1,6 @@
 import 'package:cloudinary_flutter/image/cld_image.dart';
 import 'package:core/config.dart';
+import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
@@ -11,8 +12,11 @@ import 'package:estate_market/ad_page/property_widgets/deposit_view.dart';
 import 'package:estate_market/ad_page/property_widgets/garage_view.dart';
 import 'package:estate_market/ad_page/property_widgets/house_view.dart';
 import 'package:estate_market/utils/translate_enums.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:gem_kit/d3Scene.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,6 +26,10 @@ import 'property_widgets/terrain_view.dart';
 class AdPageView extends StatelessWidget {
   final AdEntity ad;
   const AdPageView({super.key, required this.ad});
+
+  Future<void> onMapCreated(GemMapController controller, BuildContext context) async {
+    diWithMapController(controller);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -175,30 +183,49 @@ class AdPageView extends StatelessWidget {
                       height: 20,
                     ),
                     Container(
-                        width: MediaQuery.of(context).size.width - 20,
-                        padding: const EdgeInsets.all(5.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Theme.of(context).colorScheme.surface,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(AppLocalizations.of(context)!.aboutSeller,
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-                            if (ad.account!.phoneNumber != '')
-                              Text(
-                                '${AppLocalizations.of(context)!.phoneNumber}${ad.account!.phoneNumber}',
-                                softWrap: true,
-                                style: const TextStyle(fontSize: 16),
-                              ),
+                      width: MediaQuery.of(context).size.width - 20,
+                      padding: const EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(AppLocalizations.of(context)!.aboutSeller,
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                          if (ad.account!.phoneNumber != '')
                             Text(
-                              '${AppLocalizations.of(context)!.typeOfSeller}${sellerTypeTranslate(ad.account!.sellerType, context)}',
+                              '${AppLocalizations.of(context)!.phoneNumber}${ad.account!.phoneNumber}',
                               softWrap: true,
                               style: const TextStyle(fontSize: 16),
                             ),
-                          ],
-                        )),
+                          Text(
+                            '${AppLocalizations.of(context)!.typeOfSeller}${sellerTypeTranslate(ad.account!.sellerType, context)}',
+                            softWrap: true,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (ad.landmark != null)
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    if (ad.landmark != null)
+                      Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: ClipRRect(
+                          clipBehavior: Clip.hardEdge,
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: GemMap(
+                            onMapCreated: (controller) => onMapCreated(controller, context),
+                          ),
+                        ),
+                      ),
                     const SizedBox(
                       height: 70,
                     ),

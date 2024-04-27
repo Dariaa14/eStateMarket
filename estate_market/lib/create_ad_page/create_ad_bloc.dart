@@ -17,6 +17,7 @@ import 'package:equatable/equatable.dart';
 part 'create_ad_event.dart';
 part 'create_ad_state.dart';
 
+// TODO: error if landmark is not chosen + delete landmark
 class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   final DatabaseUseCase _databaseUseCase = sl.get<DatabaseUseCase>();
   final List<CreateAdFields> specificAdFields = [
