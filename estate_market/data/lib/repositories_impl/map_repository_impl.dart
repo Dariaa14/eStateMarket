@@ -1,5 +1,6 @@
 import 'package:data/entities_impl/wrappers/landmark_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/map_controller_entity_impl.dart';
+import 'package:domain/entities/wrappers/coordinates_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/entities/wrappers/map_controller_entity.dart';
 import 'package:domain/repositories/map_repository.dart';
@@ -69,5 +70,10 @@ class MapRepositoryImpl implements MapRepository {
       landmark.setName('GPS Coordinates');
       onTap(landmark);
     });
+  }
+
+  @override
+  void centerOnCoordinates(CoordinatesEntity coordinates) {
+    mapController.centerOnCoordinates(coordinates);
   }
 }

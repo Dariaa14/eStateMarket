@@ -1,3 +1,5 @@
+import 'package:domain/entities/wrappers/coordinates_entity.dart';
+
 import '../entities/wrappers/landmark_entity.dart';
 import '../repositories/map_repository.dart';
 
@@ -16,5 +18,9 @@ class MapUseCase {
 
   void registerMapGestureCallbacks(Function(LandmarkEntity) onTap) {
     _mapRepository.registerMapGestureCallbacks(onTap);
+  }
+
+  void centerOnCoordinates(CoordinatesEntity coordinates) {
+    _mapRepository.centerOnCoordinates(coordinates);
   }
 }

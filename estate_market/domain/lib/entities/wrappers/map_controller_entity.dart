@@ -15,4 +15,6 @@ abstract class MapControllerEntity {
   List<LandmarkEntity> cursorSelectionStreets();
 
   CoordinatesEntity? transformScreenToCoordinates(Point<num> pos);
+
+  void centerOnCoordinates(CoordinatesEntity coordinates);
 }

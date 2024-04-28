@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
+import 'package:domain/entities/wrappers/coordinates_entity.dart';
 import 'package:domain/use_cases/map_use_case.dart';
 import 'package:equatable/equatable.dart';
 
@@ -15,5 +16,7 @@ class AdPageBloc extends Bloc<AdPageEvent, AdPageState> {
 
   _initAdPageEventHandler(InitAdPageEvent event, Emitter<AdPageState> emit) {
     _mapUseCase = sl.get<MapUseCase>();
+
+    _mapUseCase.centerOnCoordinates(event.coordinates);
   }
 }

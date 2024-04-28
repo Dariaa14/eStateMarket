@@ -62,4 +62,9 @@ class MapControllerEntityImpl implements MapControllerEntity {
     }
     return landmarks;
   }
+
+  @override
+  void centerOnCoordinates(CoordinatesEntity coordinates) {
+    ref.centerOnCoordinates((coordinates as CoordinatesEntityImpl).ref);
+  }
 }

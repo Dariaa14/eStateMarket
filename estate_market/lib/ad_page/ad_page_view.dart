@@ -7,14 +7,13 @@ import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/house_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
+import 'package:estate_market/ad_page/ad_page_bloc.dart';
 import 'package:estate_market/ad_page/property_widgets/apartment_view.dart';
 import 'package:estate_market/ad_page/property_widgets/deposit_view.dart';
 import 'package:estate_market/ad_page/property_widgets/garage_view.dart';
 import 'package:estate_market/ad_page/property_widgets/house_view.dart';
 import 'package:estate_market/utils/translate_enums.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:gem_kit/d3Scene.dart';
 import 'package:intl/intl.dart';
@@ -24,11 +23,13 @@ import 'property_widgets/terrain_view.dart';
 
 //TODO: Implement adding to favorites from here
 class AdPageView extends StatelessWidget {
+  final AdPageBloc bloc = AdPageBloc();
   final AdEntity ad;
-  const AdPageView({super.key, required this.ad});
+  AdPageView({super.key, required this.ad});
 
   Future<void> onMapCreated(GemMapController controller, BuildContext context) async {
     diWithMapController(controller);
+    bloc.add(InitAdPageEvent(coordinates: ad.landmark!.getCoordinates()));
   }
 
   @override
@@ -214,7 +215,7 @@ class AdPageView extends StatelessWidget {
                       ),
                     if (ad.landmark != null)
                       Container(
-                        height: 200,
+                        height: 400,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
