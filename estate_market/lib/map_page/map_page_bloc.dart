@@ -5,21 +5,23 @@ import 'package:domain/use_cases/map_use_case.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:equatable/equatable.dart';
 
-part 'address_selection_event.dart';
-part 'address_selection_state.dart';
+part 'map_page_event.dart';
+part 'map_page_state.dart';
 
 //TODO: modify landmark logic
-class AddressSelectionBloc extends Bloc<AddressSelectionEvent, AddressSelectionState> {
+class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
   late MapUseCase? _mapUseCase;
   LandmarkEntity? _landmark;
 
-  AddressSelectionBloc() : super(const AddressSelectionState()) {
+  MapPageBloc() : super(const MapPageState()) {
     on<RequestLocationPermissionEvent>(_requestLocationPermissionEventHandler);
     on<FollowPositionEvent>(_followPositionEventHandler);
+
     on<InitAddressSelectionEvent>(_initAddressSelectionEventHandler);
+    on<InitViewLandmarkEvent>(_initViewLandmarkEventHandler);
   }
 
-  _initAddressSelectionEventHandler(InitAddressSelectionEvent event, Emitter<AddressSelectionState> emit) {
+  _initAddressSelectionEventHandler(InitAddressSelectionEvent event, Emitter<MapPageState> emit) {
     _mapUseCase = sl.get<MapUseCase>();
 
     _mapUseCase!.registerMapGestureCallbacks((landmark) {
@@ -28,12 +30,17 @@ class AddressSelectionBloc extends Bloc<AddressSelectionEvent, AddressSelectionS
     });
   }
 
-  _followPositionEventHandler(FollowPositionEvent event, Emitter<AddressSelectionState> emit) {
+  _initViewLandmarkEventHandler(InitViewLandmarkEvent event, Emitter<MapPageState> emit) {
+    _mapUseCase = sl.get<MapUseCase>();
+
+    _mapUseCase!.centerOnCoordinates(event.landmark.getCoordinates());
+  }
+
+  _followPositionEventHandler(FollowPositionEvent event, Emitter<MapPageState> emit) {
     _mapUseCase!.startFollowingPosition();
   }
 
-  _requestLocationPermissionEventHandler(
-      RequestLocationPermissionEvent event, Emitter<AddressSelectionState> emit) async {
+  _requestLocationPermissionEventHandler(RequestLocationPermissionEvent event, Emitter<MapPageState> emit) async {
     final status = await _mapUseCase!.requestLocationPermission();
     emit(state.copyWith(status: status));
   }

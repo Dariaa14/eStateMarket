@@ -265,7 +265,7 @@ class CreateAdView extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RouteNames.addressSelectionPage).then((value) {
+                          Navigator.pushNamed(context, RouteNames.mapPage).then((value) {
                             if (value != null) bloc.add(SetLandmarkEvent(landmark: value as LandmarkEntity));
                           });
                         },

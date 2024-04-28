@@ -1,6 +1,5 @@
 import 'package:cloudinary_flutter/image/cld_image.dart';
 import 'package:core/config.dart';
-import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
@@ -12,10 +11,10 @@ import 'package:estate_market/ad_page/property_widgets/apartment_view.dart';
 import 'package:estate_market/ad_page/property_widgets/deposit_view.dart';
 import 'package:estate_market/ad_page/property_widgets/garage_view.dart';
 import 'package:estate_market/ad_page/property_widgets/house_view.dart';
+import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/utils/translate_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:gem_kit/d3Scene.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -26,11 +25,6 @@ class AdPageView extends StatelessWidget {
   final AdPageBloc bloc = AdPageBloc();
   final AdEntity ad;
   AdPageView({super.key, required this.ad});
-
-  Future<void> onMapCreated(GemMapController controller, BuildContext context) async {
-    diWithMapController(controller);
-    bloc.add(InitAdPageEvent(coordinates: ad.landmark!.getCoordinates()));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -210,20 +204,24 @@ class AdPageView extends StatelessWidget {
                       ),
                     ),
                     if (ad.landmark != null)
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    if (ad.landmark != null)
                       Container(
-                        height: 400,
+                        height: 45,
+                        margin: const EdgeInsets.only(top: 20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
+                          color: Theme.of(context).colorScheme.surface,
                         ),
-                        child: ClipRRect(
-                          clipBehavior: Clip.hardEdge,
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: GemMap(
-                            onMapCreated: (controller) => onMapCreated(controller, context),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              RouteNames.mapPage,
+                              arguments: ad.landmark!,
+                            );
+                          },
+                          child: Center(
+                            child:
+                                Text(AppLocalizations.of(context)!.seeLocation, style: const TextStyle(fontSize: 16)),
                           ),
                         ),
                       ),

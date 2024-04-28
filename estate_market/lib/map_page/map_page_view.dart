@@ -1,33 +1,41 @@
 import 'package:core/dependency_injector/di.dart';
+import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/repositories/map_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gem_kit/d3Scene.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'address_selection_bloc.dart';
+import 'map_page_bloc.dart';
 
-class AddressSelectionPageView extends StatelessWidget {
-  final AddressSelectionBloc bloc = AddressSelectionBloc();
-  AddressSelectionPageView({super.key});
+class MapPageView extends StatelessWidget {
+  final LandmarkEntity? landmark;
+  final MapPageBloc bloc = MapPageBloc();
+  MapPageView({super.key, this.landmark});
 
   Future<void> onMapCreated(GemMapController controller, BuildContext context) async {
     diWithMapController(controller);
-    bloc.add(InitAddressSelectionEvent());
+
+    if (landmark == null) {
+      bloc.add(InitAddressSelectionEvent());
+      return;
+    }
+    bloc.add(InitViewLandmarkEvent(landmark: landmark!));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.selectAddress),
+        title: Text((landmark == null) ? AppLocalizations.of(context)!.selectAddress : ''),
         centerTitle: true,
         automaticallyImplyLeading: true,
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, bloc.getCurrentLandmark()),
-            child: Text(AppLocalizations.of(context)!.save),
-          ),
+          if (landmark == null)
+            TextButton(
+              onPressed: () => Navigator.pop(context, bloc.getCurrentLandmark()),
+              child: Text(AppLocalizations.of(context)!.save),
+            ),
         ],
       ),
       body: Stack(
@@ -37,7 +45,7 @@ class AddressSelectionPageView extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.bottomLeft,
-            child: BlocBuilder<AddressSelectionBloc, AddressSelectionState>(
+            child: BlocBuilder<MapPageBloc, MapPageState>(
               bloc: bloc,
               builder: (context, state) {
                 return Container(

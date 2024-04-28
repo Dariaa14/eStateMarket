@@ -103,5 +103,6 @@
     "contactSeller": "Contactează vânzătorul",
     "noImages": "Nu există imagini",
     "unknown": "Necunoscut",
-    "selectAddress": "Selectează adresa"
+    "selectAddress": "Selectează adresa",
+    "seeLocation": "Vezi locația pe hartă"
 }

@@ -514,5 +514,10 @@
     "selectAddress": "Select address",
     "@selectAddress": {
         "description": "Select address"
+    },
+
+    "seeLocation": "See location on map",
+    "@seeLocation": {
+        "description": "See location"
     }
 }
