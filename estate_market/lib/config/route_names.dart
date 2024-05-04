@@ -40,7 +40,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
         ad: settings.arguments as AdEntity,
       ));
     case RouteNames.mapPage:
-      return routeBuilder(MapPageView(landmark: settings.arguments as LandmarkEntity));
+      return routeBuilder(MapPageView(landmark: settings.arguments as LandmarkEntity?));
   }
   return null;
 }

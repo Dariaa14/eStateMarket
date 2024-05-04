@@ -8,10 +8,8 @@ import 'package:equatable/equatable.dart';
 part 'map_page_event.dart';
 part 'map_page_state.dart';
 
-//TODO: modify landmark logic
 class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
   late MapUseCase? _mapUseCase;
-  LandmarkEntity? _landmark;
 
   MapPageBloc() : super(const MapPageState()) {
     on<RequestLocationPermissionEvent>(_requestLocationPermissionEventHandler);
@@ -19,14 +17,15 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
 
     on<InitAddressSelectionEvent>(_initAddressSelectionEventHandler);
     on<InitViewLandmarkEvent>(_initViewLandmarkEventHandler);
+
+    on<SelectedLandmarkUpdateEvent>(_selectedLandmarkUpdateEventHandler);
   }
 
   _initAddressSelectionEventHandler(InitAddressSelectionEvent event, Emitter<MapPageState> emit) {
     _mapUseCase = sl.get<MapUseCase>();
 
     _mapUseCase!.registerMapGestureCallbacks((landmark) {
-      _landmark = landmark;
-      //emit(state.copyWith(landmark: landmark));
+      add(SelectedLandmarkUpdateEvent(landmark: landmark));
     });
   }
 
@@ -45,7 +44,11 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     emit(state.copyWith(status: status));
   }
 
-  getCurrentLandmark() {
-    return _landmark;
+  _selectedLandmarkUpdateEventHandler(SelectedLandmarkUpdateEvent event, Emitter<MapPageState> emit) {
+    if (event.landmark == null) {
+      emit(state.copyWithNullLandmark());
+      return;
+    }
+    emit(state.copyWith(landmark: event.landmark));
   }
 }

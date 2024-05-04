@@ -8,6 +8,12 @@ class FollowPositionEvent extends MapPageEvent {}
 
 class InitAddressSelectionEvent extends MapPageEvent {}
 
+class SelectedLandmarkUpdateEvent extends MapPageEvent {
+  final LandmarkEntity? landmark;
+
+  SelectedLandmarkUpdateEvent({required this.landmark});
+}
+
 class InitViewLandmarkEvent extends MapPageEvent {
   final LandmarkEntity landmark;
 

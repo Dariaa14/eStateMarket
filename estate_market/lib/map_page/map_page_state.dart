@@ -6,12 +6,15 @@ class MapPageState extends Equatable {
 
   const MapPageState({this.status = LocationPermissionStatus.denied, this.landmark});
 
-  MapPageState copyWith({LocationPermissionStatus? status, LandmarkEntity? landmark}) {
-    return MapPageState(
-      status: status ?? this.status,
-      landmark: landmark ?? this.landmark,
-    );
-  }
+  MapPageState copyWith({LocationPermissionStatus? status, LandmarkEntity? landmark}) => MapPageState(
+        status: status ?? this.status,
+        landmark: landmark ?? this.landmark,
+      );
+
+  MapPageState copyWithNullLandmark() => MapPageState(
+        status: status,
+        landmark: null,
+      );
 
   @override
   List<Object?> get props => [status, landmark];

@@ -33,46 +33,62 @@ class MapPageView extends StatelessWidget {
         actions: [
           if (landmark == null)
             TextButton(
-              onPressed: () => Navigator.pop(context, bloc.getCurrentLandmark()),
+              onPressed: () => Navigator.pop(context, bloc.state.landmark),
               child: Text(AppLocalizations.of(context)!.save),
             ),
         ],
       ),
-      body: Stack(
-        children: [
-          GemMap(
-            onMapCreated: (controller) => onMapCreated(controller, context),
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: BlocBuilder<MapPageBloc, MapPageState>(
-              bloc: bloc,
-              builder: (context, state) {
-                return Container(
-                    height: 60,
-                    width: 60,
+      body: BlocBuilder<MapPageBloc, MapPageState>(
+        bloc: bloc,
+        builder: (context, state) {
+          return Stack(
+            children: [
+              GemMap(
+                onMapCreated: (controller) => onMapCreated(controller, context),
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      color: (state.status == LocationPermissionStatus.granted)
+                          ? Theme.of(context).colorScheme.primary
+                          : Colors.red,
+                      shape: BoxShape.circle),
+                  margin: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      if (state.status == LocationPermissionStatus.granted) {
+                        bloc.add(FollowPositionEvent());
+                      } else {
+                        bloc.add(RequestLocationPermissionEvent());
+                      }
+                    },
+                    child: (state.status == LocationPermissionStatus.granted)
+                        ? Icon(Icons.location_on, color: Theme.of(context).colorScheme.onPrimary, size: 40)
+                        : Icon(Icons.location_off, color: Theme.of(context).colorScheme.onPrimary, size: 40),
+                  ),
+                ),
+              ),
+              if (state.landmark != null)
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: (state.status == LocationPermissionStatus.granted)
-                            ? Theme.of(context).colorScheme.primary
-                            : Colors.red,
-                        shape: BoxShape.circle),
-                    margin: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () {
-                        if (state.status == LocationPermissionStatus.granted) {
-                          bloc.add(FollowPositionEvent());
-                        } else {
-                          bloc.add(RequestLocationPermissionEvent());
-                        }
-                      },
-                      child: (state.status == LocationPermissionStatus.granted)
-                          ? Icon(Icons.location_on, color: Theme.of(context).colorScheme.onPrimary, size: 40)
-                          : Icon(Icons.location_off, color: Theme.of(context).colorScheme.onPrimary, size: 40),
-                    ));
-              },
-            ),
-          ),
-        ],
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      state.landmark!.getName(),
+                    ),
+                  ),
+                )
+            ],
+          );
+        },
       ),
     );
   }
