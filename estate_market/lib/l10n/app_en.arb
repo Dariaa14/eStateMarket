@@ -519,5 +519,10 @@
     "seeLocation": "See location on map",
     "@seeLocation": {
         "description": "See location"
+    },
+
+    "locationDisabled": "Location is not enabled. Please enable it in settings.",
+    "@locationDisabled": {
+        "description": "Location disabled in settings"
     }
 }

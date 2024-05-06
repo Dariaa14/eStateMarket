@@ -104,5 +104,6 @@
     "noImages": "Nu există imagini",
     "unknown": "Necunoscut",
     "selectAddress": "Selectează adresa",
-    "seeLocation": "Vezi locația pe hartă"
+    "seeLocation": "Vezi locația pe hartă",
+    "locationDisabled": "Locația nu este activată. Vă rog să o activați din setări."
 }

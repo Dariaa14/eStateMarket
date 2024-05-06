@@ -12,10 +12,6 @@ class MapUseCase {
     _mapRepository.startFollowingPosition();
   }
 
-  Future<LocationPermissionStatus> requestLocationPermission() async {
-    return await _mapRepository.requestLocationPermission();
-  }
-
   void registerMapGestureCallbacks(Function(LandmarkEntity) onTap) {
     _mapRepository.registerMapGestureCallbacks(onTap);
   }

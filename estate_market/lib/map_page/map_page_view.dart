@@ -1,6 +1,5 @@
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
-import 'package:domain/repositories/map_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gem_kit/d3Scene.dart';
@@ -52,25 +51,32 @@ class MapPageView extends StatelessWidget {
                   height: 60,
                   width: 60,
                   decoration: BoxDecoration(
-                      color: (state.status == LocationPermissionStatus.granted)
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.red,
+                      color: (state.hasLocationPermission) ? Theme.of(context).colorScheme.primary : Colors.red,
                       shape: BoxShape.circle),
                   margin: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    onTap: () {
-                      if (state.status == LocationPermissionStatus.granted) {
-                        bloc.add(FollowPositionEvent());
-                      } else {
-                        bloc.add(RequestLocationPermissionEvent());
-                      }
-                    },
-                    child: (state.status == LocationPermissionStatus.granted)
+                    onTap: () => _onLocationButtonPressed(context),
+                    child: (state.hasLocationPermission)
                         ? Icon(Icons.location_on, color: Theme.of(context).colorScheme.onPrimary, size: 40)
                         : Icon(Icons.location_off, color: Theme.of(context).colorScheme.onPrimary, size: 40),
                   ),
                 ),
               ),
+              if (landmark != null)
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
+                    margin: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () => bloc.add(CenterOnLandmarkEvent(landmark: landmark!)),
+                      child: Icon(Icons.center_focus_strong_rounded,
+                          color: Theme.of(context).colorScheme.onPrimary, size: 40),
+                    ),
+                  ),
+                ),
               if (state.landmark != null)
                 Align(
                   alignment: Alignment.topCenter,
@@ -91,5 +97,20 @@ class MapPageView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  _onLocationButtonPressed(BuildContext context) {
+    {
+      final mapState = bloc.state;
+      if (!mapState.hasLocationPermission) {
+        bloc.add(RequestLocationPermissionEvent());
+        return;
+      } else if (!mapState.isLocationEnabled) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.locationDisabled)));
+        return;
+      }
+      bloc.add(FollowPositionEvent());
+    }
   }
 }

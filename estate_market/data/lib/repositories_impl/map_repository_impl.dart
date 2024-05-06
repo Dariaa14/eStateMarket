@@ -5,9 +5,7 @@ import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/entities/wrappers/map_controller_entity.dart';
 import 'package:domain/repositories/map_repository.dart';
 import 'package:gem_kit/d3Scene.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-// TODO: COMPLETE FOLLOW POSITION:
 class MapRepositoryImpl implements MapRepository {
   final MapControllerEntity mapController;
 
@@ -16,25 +14,6 @@ class MapRepositoryImpl implements MapRepository {
   @override
   void startFollowingPosition() {
     mapController.startFollowingPosition();
-  }
-
-  @override
-  Future<LocationPermissionStatus> requestLocationPermission() async {
-    final currentStatus = _parsePermissionStatus(await Permission.locationWhenInUse.request());
-    return currentStatus;
-  }
-
-  _parsePermissionStatus(PermissionStatus status) {
-    switch (status) {
-      case PermissionStatus.granted:
-        return LocationPermissionStatus.granted;
-      case PermissionStatus.denied:
-        return LocationPermissionStatus.denied;
-      case PermissionStatus.permanentlyDenied:
-        return LocationPermissionStatus.permanentlyDenied;
-      default:
-        return LocationPermissionStatus.denied;
-    }
   }
 
   @override

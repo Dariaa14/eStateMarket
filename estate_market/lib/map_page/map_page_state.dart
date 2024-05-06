@@ -1,21 +1,46 @@
 part of 'map_page_bloc.dart';
 
 class MapPageState extends Equatable {
-  final LocationPermissionStatus status;
   final LandmarkEntity? landmark;
 
-  const MapPageState({this.status = LocationPermissionStatus.denied, this.landmark});
+  final bool hasLocationPermission;
+  final bool isLocationEnabled;
+  final PositionEntity? currentPosition;
 
-  MapPageState copyWith({LocationPermissionStatus? status, LandmarkEntity? landmark}) => MapPageState(
-        status: status ?? this.status,
+  const MapPageState({
+    this.landmark,
+    this.hasLocationPermission = false,
+    this.isLocationEnabled = false,
+    this.currentPosition,
+  });
+
+  MapPageState copyWith({
+    LandmarkEntity? landmark,
+    bool? hasLocationPermission,
+    bool? isLocationEnabled,
+    PositionEntity? currentPosition,
+  }) =>
+      MapPageState(
         landmark: landmark ?? this.landmark,
+        hasLocationPermission: hasLocationPermission ?? this.hasLocationPermission,
+        isLocationEnabled: isLocationEnabled ?? this.isLocationEnabled,
+        currentPosition: currentPosition ?? this.currentPosition,
       );
 
   MapPageState copyWithNullLandmark() => MapPageState(
-        status: status,
+        hasLocationPermission: hasLocationPermission,
+        isLocationEnabled: isLocationEnabled,
+        currentPosition: currentPosition,
         landmark: null,
       );
 
+  MapPageState copyWithNullPosition() => MapPageState(
+        hasLocationPermission: hasLocationPermission,
+        isLocationEnabled: isLocationEnabled,
+        currentPosition: null,
+        landmark: landmark,
+      );
+
   @override
-  List<Object?> get props => [status, landmark];
+  List<Object?> get props => [landmark, hasLocationPermission, isLocationEnabled, currentPosition];
 }

@@ -65,6 +65,7 @@ class MapControllerEntityImpl implements MapControllerEntity {
 
   @override
   void centerOnCoordinates(CoordinatesEntity coordinates) {
-    ref.centerOnCoordinates((coordinates as CoordinatesEntityImpl).ref);
+    ref.centerOnCoordinates((coordinates as CoordinatesEntityImpl).ref,
+        animation: GemAnimation(type: EAnimation.AnimationLinear));
   }
 }

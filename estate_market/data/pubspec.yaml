@@ -23,6 +23,8 @@ dependencies:
   gem_kit:
     path: ../plugins/gem_kit
   permission_handler: ^11.3.1
+  rxdart: ^0.27.7
+  geolocator: ^11.0.0
 
 dev_dependencies:
   lints: ^2.0.0

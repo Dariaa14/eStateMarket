@@ -14,8 +14,34 @@ class SelectedLandmarkUpdateEvent extends MapPageEvent {
   SelectedLandmarkUpdateEvent({required this.landmark});
 }
 
+class CenterOnLandmarkEvent extends MapPageEvent {
+  final LandmarkEntity landmark;
+
+  CenterOnLandmarkEvent({required this.landmark});
+}
+
 class InitViewLandmarkEvent extends MapPageEvent {
   final LandmarkEntity landmark;
 
   InitViewLandmarkEvent({required this.landmark});
 }
+
+class PositionUpdatedEvent extends MapPageEvent {
+  final PositionEntity? position;
+
+  PositionUpdatedEvent({required this.position});
+}
+
+class PermissionStatusUpdatedEvent extends MapPageEvent {
+  final bool hasPermission;
+
+  PermissionStatusUpdatedEvent({required this.hasPermission});
+}
+
+class LocationStatusUpdatedEvent extends MapPageEvent {
+  final bool isEnabled;
+
+  LocationStatusUpdatedEvent({required this.isEnabled});
+}
+
+class InitializeLocationEvent extends MapPageEvent {}
