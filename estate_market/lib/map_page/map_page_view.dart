@@ -1,6 +1,7 @@
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gem_kit/d3Scene.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -87,8 +88,23 @@ class MapPageView extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(
-                      state.landmark!.getName(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          state.landmark!.getAddressString(),
+                        ),
+                        SizedBox(
+                          height: 35,
+                          width: 35,
+                          child: IconButton(
+                            iconSize: 20,
+                            onPressed: () => bloc.add(DeactivateLandmarkHightlightEvent()),
+                            icon: Icon(Icons.close, color: Theme.of(context).colorScheme.onPrimary),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 )

@@ -29,7 +29,7 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     on<InitViewLandmarkEvent>(_initViewLandmarkEventHandler);
 
     on<SelectedLandmarkUpdateEvent>(_selectedLandmarkUpdateEventHandler);
-
+    on<DeactivateLandmarkHightlightEvent>(_deactivateLandmarkHightlightEventHandler);
     on<CenterOnLandmarkEvent>(_centerOnLandmarkEventHandler);
 
     on<PositionUpdatedEvent>(_positionUpdatedEventHandler);
@@ -76,6 +76,11 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     }
     emit(state.copyWith(landmark: event.landmark));
     _mapUseCase!.activateHighlight(event.landmark!);
+  }
+
+  _deactivateLandmarkHightlightEventHandler(DeactivateLandmarkHightlightEvent event, Emitter<MapPageState> emit) {
+    _mapUseCase!.deactivateAllHighlights();
+    emit(state.copyWithNullLandmark());
   }
 
   _positionUpdatedEventHandler(PositionUpdatedEvent event, Emitter<MapPageState> emit) {
