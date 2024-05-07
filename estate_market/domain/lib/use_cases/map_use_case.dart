@@ -19,4 +19,12 @@ class MapUseCase {
   void centerOnCoordinates(CoordinatesEntity coordinates) {
     _mapRepository.centerOnCoordinates(coordinates);
   }
+
+  void activateHighlight(LandmarkEntity landmark) {
+    _mapRepository.activateHighlight(landmark);
+  }
+
+  void deactivateAllHighlights() {
+    _mapRepository.deactivateAllHighlights();
+  }
 }

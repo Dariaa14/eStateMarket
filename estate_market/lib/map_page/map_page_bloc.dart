@@ -75,6 +75,7 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
       return;
     }
     emit(state.copyWith(landmark: event.landmark));
+    _mapUseCase!.activateHighlight(event.landmark!);
   }
 
   _positionUpdatedEventHandler(PositionUpdatedEvent event, Emitter<MapPageState> emit) {

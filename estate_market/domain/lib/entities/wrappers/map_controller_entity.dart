@@ -17,4 +17,7 @@ abstract class MapControllerEntity {
   CoordinatesEntity? transformScreenToCoordinates(Point<num> pos);
 
   void centerOnCoordinates(CoordinatesEntity coordinates);
+
+  void activateHighlight(LandmarkEntity landmark);
+  void deactivateAllHighlights();
 }

@@ -20,19 +20,19 @@ class MapRepositoryImpl implements MapRepository {
   void registerMapGestureCallbacks(Function(LandmarkEntity) onTap) {
     mapController.registerTouchCallback((pos) async {
       await mapController.selectMapObjects(pos);
-      //final landmarks = mapController.cursorSelectionLandmarks();
-      // if (landmarks.isNotEmpty) {
-      //   final landmark = landmarks.first;
-      //   onTap(landmark);
-      //   return;
-      // }
+      final landmarks = mapController.cursorSelectionLandmarks();
+      if (landmarks.isNotEmpty) {
+        final landmark = landmarks.first;
+        onTap(landmark);
+        return;
+      }
 
-      // final overlays = mapController.cursorSelectionOverlayItems();
-      // if (overlays.isNotEmpty) {
-      //   final overlay = overlays.first;
-      //   onTap(overlay);
-      //   return;
-      // }
+      final overlays = mapController.cursorSelectionOverlayItems();
+      if (overlays.isNotEmpty) {
+        final overlay = overlays.first;
+        onTap(overlay);
+        return;
+      }
 
       final streets = mapController.cursorSelectionStreets();
       if (streets.isNotEmpty) {
@@ -54,5 +54,15 @@ class MapRepositoryImpl implements MapRepository {
   @override
   void centerOnCoordinates(CoordinatesEntity coordinates) {
     mapController.centerOnCoordinates(coordinates);
+  }
+
+  @override
+  void activateHighlight(LandmarkEntity landmark) {
+    mapController.activateHighlight(landmark);
+  }
+
+  @override
+  void deactivateAllHighlights() {
+    mapController.deactivateAllHighlights();
   }
 }

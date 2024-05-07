@@ -68,4 +68,20 @@ class MapControllerEntityImpl implements MapControllerEntity {
     ref.centerOnCoordinates((coordinates as CoordinatesEntityImpl).ref,
         animation: GemAnimation(type: EAnimation.AnimationLinear));
   }
+
+  @override
+  void deactivateAllHighlights() {
+    ref.deactivateAllHighlights();
+  }
+
+  @override
+  void activateHighlight(LandmarkEntity landmark) {
+    final landmarksToHighlight = LandmarkList.create();
+    final gemLandmark = (landmark as LandmarkEntityImpl).ref;
+    gemLandmark.setImageFromIconId(GemIcon.Search_Results_Pin);
+
+    landmarksToHighlight.push_back(gemLandmark);
+
+    ref.activateHighlight(landmarksToHighlight);
+  }
 }

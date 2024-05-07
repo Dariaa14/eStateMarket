@@ -8,4 +8,7 @@ abstract class MapRepository {
   void registerMapGestureCallbacks(Function(LandmarkEntity) onTap);
 
   void centerOnCoordinates(CoordinatesEntity coordinates);
+
+  void activateHighlight(LandmarkEntity landmark);
+  void deactivateAllHighlights();
 }
