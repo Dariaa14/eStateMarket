@@ -270,14 +270,34 @@ class CreateAdView extends StatelessWidget {
                           });
                         },
                         child: Center(
-                          child: Text(
-                            (state.landmark == null)
-                                ? AppLocalizations.of(context)!.selectAddress
-                                : state.landmark!.getAddressString(),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                (state.landmark == null)
+                                    ? AppLocalizations.of(context)!.selectAddress
+                                    : state.landmark!.getAddressString(),
+                              ),
+                              if (state.landmark != null)
+                                IconButton(
+                                    onPressed: () => bloc.add(SetLandmarkEvent(landmark: null)),
+                                    icon: Icon(
+                                      Icons.close,
+                                      color: Theme.of(context).colorScheme.onSurface,
+                                    )),
+                            ],
                           ),
                         ),
                       ),
                     ),
+                    if (state.showErrors && bloc.fieldIsEmpty(CreateAdFields.location))
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 10.0),
+                        child: Text(
+                          AppLocalizations.of(context)!.requiredField,
+                          style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 12.0),
+                        ),
+                      ),
                     const SizedBox(height: 16.0),
 
                     // Submit button

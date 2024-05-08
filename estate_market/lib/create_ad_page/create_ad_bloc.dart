@@ -17,7 +17,6 @@ import 'package:equatable/equatable.dart';
 part 'create_ad_event.dart';
 part 'create_ad_state.dart';
 
-// TODO: error if landmark is not chosen + delete landmark
 class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   final DatabaseUseCase _databaseUseCase = sl.get<DatabaseUseCase>();
   final List<CreateAdFields> specificAdFields = [
@@ -92,7 +91,6 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     final imageUploadResult = await _databaseUseCase.uploadImages(state.images.map((image) => image.path).toList());
     if (imageUploadResult.isLeft()) {
       emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
-      print("Error uploading images");
       return;
     }
 
@@ -396,6 +394,16 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   }
 
   _setLandmarkEventHandler(SetLandmarkEvent event, Emitter<CreateAdState> emit) {
-    emit(state.copyWith(landmark: event.landmark));
+    List<CreateAdFields> newEmptyFields = List.from(state.emptyFields);
+    if (event.landmark == null) {
+      if (!newEmptyFields.contains(CreateAdFields.location)) {
+        newEmptyFields.add(CreateAdFields.location);
+        emit(state.copyWith(emptyFields: newEmptyFields));
+      }
+      emit(state.copyWithLandmarkNull());
+      return;
+    }
+    newEmptyFields.remove(CreateAdFields.location);
+    emit(state.copyWith(landmark: event.landmark, emptyFields: newEmptyFields));
   }
 }

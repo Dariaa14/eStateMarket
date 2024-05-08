@@ -16,6 +16,7 @@ enum CreateAdFields {
   usableSurface,
   administrativeSurface,
   parkingSpaces,
+  location,
 }
 
 enum CreateAdStatus { normal, loading, finished }
@@ -233,6 +234,33 @@ class CreateAdState extends Equatable {
         parkingSpaces: parkingSpaces,
         landmark: landmark,
       );
+
+  CreateAdState copyWithLandmarkNull() => CreateAdState(
+      emptyFields: emptyFields,
+      showErrors: showErrors,
+      images: images,
+      status: status,
+      isNegotiable: isNegotiable,
+      currentCategory: currentCategory,
+      listingType: listingType,
+      landUseCategory: landUseCategory,
+      isInBuildUpArea: isInBuildUpArea,
+      parkingType: parkingType,
+      parkingCapacity: parkingCapacity,
+      furnishingLevel: furnishingLevel,
+      partitioning: partitioning,
+      depositType: depositType,
+      numberOfRooms: numberOfRooms,
+      numberOfBathrooms: numberOfBathrooms,
+      floor: floor,
+      insideSurface: insideSurface,
+      outsideSurface: outsideSurface,
+      numberOfFloors: numberOfFloors,
+      height: height,
+      usableSurface: usableSurface,
+      administrativeSurface: administrativeSurface,
+      parkingSpaces: parkingSpaces,
+      landmark: null);
 
   @override
   List<Object?> get props => [
