@@ -17,16 +17,21 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   MainPageBloc() : super(const MainPageState(ads: [])) {
     on<InitMainPageEvent>(_initMainPageEventHandler);
     on<FavoritesButtonPressedEvent>(_favoritesButtonPressedEventHandler);
+
+    on<CurrentUserChangedEvent>(_currentUserChangedEventHandler);
   }
 
   _initMainPageEventHandler(InitMainPageEvent event, Emitter<MainPageState> emit) async {
     await _loginUseCase.initializeCurrentToken();
+    _accountUseCase.accountStatus.listen((bool isLoggedIn) {
+      add(CurrentUserChangedEvent(isLoggedIn: isLoggedIn));
+    });
     // final ads = await _databaseUseCase.getAllAds();
     // emit(state.copyWith(ads: ads));
   }
 
   _favoritesButtonPressedEventHandler(FavoritesButtonPressedEvent event, Emitter<MainPageState> emit) async {
-    if (_accountUseCase.isUserLoggedIn()) {
+    if (state.isUserLoggedIn) {
       if (isAdFavorite(event.ad)) {
         _accountUseCase.removeFavoriteAd(event.ad);
       } else {
@@ -36,12 +41,11 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     }
   }
 
+  _currentUserChangedEventHandler(CurrentUserChangedEvent event, Emitter<MainPageState> emit) =>
+      emit(state.copyWith(isUserLoggedIn: event.isLoggedIn));
+
   Future<List<AdEntity>> getAdsTest() async {
     return await _databaseUseCase.getAllAds();
-  }
-
-  bool isUserLoggedIn() {
-    return _accountUseCase.isUserLoggedIn();
   }
 
   bool isAdFavorite(AdEntity ad) {

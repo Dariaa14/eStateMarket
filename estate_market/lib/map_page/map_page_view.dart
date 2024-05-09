@@ -1,7 +1,6 @@
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gem_kit/d3Scene.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

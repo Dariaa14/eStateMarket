@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:domain/repositories/account_repository.dart';
 import 'package:domain/repositories/database_repository.dart';
 
@@ -8,12 +10,14 @@ class AccountUseCase {
   final AccountRepository _accountRepository;
   final DatabaseRepository _databaseRepository;
 
+  final _accountController = StreamController<bool>.broadcast();
+
   AccountUseCase({required AccountRepository accountRepository, required DatabaseRepository databaseRepository})
       : _accountRepository = accountRepository,
-        _databaseRepository = databaseRepository;
-
-  bool isUserLoggedIn() {
-    return _accountRepository.currentAccount != null;
+        _databaseRepository = databaseRepository {
+    _accountRepository.accountStream.listen((account) {
+      _accountController.add(account != null);
+    });
   }
 
   Future<void> updateAccount(String? phoneNumber, SellerType? sellerType) {
@@ -34,11 +38,17 @@ class AccountUseCase {
     _databaseRepository.removeFavoriteAd(account: _accountRepository.currentAccount!, ad: ad);
   }
 
+  Stream<bool> get accountStatus => _accountController.stream;
+
   AccountEntity? get currentAccount {
     return _accountRepository.currentAccount;
   }
 
   List<AdEntity>? get favoriteAds {
     return _accountRepository.favoriteAds;
+  }
+
+  void dispose() {
+    _accountController.close();
   }
 }

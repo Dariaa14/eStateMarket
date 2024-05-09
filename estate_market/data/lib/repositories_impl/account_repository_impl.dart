@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:data/entities_impl/account_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/collection_reference_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/document_reference_entity_impl.dart';
@@ -11,6 +13,8 @@ import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 class AccountRepositoryImpl implements AccountRepository {
   @override
   AccountEntity? currentAccount;
+
+  final _accountController = StreamController<AccountEntity?>.broadcast();
 
   @override
   DocumentReferenceEntity? currentAccountDocument;
@@ -40,6 +44,7 @@ class AccountRepositoryImpl implements AccountRepository {
     currentAccount = accountsWithGivenEmail.first;
     currentAccountDocument = await _getCurrentUserDocumentReference();
     favoriteAds = await _getFavoriteAds();
+    _accountController.add(currentAccount);
   }
 
   @override
@@ -62,6 +67,7 @@ class AccountRepositoryImpl implements AccountRepository {
     currentAccount = null;
     currentAccountDocument = null;
     favoriteAds = null;
+    _accountController.add(null);
   }
 
   Future<DocumentReferenceEntity?> _getCurrentUserDocumentReference() async {
@@ -92,4 +98,7 @@ class AccountRepositoryImpl implements AccountRepository {
     final ads = await adsCollection.where('account', WhereOperations.isEqualTo, reference).get<AdEntity>();
     return ads;
   }
+
+  @override
+  Stream<AccountEntity?> get accountStream => _accountController.stream;
 }

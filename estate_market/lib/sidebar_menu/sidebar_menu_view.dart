@@ -7,9 +7,8 @@ import '../main_page/main_page_bloc.dart';
 
 //TODO: Implement BlocProviders
 class SidebarMenu extends StatelessWidget {
-  const SidebarMenu({
-    super.key,
-  });
+  final MainPageBloc mainBloc;
+  const SidebarMenu({super.key, required this.mainBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +34,7 @@ class SidebarMenu extends StatelessWidget {
               leading: const Icon(CupertinoIcons.add),
               title: Text(AppLocalizations.of(context)!.addAdd),
               onTap: () async {
-                final mainPageBloc = MainPageBloc();
-                if (mainPageBloc.isUserLoggedIn()) {
+                if (mainBloc.state.isUserLoggedIn) {
                   Navigator.pushNamed(context, RouteNames.createAdPage);
                 } else {
                   Navigator.pushNamed(context, RouteNames.registerPage);
@@ -56,8 +54,7 @@ class SidebarMenu extends StatelessWidget {
               leading: const Icon(Icons.account_circle),
               title: Text(AppLocalizations.of(context)!.profile),
               onTap: () {
-                final mainPageBloc = MainPageBloc();
-                if (mainPageBloc.isUserLoggedIn()) {
+                if (mainBloc.state.isUserLoggedIn) {
                   Navigator.pushNamed(context, RouteNames.profilePage);
                 } else {
                   Navigator.pushNamed(context, RouteNames.registerPage);

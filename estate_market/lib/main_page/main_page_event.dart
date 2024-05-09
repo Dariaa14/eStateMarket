@@ -9,3 +9,9 @@ class FavoritesButtonPressedEvent extends MainPageEvent {
 
   FavoritesButtonPressedEvent({required this.ad});
 }
+
+class CurrentUserChangedEvent extends MainPageEvent {
+  final bool isLoggedIn;
+
+  CurrentUserChangedEvent({required this.isLoggedIn});
+}

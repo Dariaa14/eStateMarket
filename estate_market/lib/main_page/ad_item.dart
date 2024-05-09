@@ -2,6 +2,7 @@ import 'package:cloudinary_flutter/image/cld_image.dart';
 import 'package:core/config.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,7 +23,7 @@ class AdItem extends StatelessWidget {
         onTap: () {
           final Map<String, dynamic> arguments = {
             'ad': ad,
-            'isUserLoggedIn': mainBloc.isUserLoggedIn(),
+            'isUserLoggedIn': mainBloc.state.isUserLoggedIn,
             'onFavoritesButtonPressed': () {
               mainBloc.add(FavoritesButtonPressedEvent(ad: ad));
             },
@@ -98,35 +99,41 @@ class AdItem extends StatelessWidget {
                   ),
                 ),
               ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ad.title,
-                          overflow: TextOverflow.ellipsis,
+            BlocBuilder<MainPageBloc, MainPageState>(
+              bloc: mainBloc,
+              builder: (context, state) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              ad.title,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text((ad.property == null) ? "Price" : "${ad.property!.price}"),
+                            const Text("Location"),
+                            Text(DateFormat.yMd(Localizations.localeOf(context).toString()).format(ad.dateOfAd)),
+                            Text((ad.property == null) ? "Surface" : "${ad.property!.surface}"),
+                          ],
                         ),
-                        Text((ad.property == null) ? "Price" : "${ad.property!.price}"),
-                        const Text("Location"),
-                        Text(DateFormat.yMd(Localizations.localeOf(context).toString()).format(ad.dateOfAd)),
-                        Text((ad.property == null) ? "Surface" : "${ad.property!.surface}"),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                if (mainBloc.isUserLoggedIn())
-                  IconButton(
-                      onPressed: () {
-                        mainBloc.add(FavoritesButtonPressedEvent(ad: ad));
-                      },
-                      icon:
-                          mainBloc.isAdFavorite(ad) ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline)),
-              ],
+                    if (state.isUserLoggedIn)
+                      IconButton(
+                          onPressed: () {
+                            mainBloc.add(FavoritesButtonPressedEvent(ad: ad));
+                          },
+                          icon: mainBloc.isAdFavorite(ad)
+                              ? const Icon(Icons.favorite)
+                              : const Icon(Icons.favorite_outline)),
+                  ],
+                );
+              },
             ),
           ]),
         ),

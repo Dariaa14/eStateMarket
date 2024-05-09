@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../sidebar_menu/sidebar_menu_view.dart';
 
-//TODO: when logout/login change state so favorite button is(not) visible
 //TODO: when no internet connection show something
 class MainPageView extends StatelessWidget {
   final MainPageBloc bloc = MainPageBloc();
@@ -37,7 +36,7 @@ class MainPageView extends StatelessWidget {
                 ))
           ],
         ),
-        drawer: const SidebarMenu(),
+        drawer: SidebarMenu(mainBloc: bloc),
         body: Container(
           color: Theme.of(context).colorScheme.background,
           child: Padding(
