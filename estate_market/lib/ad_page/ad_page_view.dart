@@ -14,24 +14,40 @@ import 'package:estate_market/ad_page/property_widgets/house_view.dart';
 import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/utils/translate_enums.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'property_widgets/terrain_view.dart';
 
-//TODO: Implement adding to favorites from here
 class AdPageView extends StatelessWidget {
   final AdPageBloc bloc = AdPageBloc();
   final AdEntity ad;
-  AdPageView({super.key, required this.ad});
+  final bool isUserLoggedIn;
+  final VoidCallback onFavoritesButtonPressed;
+
+  AdPageView({super.key, required this.ad, required this.isUserLoggedIn, required this.onFavoritesButtonPressed});
 
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
       appBar: PlatformAppBar(
         automaticallyImplyLeading: true,
-        trailingActions: [IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border))],
+        trailingActions: [
+          if (isUserLoggedIn)
+            BlocBuilder<AdPageBloc, AdPageState>(
+              bloc: bloc,
+              builder: (context, state) {
+                return IconButton(
+                    onPressed: () {
+                      bloc.add(FavoritesButtonPressedEvent(ad: ad));
+                      onFavoritesButtonPressed();
+                    },
+                    icon: bloc.isAdFavorite(ad) ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline));
+              },
+            ),
+        ],
       ),
       body: Stack(children: [
         SingleChildScrollView(

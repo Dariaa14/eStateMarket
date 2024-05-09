@@ -37,7 +37,10 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return routeBuilder(EditProfilePageView());
     case RouteNames.adPage:
       return routeBuilder(AdPageView(
-        ad: settings.arguments as AdEntity,
+        ad: (settings.arguments as Map<String, dynamic>)['ad'] as AdEntity,
+        isUserLoggedIn: (settings.arguments as Map<String, dynamic>)['isUserLoggedIn'] as bool,
+        onFavoritesButtonPressed:
+            (settings.arguments as Map<String, dynamic>)['onFavoritesButtonPressed'] as VoidCallback,
       ));
     case RouteNames.mapPage:
       return routeBuilder(MapPageView(landmark: settings.arguments as LandmarkEntity?));
