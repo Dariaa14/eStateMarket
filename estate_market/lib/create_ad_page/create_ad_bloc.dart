@@ -389,7 +389,9 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     Set<String> uniquePaths = allImages.map((image) => image.path.substring(image.path.lastIndexOf('/') + 1)).toSet();
     List<File> uniqueImages =
         uniquePaths.map((uniquePath) => allImages.firstWhere((image) => image.path.endsWith(uniquePath))).toList();
-
+    if (uniqueImages.length > 8) {
+      uniqueImages = uniqueImages.sublist(0, 8);
+    }
     emit(state.copyWith(images: uniqueImages));
   }
 

@@ -524,5 +524,20 @@
     "locationDisabled": "Location is not enabled. Please enable it in settings.",
     "@locationDisabled": {
         "description": "Location disabled in settings"
+    },
+
+    "maximumPhotoCount": "Select maximum 8 photos",
+    "@maximumPhotoCount": {
+        "description": "Select maximum 8 photos"
+    },
+
+    "addPhoto": "Add photos",
+    "@addPhoto": {
+        "description": "Add photos"
+    },
+
+    "deletePhoto": "Delete photo",
+    "@deletePhoto": {
+        "description": "Delete photo"
     }
 }

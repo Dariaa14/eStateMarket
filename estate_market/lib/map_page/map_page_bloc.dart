@@ -11,7 +11,6 @@ import 'package:equatable/equatable.dart';
 part 'map_page_event.dart';
 part 'map_page_state.dart';
 
-//TODO: continue from here
 class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
   late MapUseCase? _mapUseCase;
 

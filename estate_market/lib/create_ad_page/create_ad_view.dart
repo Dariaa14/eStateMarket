@@ -128,7 +128,6 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 16.0),
 
                     // Add images
-                    // TODO: limit number of photos
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
@@ -173,6 +172,8 @@ class CreateAdView extends StatelessWidget {
                               ),
                       ),
                     ),
+                    Text(AppLocalizations.of(context)!.maximumPhotoCount,
+                        style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12.0)),
                     const SizedBox(height: 20.0),
 
                     // Properties for all property types:
@@ -394,7 +395,7 @@ class CreateAdView extends StatelessWidget {
                             bloc.add(AddImagesEvent(images: newImagesFile));
                           },
                           child: Text(
-                            'Add photos',
+                            AppLocalizations.of(context)!.addPhoto,
                             style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),
@@ -408,9 +409,14 @@ class CreateAdView extends StatelessWidget {
                             List<File> newImagesList = List.from(bloc.state.images);
                             newImagesList.removeAt(currentIndex);
                             bloc.add(SetImagesEvent(images: newImagesList));
+                            if (newImagesList.isEmpty) {
+                              Navigator.pop(context);
+                            } else {
+                              pageController.jumpToPage(currentIndex - 1);
+                            }
                           },
                           child: Text(
-                            'Delete photo',
+                            AppLocalizations.of(context)!.deletePhoto,
                             style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),
@@ -429,6 +435,9 @@ class CreateAdView extends StatelessWidget {
   Future<List<File>> _pickImageFromGallery(CreateAdBloc bloc) async {
     final returnedImage = await ImagePicker().pickMultiImage();
     List<File> images = returnedImage.map((imageData) => File(imageData.path)).toList();
+    if (images.length > 8) {
+      images = images.sublist(0, 8);
+    }
     return images;
   }
 }
