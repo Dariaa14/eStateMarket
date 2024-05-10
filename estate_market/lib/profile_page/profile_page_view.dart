@@ -1,15 +1,17 @@
 import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/profile_page/profile_page_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/profile_list_tile.dart';
 
 class ProfilePageView extends StatelessWidget {
-  final ProfilePageBloc profileBloc = ProfilePageBloc();
-  ProfilePageView({super.key});
+  const ProfilePageView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ProfilePageBloc profileBloc = BlocProvider.of<ProfilePageBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),

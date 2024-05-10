@@ -1,14 +1,13 @@
 import 'package:estate_market/config/route_names.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main_page/main_page_bloc.dart';
 
-//TODO: Implement BlocProviders
 class SidebarMenu extends StatelessWidget {
-  final MainPageBloc mainBloc;
-  const SidebarMenu({super.key, required this.mainBloc});
+  const SidebarMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +33,7 @@ class SidebarMenu extends StatelessWidget {
               leading: const Icon(CupertinoIcons.add),
               title: Text(AppLocalizations.of(context)!.addAdd),
               onTap: () async {
+                final mainBloc = BlocProvider.of<MainPageBloc>(context);
                 if (mainBloc.state.isUserLoggedIn) {
                   Navigator.pushNamed(context, RouteNames.createAdPage);
                 } else {
@@ -54,6 +54,7 @@ class SidebarMenu extends StatelessWidget {
               leading: const Icon(Icons.account_circle),
               title: Text(AppLocalizations.of(context)!.profile),
               onTap: () {
+                final mainBloc = BlocProvider.of<MainPageBloc>(context);
                 if (mainBloc.state.isUserLoggedIn) {
                   Navigator.pushNamed(context, RouteNames.profilePage);
                 } else {

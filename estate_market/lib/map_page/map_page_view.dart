@@ -9,21 +9,22 @@ import 'map_page_bloc.dart';
 
 class MapPageView extends StatelessWidget {
   final LandmarkEntity? landmark;
-  final MapPageBloc bloc = MapPageBloc();
-  MapPageView({super.key, this.landmark});
+  const MapPageView({super.key, this.landmark});
 
   Future<void> onMapCreated(GemMapController controller, BuildContext context) async {
+    final MapPageBloc mapBloc = BlocProvider.of<MapPageBloc>(context);
     diWithMapController(controller);
 
     if (landmark == null) {
-      bloc.add(InitAddressSelectionEvent());
+      mapBloc.add(InitAddressSelectionEvent());
       return;
     }
-    bloc.add(InitViewLandmarkEvent(landmark: landmark!));
+    mapBloc.add(InitViewLandmarkEvent(landmark: landmark!));
   }
 
   @override
   Widget build(BuildContext context) {
+    final MapPageBloc mapBloc = BlocProvider.of<MapPageBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text((landmark == null) ? AppLocalizations.of(context)!.selectAddress : ''),
@@ -32,13 +33,13 @@ class MapPageView extends StatelessWidget {
         actions: [
           if (landmark == null)
             TextButton(
-              onPressed: () => Navigator.pop(context, bloc.state.landmark),
+              onPressed: () => Navigator.pop(context, mapBloc.state.landmark),
               child: Text(AppLocalizations.of(context)!.save),
             ),
         ],
       ),
       body: BlocBuilder<MapPageBloc, MapPageState>(
-        bloc: bloc,
+        bloc: mapBloc,
         builder: (context, state) {
           return Stack(
             children: [
@@ -71,7 +72,7 @@ class MapPageView extends StatelessWidget {
                     decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
                     margin: const EdgeInsets.all(8.0),
                     child: InkWell(
-                      onTap: () => bloc.add(CenterOnLandmarkEvent(landmark: landmark!)),
+                      onTap: () => mapBloc.add(CenterOnLandmarkEvent(landmark: landmark!)),
                       child: Icon(Icons.center_focus_strong_rounded,
                           color: Theme.of(context).colorScheme.onPrimary, size: 40),
                     ),
@@ -99,7 +100,7 @@ class MapPageView extends StatelessWidget {
                           width: 35,
                           child: IconButton(
                             iconSize: 20,
-                            onPressed: () => bloc.add(DeactivateLandmarkHightlightEvent()),
+                            onPressed: () => mapBloc.add(DeactivateLandmarkHightlightEvent()),
                             icon: Icon(Icons.close, color: Theme.of(context).colorScheme.onPrimary),
                           ),
                         ),
@@ -116,16 +117,17 @@ class MapPageView extends StatelessWidget {
 
   _onLocationButtonPressed(BuildContext context) {
     {
-      final mapState = bloc.state;
+      final MapPageBloc mapBloc = BlocProvider.of<MapPageBloc>(context);
+      final mapState = mapBloc.state;
       if (!mapState.hasLocationPermission) {
-        bloc.add(RequestLocationPermissionEvent());
+        mapBloc.add(RequestLocationPermissionEvent());
         return;
       } else if (!mapState.isLocationEnabled) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.locationDisabled)));
         return;
       }
-      bloc.add(FollowPositionEvent());
+      mapBloc.add(FollowPositionEvent());
     }
   }
 }

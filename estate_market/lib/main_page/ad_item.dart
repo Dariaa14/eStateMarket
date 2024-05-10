@@ -21,14 +21,7 @@ class AdItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          final Map<String, dynamic> arguments = {
-            'ad': ad,
-            'isUserLoggedIn': mainBloc.state.isUserLoggedIn,
-            'onFavoritesButtonPressed': () {
-              mainBloc.add(FavoritesButtonPressedEvent(ad: ad));
-            },
-          };
-          Navigator.of(context).pushNamed(RouteNames.adPage, arguments: arguments);
+          Navigator.of(context).pushNamed(RouteNames.adPage, arguments: ad);
         },
         child: Container(
           height: 300,

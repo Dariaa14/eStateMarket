@@ -20,7 +20,6 @@ import 'create_ad_bloc.dart';
 import 'widgets/create_ad_textfield.dart';
 
 class CreateAdView extends StatelessWidget {
-  final CreateAdBloc bloc = CreateAdBloc();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
@@ -32,6 +31,7 @@ class CreateAdView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CreateAdBloc createAdBloc = BlocProvider.of<CreateAdBloc>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -46,11 +46,11 @@ class CreateAdView extends StatelessWidget {
         ),
       ),
       body: BlocBuilder<CreateAdBloc, CreateAdState>(
-        bloc: bloc,
+        bloc: createAdBloc,
         builder: (context, state) {
           int currentPhotoIndex = 0;
           return BlocListener<CreateAdBloc, CreateAdState>(
-            bloc: bloc,
+            bloc: createAdBloc,
             listener: (context, state) {
               if (state.status == CreateAdStatus.finished) {
                 Navigator.pop(context);
@@ -76,9 +76,9 @@ class CreateAdView extends StatelessWidget {
                     CreateAdTextfield(
                       hintText: AppLocalizations.of(context)!.adTitleHintText,
                       controller: _titleController,
-                      onChanged: (title) =>
-                          bloc.add(SetEmptyFieldsEvent(field: CreateAdFields.title, shouldRemove: title.isNotEmpty)),
-                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.title),
+                      onChanged: (title) => createAdBloc
+                          .add(SetEmptyFieldsEvent(field: CreateAdFields.title, shouldRemove: title.isNotEmpty)),
+                      showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.title),
                     ),
                     const SizedBox(height: 16.0),
 
@@ -91,7 +91,7 @@ class CreateAdView extends StatelessWidget {
                             DropdownMenuItem(value: category, child: Text(adCategoryTranslate(category, context))),
                         ],
                         onChanged: (category) {
-                          bloc.add(ChangeCurrentCategoryEvent(category: category));
+                          createAdBloc.add(ChangeCurrentCategoryEvent(category: category));
                         }),
                     const SizedBox(height: 16.0),
 
@@ -100,9 +100,9 @@ class CreateAdView extends StatelessWidget {
                     CreateAdTextfield(
                       hintText: AppLocalizations.of(context)!.adDescriptionHintText,
                       controller: _descriptionController,
-                      onChanged: (description) => bloc.add(
+                      onChanged: (description) => createAdBloc.add(
                           SetEmptyFieldsEvent(field: CreateAdFields.description, shouldRemove: description.isNotEmpty)),
-                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.description),
+                      showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.description),
                     ),
                     const SizedBox(height: 16.0),
 
@@ -119,7 +119,7 @@ class CreateAdView extends StatelessWidget {
                               value: value,
                               groupValue: state.listingType,
                               onChanged: (listingType) {
-                                bloc.add(ChangeListingTypeEvent(listingType: listingType));
+                                createAdBloc.add(ChangeListingTypeEvent(listingType: listingType));
                               },
                             ),
                           ),
@@ -137,9 +137,9 @@ class CreateAdView extends StatelessWidget {
                       child: InkWell(
                         onTap: () async {
                           if (state.images.isEmpty) {
-                            bloc.add(SetImagesEvent(images: await _pickImageFromGallery(bloc)));
+                            createAdBloc.add(SetImagesEvent(images: await _pickImageFromGallery(createAdBloc)));
                           } else {
-                            _showImageModal(context, bloc, currentPhotoIndex);
+                            _showImageModal(context, createAdBloc, currentPhotoIndex);
                           }
                         },
                         child: state.images.isNotEmpty
@@ -189,9 +189,9 @@ class CreateAdView extends StatelessWidget {
                       hintText: AppLocalizations.of(context)!.surfaceHintText,
                       controller: _surfaceController,
                       keyboardType: TextInputType.number,
-                      onChanged: (surface) => bloc
+                      onChanged: (surface) => createAdBloc
                           .add(SetEmptyFieldsEvent(field: CreateAdFields.surface, shouldRemove: surface.isNotEmpty)),
-                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.surface),
+                      showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.surface),
                     ),
                     const SizedBox(
                       height: 16.0,
@@ -203,9 +203,9 @@ class CreateAdView extends StatelessWidget {
                       hintText: AppLocalizations.of(context)!.priceHintText,
                       controller: _priceController,
                       keyboardType: TextInputType.number,
-                      onChanged: (price) =>
-                          bloc.add(SetEmptyFieldsEvent(field: CreateAdFields.price, shouldRemove: price.isNotEmpty)),
-                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.price),
+                      onChanged: (price) => createAdBloc
+                          .add(SetEmptyFieldsEvent(field: CreateAdFields.price, shouldRemove: price.isNotEmpty)),
+                      showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.price),
                     ),
                     const SizedBox(
                       height: 16.0,
@@ -222,7 +222,7 @@ class CreateAdView extends StatelessWidget {
                             value: true,
                             groupValue: state.isNegotiable,
                             onChanged: (isNegotiable) {
-                              bloc.add(ChangeIsNegotiableEvent(isNegotiable: isNegotiable));
+                              createAdBloc.add(ChangeIsNegotiableEvent(isNegotiable: isNegotiable));
                             },
                           ),
                         ),
@@ -232,7 +232,7 @@ class CreateAdView extends StatelessWidget {
                             value: false,
                             groupValue: state.isNegotiable,
                             onChanged: (isNegotiable) {
-                              bloc.add(ChangeIsNegotiableEvent(isNegotiable: isNegotiable));
+                              createAdBloc.add(ChangeIsNegotiableEvent(isNegotiable: isNegotiable));
                             },
                           ),
                         ),
@@ -252,7 +252,7 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 16.0),
 
                     // Specific properties based on category:
-                    _buildPropertyTypeWidgets(bloc),
+                    _buildPropertyTypeWidgets(createAdBloc),
                     const SizedBox(height: 16.0),
 
                     // Select location
@@ -267,7 +267,7 @@ class CreateAdView extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RouteNames.mapPage).then((value) {
-                            if (value != null) bloc.add(SetLandmarkEvent(landmark: value as LandmarkEntity));
+                            if (value != null) createAdBloc.add(SetLandmarkEvent(landmark: value as LandmarkEntity));
                           });
                         },
                         child: Center(
@@ -281,7 +281,7 @@ class CreateAdView extends StatelessWidget {
                               ),
                               if (state.landmark != null)
                                 IconButton(
-                                    onPressed: () => bloc.add(SetLandmarkEvent(landmark: null)),
+                                    onPressed: () => createAdBloc.add(SetLandmarkEvent(landmark: null)),
                                     icon: Icon(
                                       Icons.close,
                                       color: Theme.of(context).colorScheme.onSurface,
@@ -291,7 +291,7 @@ class CreateAdView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (state.showErrors && bloc.fieldIsEmpty(CreateAdFields.location))
+                    if (state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.location))
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0, left: 10.0),
                         child: Text(
@@ -305,7 +305,7 @@ class CreateAdView extends StatelessWidget {
                     PlatformElevatedButton(
                       color: Theme.of(context).colorScheme.primary,
                       onPressed: () {
-                        bloc.add(InsertInDatabaseEvent(
+                        createAdBloc.add(InsertInDatabaseEvent(
                             title: _titleController.text,
                             description: _descriptionController.text,
                             surface: _surfaceController.text,

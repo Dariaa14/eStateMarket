@@ -12,11 +12,12 @@ import '../sidebar_menu/sidebar_menu_view.dart';
 
 //TODO: when no internet connection show something
 class MainPageView extends StatelessWidget {
-  final MainPageBloc bloc = MainPageBloc();
-  MainPageView({super.key});
+  const MainPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mainBloc = BlocProvider.of<MainPageBloc>(context);
+
     return Scaffold(
         appBar: AppBar(
           title: CustomTextField(
@@ -36,7 +37,7 @@ class MainPageView extends StatelessWidget {
                 ))
           ],
         ),
-        drawer: SidebarMenu(mainBloc: bloc),
+        drawer: const SidebarMenu(),
         body: Container(
           color: Theme.of(context).colorScheme.background,
           child: Padding(
@@ -78,10 +79,10 @@ class MainPageView extends StatelessWidget {
                           return const Text('Loading...');
                         }
                         return BlocBuilder<MainPageBloc, MainPageState>(
-                          bloc: bloc..add(InitMainPageEvent()),
+                          bloc: mainBloc..add(InitMainPageEvent()),
                           builder: (context, state) {
                             return FutureBuilder<List<AdEntity>>(
-                              future: bloc.getAdsTest(),
+                              future: mainBloc.getAdsTest(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
                                   return Center(
@@ -98,7 +99,7 @@ class MainPageView extends StatelessWidget {
                                     physics: const NeverScrollableScrollPhysics(),
                                     itemCount: data.length,
                                     itemBuilder: (context, index) {
-                                      return AdItem(ad: data[index], mainBloc: bloc);
+                                      return AdItem(ad: data[index], mainBloc: mainBloc);
                                     });
                               },
                             );

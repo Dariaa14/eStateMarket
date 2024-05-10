@@ -9,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'register_page_bloc.dart';
 
 class RegisterPage extends StatelessWidget {
-  final RegisterPageBloc bloc = RegisterPageBloc();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -17,11 +16,12 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RegisterPageBloc registerBloc = BlocProvider.of<RegisterPageBloc>(context);
     return BlocBuilder<RegisterPageBloc, RegisterPageState>(
-      bloc: bloc,
+      bloc: registerBloc,
       builder: (context, state) {
         return BlocListener<RegisterPageBloc, RegisterPageState>(
-          bloc: bloc,
+          bloc: registerBloc,
           listener: (context, state) {
             if (state.wasLoginSuccessful) {
               Navigator.pop(context);
@@ -73,7 +73,7 @@ class RegisterPage extends StatelessWidget {
                                     onTap: () {
                                       _emailController.text = '';
                                       _passwordController.text = '';
-                                      bloc.add(ChangeRegisterTypeEvent(type: RegisterPageType.login));
+                                      registerBloc.add(ChangeRegisterTypeEvent(type: RegisterPageType.login));
                                     },
                                     child: Text(
                                       AppLocalizations.of(context)!.login,
@@ -90,7 +90,7 @@ class RegisterPage extends StatelessWidget {
                                     onTap: () {
                                       _emailController.text = '';
                                       _passwordController.text = '';
-                                      bloc.add(ChangeRegisterTypeEvent(type: RegisterPageType.signup));
+                                      registerBloc.add(ChangeRegisterTypeEvent(type: RegisterPageType.signup));
                                     },
                                     child: Text(
                                       AppLocalizations.of(context)!.signup,
@@ -126,14 +126,15 @@ class RegisterPage extends StatelessWidget {
                                 controller: _passwordController,
                                 hintText: AppLocalizations.of(context)!.password,
                                 obscureText: state.isPasswordObscured,
-                                onChanged: (password) => {bloc.add(CalculatePasswordStrenghtEvent(password: password))},
+                                onChanged: (password) =>
+                                    {registerBloc.add(CalculatePasswordStrenghtEvent(password: password))},
                                 prefix: Icon(
                                   Icons.password,
                                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                                 ),
                                 suffix: IconButton(
                                   onPressed: () {
-                                    bloc.add(ChangePasswordVisibilityEvent());
+                                    registerBloc.add(ChangePasswordVisibilityEvent());
                                   },
                                   icon: Icon(
                                     (state.isPasswordObscured == true) ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
@@ -201,7 +202,7 @@ class RegisterPage extends StatelessWidget {
                                     Checkbox(
                                         value: state.isStayConnectedChecked,
                                         onChanged: (isChecked) {
-                                          bloc.add(ChangeStayConnectedEvent());
+                                          registerBloc.add(ChangeStayConnectedEvent());
                                         }),
                                     Text(
                                       AppLocalizations.of(context)!.stay_connected,
@@ -215,11 +216,12 @@ class RegisterPage extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {
                               if (state.registerPageType == RegisterPageType.signup) {
-                                bloc.add(CreateAccountEvent(
+                                registerBloc.add(CreateAccountEvent(
                                     email: _emailController.text, password: _passwordController.text));
                                 // Navigator.pop(context);
                               } else {
-                                bloc.add(LoginEvent(email: _emailController.text, password: _passwordController.text));
+                                registerBloc
+                                    .add(LoginEvent(email: _emailController.text, password: _passwordController.text));
                               }
                             },
                             style: ElevatedButton.styleFrom(

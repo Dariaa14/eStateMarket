@@ -12,6 +12,7 @@ import 'package:estate_market/ad_page/property_widgets/deposit_view.dart';
 import 'package:estate_market/ad_page/property_widgets/garage_view.dart';
 import 'package:estate_market/ad_page/property_widgets/house_view.dart';
 import 'package:estate_market/config/route_names.dart';
+import 'package:estate_market/main_page/main_page_bloc.dart' as main;
 import 'package:estate_market/utils/translate_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,29 +23,28 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'property_widgets/terrain_view.dart';
 
 class AdPageView extends StatelessWidget {
-  final AdPageBloc bloc = AdPageBloc();
   final AdEntity ad;
-  final bool isUserLoggedIn;
-  final VoidCallback onFavoritesButtonPressed;
 
-  AdPageView({super.key, required this.ad, required this.isUserLoggedIn, required this.onFavoritesButtonPressed});
+  const AdPageView({super.key, required this.ad});
 
   @override
   Widget build(BuildContext context) {
+    final AdPageBloc adBloc = BlocProvider.of<AdPageBloc>(context);
+    final main.MainPageBloc mainBloc = BlocProvider.of<main.MainPageBloc>(context);
     return PlatformScaffold(
       appBar: PlatformAppBar(
         automaticallyImplyLeading: true,
         trailingActions: [
-          if (isUserLoggedIn)
+          if (mainBloc.state.isUserLoggedIn)
             BlocBuilder<AdPageBloc, AdPageState>(
-              bloc: bloc,
+              bloc: adBloc,
               builder: (context, state) {
                 return IconButton(
                     onPressed: () {
-                      bloc.add(FavoritesButtonPressedEvent(ad: ad));
-                      onFavoritesButtonPressed();
+                      adBloc.add(FavoritesButtonPressedEvent(ad: ad));
+                      mainBloc.add(main.FavoritesButtonPressedEvent(ad: ad));
                     },
-                    icon: bloc.isAdFavorite(ad) ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline));
+                    icon: mainBloc.isAdFavorite(ad) ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline));
               },
             ),
         ],
