@@ -16,6 +16,7 @@ import 'package:domain/entities/terrain_entity.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
+import 'package:domain/entities/wrappers/query_snapshot_entity.dart';
 import 'package:domain/repositories/database_repository.dart';
 
 import '../entities_impl/ad_enitity_impl.dart';
@@ -24,10 +25,20 @@ import '../entities_impl/wrappers/landmark_entity_impl.dart';
 import '../utils/convert.dart';
 
 class DatabaseRepositoryImpl extends DatabaseRepository {
+  // @override
+  // Future<List<AdEntity>> getAllAds() async {
+  //   CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad);
+  //   return await ads.get<AdEntity>();
+  // }
+
   @override
-  Future<List<AdEntity>> getAllAds() async {
-    CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad);
-    return await ads.get<AdEntity>();
+  Stream<List<AdEntity?>> streamAds() {
+    CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);
+    return ads.snapshots().asyncMap((QuerySnapshotEntity snapshot) async {
+      List<DocumentReferenceEntity> docRefs = snapshot.transformToDocumentReferenceList();
+      List<Future<AdEntity?>> futures = docRefs.map((docRef) => AdEntityImpl.getAdFromDocument(docRef)).toList();
+      return await Future.wait(futures);
+    });
   }
 
   @override

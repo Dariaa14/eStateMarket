@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:estate_market/main_page/category_item.dart';
 import 'package:estate_market/main_page/main_page_bloc.dart';
@@ -10,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../sidebar_menu/sidebar_menu_view.dart';
 
-//TODO: when no internet connection show something
 class MainPageView extends StatelessWidget {
   const MainPageView({super.key});
 
@@ -67,45 +65,18 @@ class MainPageView extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  // TODO: Replace StreamBuilder with something else
-                  StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance.collection('ad').snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Text('Loading...');
-                        }
-                        return BlocBuilder<MainPageBloc, MainPageState>(
-                          bloc: mainBloc..add(InitMainPageEvent()),
-                          builder: (context, state) {
-                            return FutureBuilder<List<AdEntity>>(
-                              future: mainBloc.getAdsTest(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return Center(
-                                    child: Text(snapshot.error.toString()),
-                                  );
-                                }
-                                if (!snapshot.hasData) {
-                                  return const Center(child: CircularProgressIndicator());
-                                }
-
-                                final data = snapshot.requireData;
-                                return ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: data.length,
-                                    itemBuilder: (context, index) {
-                                      return AdItem(ad: data[index], mainBloc: mainBloc);
-                                    });
-                              },
-                            );
-                          },
-                        );
-                      }),
+                  BlocBuilder<MainPageBloc, MainPageState>(
+                    bloc: mainBloc..add(InitMainPageEvent()),
+                    builder: (context, state) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: mainBloc.state.ads.length,
+                          itemBuilder: (context, index) {
+                            return AdItem(ad: mainBloc.state.ads[index], mainBloc: mainBloc);
+                          });
+                    },
+                  )
                 ],
               ),
             ),

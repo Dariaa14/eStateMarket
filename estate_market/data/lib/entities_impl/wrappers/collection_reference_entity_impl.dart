@@ -109,4 +109,9 @@ class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
         return FirebaseFirestore.instance.collection('landmarks');
     }
   }
+
+  @override
+  Stream<QuerySnapshotEntity> snapshots() {
+    return ref.snapshots().map((querySnapshot) => QuerySnapshotEntityImpl(ref: querySnapshot));
+  }
 }

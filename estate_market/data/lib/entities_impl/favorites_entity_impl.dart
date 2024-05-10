@@ -43,8 +43,7 @@ class FavoritesEntityImpl implements FavoritesEntity {
         (_accountReference as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>);
     this.account = account;
 
-    AdEntity? ad = await AdEntityImpl.getAdFromDocument(
-        (_adReference as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>);
+    AdEntity? ad = await AdEntityImpl.getAdFromDocument(_adReference);
     this.ad = ad;
   }
 }

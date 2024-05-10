@@ -27,9 +27,8 @@ class DatabaseUseCase {
         _imageUploadRepository = imageUploadRepository,
         _accountRepository = accountRepository;
 
-  Future<List<AdEntity>> getAllAds() async {
-    final resp = await _databaseRepository.getAllAds();
-    return resp;
+  Stream<List<AdEntity>> getAllAds() {
+    return _databaseRepository.streamAds().map((list) => list.whereType<AdEntity>().toList());
   }
 
   Future<DocumentReferenceEntity> insertGarageEntity({

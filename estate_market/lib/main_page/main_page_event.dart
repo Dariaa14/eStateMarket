@@ -10,6 +10,12 @@ class FavoritesButtonPressedEvent extends MainPageEvent {
   FavoritesButtonPressedEvent({required this.ad});
 }
 
+class SetAdsEvent extends MainPageEvent {
+  final List<AdEntity> ads;
+
+  SetAdsEvent({required this.ads});
+}
+
 class CurrentUserChangedEvent extends MainPageEvent {
   final bool isLoggedIn;
 

@@ -1,6 +1,8 @@
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/entities/wrappers/query_entity.dart';
 
+import 'query_snapshot_entity.dart';
+
 enum Collections { ad, accounts, properties, favorites, landmarks }
 
 enum WhereOperations {
@@ -22,4 +24,5 @@ abstract class CollectionReferenceEntity {
   Future<List<T>> get<T>();
   Future<List<DocumentReferenceEntity>> getDocuments<T>();
   QueryEntity where<T>(String field, WhereOperations operation, dynamic value);
+  Stream<QuerySnapshotEntity> snapshots();
 }

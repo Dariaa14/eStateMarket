@@ -115,8 +115,9 @@ class AdEntityImpl implements AdEntity {
     this.landmark = landmark;
   }
 
-  static Future<AdEntity?> getAdFromDocument(DocumentReference<Map<String, dynamic>> document) async {
-    final adDocument = await document.get();
+  static Future<AdEntity?> getAdFromDocument(DocumentReferenceEntity document) async {
+    final firebaseDocument = (document as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>;
+    final adDocument = await firebaseDocument.get();
     final ad = AdEntityImpl.fromJson(adDocument.data()!);
     await ad.setReferences();
     return ad;
