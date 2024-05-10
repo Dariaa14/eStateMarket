@@ -10,7 +10,6 @@ import '../entities/terrain_entity.dart';
 import '../entities/wrappers/document_reference_entity.dart';
 
 abstract class DatabaseRepository {
-  // Future<List<AdEntity>> getAllAds();
   Stream<List<AdEntity?>> streamAds();
 
   Future<DocumentReferenceEntity> insertGarageEntity({

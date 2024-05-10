@@ -25,12 +25,6 @@ import '../entities_impl/wrappers/landmark_entity_impl.dart';
 import '../utils/convert.dart';
 
 class DatabaseRepositoryImpl extends DatabaseRepository {
-  // @override
-  // Future<List<AdEntity>> getAllAds() async {
-  //   CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad);
-  //   return await ads.get<AdEntity>();
-  // }
-
   @override
   Stream<List<AdEntity?>> streamAds() {
     CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);

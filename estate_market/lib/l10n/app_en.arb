@@ -539,5 +539,10 @@
     "deletePhoto": "Delete photo",
     "@deletePhoto": {
         "description": "Delete photo"
+    },
+
+    "noFavorites": "You don't have any ads saved in favorites.",
+    "@noFavorites": {
+        "description": "No favorites message"
     }
 }

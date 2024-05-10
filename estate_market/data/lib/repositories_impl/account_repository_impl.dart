@@ -22,6 +22,8 @@ class AccountRepositoryImpl implements AccountRepository {
   @override
   List<AdEntity>? favoriteAds;
 
+  final _favoritesController = StreamController<List<AdEntity>?>.broadcast();
+
   @override
   Future<void> updateAccount(String? phoneNumber, SellerType? sellerType) async {
     final AccountEntity newAccountData = AccountEntityImpl(
@@ -44,12 +46,14 @@ class AccountRepositoryImpl implements AccountRepository {
     currentAccount = accountsWithGivenEmail.first;
     currentAccountDocument = await _getCurrentUserDocumentReference();
     favoriteAds = await _getFavoriteAds();
+    _favoritesController.add(favoriteAds);
     _accountController.add(currentAccount);
   }
 
   @override
   void addFavoriteAd(AdEntity ad) {
     favoriteAds!.add(ad);
+    _favoritesController.add(favoriteAds);
   }
 
   @override
@@ -57,6 +61,7 @@ class AccountRepositoryImpl implements AccountRepository {
     for (int index = 0; index < favoriteAds!.length; index++) {
       if (favoriteAds![index].dateOfAd.compareTo(ad.dateOfAd) == 0) {
         favoriteAds!.removeAt(index);
+        _favoritesController.add(favoriteAds);
         return;
       }
     }
@@ -68,6 +73,7 @@ class AccountRepositoryImpl implements AccountRepository {
     currentAccountDocument = null;
     favoriteAds = null;
     _accountController.add(null);
+    _favoritesController.add(null);
   }
 
   Future<DocumentReferenceEntity?> _getCurrentUserDocumentReference() async {
@@ -101,4 +107,7 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   Stream<AccountEntity?> get accountStream => _accountController.stream;
+
+  @override
+  Stream<List<AdEntity>?> get favoriteAdsStream => _favoritesController.stream;
 }

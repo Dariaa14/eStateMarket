@@ -27,7 +27,14 @@ class SidebarMenu extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.favorite),
               title: Text(AppLocalizations.of(context)!.favorites),
-              onTap: () {},
+              onTap: () {
+                final mainBloc = BlocProvider.of<MainPageBloc>(context);
+                if (mainBloc.state.isUserLoggedIn) {
+                  Navigator.pushNamed(context, RouteNames.favoritesPage);
+                } else {
+                  Navigator.pushNamed(context, RouteNames.registerPage);
+                }
+              },
             ),
             ListTile(
               leading: const Icon(CupertinoIcons.add),

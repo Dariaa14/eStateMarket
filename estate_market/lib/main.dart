@@ -4,6 +4,7 @@ import 'package:estate_market/ad_page/ad_page_bloc.dart';
 import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/config/themes.dart';
 import 'package:estate_market/create_ad_page/create_ad_bloc.dart';
+import 'package:estate_market/favorites_page/favorites_page_bloc.dart';
 import 'package:estate_market/main_page/main_page_bloc.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
 import 'package:estate_market/map_page/map_page_bloc.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ProfilePageBloc()),
         BlocProvider(create: (context) => CreateAdBloc()),
         BlocProvider(create: (context) => MapPageBloc()),
+        BlocProvider(create: (context) => FavoritesPageBloc()),
       ],
       child: MaterialApp(
         title: 'eState Market',
@@ -64,7 +66,7 @@ class MyApp extends StatelessWidget {
           Locale('ro'),
         ],
         onGenerateRoute: onGenerateRoute,
-        home: SafeArea(child: MainPageView()),
+        home: const SafeArea(child: MainPageView()),
       ),
     );
   }

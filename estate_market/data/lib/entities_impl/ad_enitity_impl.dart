@@ -118,6 +118,7 @@ class AdEntityImpl implements AdEntity {
   static Future<AdEntity?> getAdFromDocument(DocumentReferenceEntity document) async {
     final firebaseDocument = (document as DocumentReferenceEntityImpl).ref as DocumentReference<Map<String, dynamic>>;
     final adDocument = await firebaseDocument.get();
+    if (adDocument.data() == null) return null;
     final ad = AdEntityImpl.fromJson(adDocument.data()!);
     await ad.setReferences();
     return ad;

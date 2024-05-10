@@ -18,4 +18,5 @@ abstract class AccountRepository {
   void removeFavoriteAd(AdEntity ad);
 
   Stream<AccountEntity?> get accountStream;
+  Stream<List<AdEntity>?> get favoriteAdsStream;
 }

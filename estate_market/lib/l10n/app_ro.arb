@@ -108,5 +108,6 @@
     "locationDisabled": "Locația nu este activată. Vă rog să o activați din setări.",
     "maximumPhotoCount": "Selectează maxim 8 poze",
     "addPhoto": "Adaugă poze",
-    "deletePhoto": "Șterge poza"
+    "deletePhoto": "Șterge poza",
+    "noFavorites": "Nu ai niciun anunț salvat la favorite."
 }

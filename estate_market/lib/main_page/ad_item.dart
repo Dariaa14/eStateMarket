@@ -10,13 +10,13 @@ import '../config/route_names.dart';
 import 'main_page_bloc.dart';
 
 class AdItem extends StatelessWidget {
-  final MainPageBloc mainBloc;
   final AdEntity ad;
 
-  const AdItem({super.key, required this.ad, required this.mainBloc});
+  const AdItem({super.key, required this.ad});
 
   @override
   Widget build(BuildContext context) {
+    final mainBloc = BlocProvider.of<MainPageBloc>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(

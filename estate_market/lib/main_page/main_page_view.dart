@@ -71,9 +71,9 @@ class MainPageView extends StatelessWidget {
                       return ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: mainBloc.state.ads.length,
+                          itemCount: state.ads.length,
                           itemBuilder: (context, index) {
-                            return AdItem(ad: mainBloc.state.ads[index], mainBloc: mainBloc);
+                            return AdItem(ad: state.ads[index]);
                           });
                     },
                   )

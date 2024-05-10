@@ -11,12 +11,16 @@ class AccountUseCase {
   final DatabaseRepository _databaseRepository;
 
   final _accountController = StreamController<bool>.broadcast();
+  final _favoriteAdsController = StreamController<List<AdEntity>>.broadcast();
 
   AccountUseCase({required AccountRepository accountRepository, required DatabaseRepository databaseRepository})
       : _accountRepository = accountRepository,
         _databaseRepository = databaseRepository {
     _accountRepository.accountStream.listen((account) {
       _accountController.add(account != null);
+    });
+    _accountRepository.favoriteAdsStream.listen((favoriteAds) {
+      _favoriteAdsController.add(favoriteAds ?? []);
     });
   }
 
@@ -39,6 +43,7 @@ class AccountUseCase {
   }
 
   Stream<bool> get accountStatus => _accountController.stream;
+  Stream<List<AdEntity>> get favoriteAdsStream => _favoriteAdsController.stream;
 
   AccountEntity? get currentAccount {
     return _accountRepository.currentAccount;
@@ -50,5 +55,6 @@ class AccountUseCase {
 
   void dispose() {
     _accountController.close();
+    _favoriteAdsController.close();
   }
 }

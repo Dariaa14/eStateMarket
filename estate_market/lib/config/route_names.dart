@@ -8,6 +8,7 @@ import 'package:estate_market/profile_page/subpages/edit_profile_page/edit_profi
 import 'package:estate_market/register_page/register_page_view.dart';
 import 'package:flutter/material.dart';
 
+import '../favorites_page/favorites_view_page.dart';
 import '../profile_page/profile_page_view.dart';
 
 class RouteNames {
@@ -19,6 +20,8 @@ class RouteNames {
 
   static const String profilePage = '/profile';
   static const String editProfilePage = '/profile/editProfile';
+
+  static const String favoritesPage = '/favorites';
 
   static const String adPage = '/adPage';
 }
@@ -39,6 +42,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return routeBuilder(AdPageView(ad: settings.arguments as AdEntity));
     case RouteNames.mapPage:
       return routeBuilder(MapPageView(landmark: settings.arguments as LandmarkEntity?));
+    case RouteNames.favoritesPage:
+      return routeBuilder(const FavoritesViewPage());
   }
   return null;
 }
