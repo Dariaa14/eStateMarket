@@ -31,7 +31,9 @@ class ProfilePageView extends StatelessWidget {
           ProfileListTile(
             icon: Icons.library_books_outlined,
             title: 'My Ads',
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, RouteNames.myAdsPage);
+            },
           ),
           ProfileListTile(
             icon: Icons.chat_rounded,

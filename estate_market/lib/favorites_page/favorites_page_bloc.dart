@@ -26,10 +26,8 @@ class FavoritesPageBloc extends Bloc<FavoritesPageEvent, FavoritesPageState> {
     });
   }
 
-  _setFavoritesEventHandler(SetFavoritesEvent event, Emitter<FavoritesPageState> emit) {
-    List<AdEntity> ads = List.from(event.ads);
-    emit(state.copyWith(ads: ads));
-  }
+  _setFavoritesEventHandler(SetFavoritesEvent event, Emitter<FavoritesPageState> emit) =>
+      emit(state.copyWith(ads: event.ads));
 
   @override
   Future<void> close() {
