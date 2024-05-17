@@ -7,6 +7,7 @@ import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
+import 'package:domain/entities/house_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
@@ -34,6 +35,8 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   ];
 
   CreateAdBloc() : super(const CreateAdState()) {
+    on<InitAdEvent>(_initAdEventHandler);
+
     on<InsertInDatabaseEvent>(_insertInDatabaseEventHandler);
 
     on<ChangeIsNegotiableEvent>(_changeIsNegotiableEventHandler);
@@ -71,6 +74,80 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     on<AddImagesEvent>(_addImagesEventHandler);
 
     on<SetLandmarkEvent>(_setLandmarkEventHandler);
+  }
+
+  _initAdEventHandler(InitAdEvent event, Emitter<CreateAdState> emit) {
+    // TODO: images
+    if (event.ad == null) {
+      emit(const CreateAdState());
+      return;
+    }
+    emit(state.copyWith(
+      isNegotiable: event.ad!.property!.isNegotiable,
+      currentCategory: event.ad!.adCategory,
+      listingType: event.ad!.listingType,
+      landmark: event.ad!.landmark,
+    ));
+
+    switch (event.ad!.adCategory) {
+      case AdCategory.garage:
+        {
+          emit(state.copyWith(
+            parkingType: (event.ad!.property as GarageEntity).parkingType,
+          ));
+          emit(state.copyGarage(
+            parkingCapacity: (event.ad!.property as GarageEntity).capacity,
+          ));
+          break;
+        }
+      case AdCategory.terrain:
+        {
+          emit(state.copyWith(
+            landUseCategory: (event.ad!.property as TerrainEntity).landUseCategory,
+            isInBuildUpArea: (event.ad!.property as TerrainEntity).isInBuildUpArea,
+          ));
+          break;
+        }
+      case AdCategory.apartament:
+        {
+          emit(state.copyResidence(
+            numberOfRooms: (event.ad!.property as ApartmentEntity).numberOfRooms,
+            numberOfBathrooms: (event.ad!.property as ApartmentEntity).numberOfBathrooms,
+            furnishingLevel: (event.ad!.property as ApartmentEntity).furnishingLevel,
+          ));
+          emit(state.copyApartment(
+            floor: (event.ad!.property as ApartmentEntity).floor,
+            partitioning: (event.ad!.property as ApartmentEntity).partitioning,
+          ));
+          break;
+        }
+      case AdCategory.house:
+        {
+          emit(state.copyResidence(
+            numberOfRooms: (event.ad!.property as HouseEntity).numberOfRooms,
+            numberOfBathrooms: (event.ad!.property as HouseEntity).numberOfBathrooms,
+            furnishingLevel: (event.ad!.property as HouseEntity).furnishingLevel,
+          ));
+          emit(state.copyHouse(
+            numberOfFloors: (event.ad!.property as HouseEntity).numberOfFloors,
+            insideSurface: (event.ad!.property as HouseEntity).insideSurface,
+            outsideSurface: (event.ad!.property as HouseEntity).outsideSurface,
+          ));
+          break;
+        }
+      case AdCategory.deposit:
+        {
+          emit(state.copyDeposit(
+            parkingSpaces: (event.ad!.property as DepositEntity).parkingSpaces,
+            height: (event.ad!.property as DepositEntity).height,
+            usableSurface: (event.ad!.property as DepositEntity).usableSurface,
+            administrativeSurface: (event.ad!.property as DepositEntity).administrativeSurface,
+          ));
+          break;
+        }
+      default:
+        break;
+    }
   }
 
   _insertInDatabaseEventHandler(InsertInDatabaseEvent event, Emitter<CreateAdState> emit) async {

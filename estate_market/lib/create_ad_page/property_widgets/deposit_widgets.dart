@@ -1,3 +1,4 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,11 +9,24 @@ import '../create_ad_bloc.dart';
 import '../widgets/create_ad_textfield.dart';
 
 class DepositWidgets extends StatelessWidget {
-  final CreateAdBloc bloc;
-  const DepositWidgets({super.key, required this.bloc});
+  final AdEntity? ad;
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _usableSurfaceController = TextEditingController();
+  final TextEditingController _administrativeSurfaceController = TextEditingController();
+  final TextEditingController _parkingSpacesController = TextEditingController();
+
+  DepositWidgets({super.key, required this.ad}) {
+    if (ad != null && ad!.property is DepositEntity) {
+      _heightController.text = (ad!.property! as DepositEntity).height.toString();
+      _usableSurfaceController.text = (ad!.property! as DepositEntity).usableSurface.toString();
+      _administrativeSurfaceController.text = (ad!.property! as DepositEntity).administrativeSurface.toString();
+      _parkingSpacesController.text = (ad!.property! as DepositEntity).parkingSpaces.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final CreateAdBloc bloc = BlocProvider.of<CreateAdBloc>(context);
     return BlocBuilder<CreateAdBloc, CreateAdState>(
         bloc: bloc,
         builder: (context, state) {
@@ -22,6 +36,7 @@ class DepositWidgets extends StatelessWidget {
               // Height textfield
               Text('${AppLocalizations.of(context)!.height}*'),
               CreateAdTextfield(
+                controller: _heightController,
                 hintText: AppLocalizations.of(context)!.heightHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (height) {
@@ -34,6 +49,7 @@ class DepositWidgets extends StatelessWidget {
               // Usable surface textfield
               Text('${AppLocalizations.of(context)!.usableSurface}*'),
               CreateAdTextfield(
+                controller: _usableSurfaceController,
                 hintText: AppLocalizations.of(context)!.usableSurfaceHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (usableSurface) {
@@ -46,6 +62,7 @@ class DepositWidgets extends StatelessWidget {
               // Administrative surface textfield
               Text('${AppLocalizations.of(context)!.administrativeSurface}*'),
               CreateAdTextfield(
+                controller: _administrativeSurfaceController,
                 hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (administrativeSurface) {
@@ -71,6 +88,7 @@ class DepositWidgets extends StatelessWidget {
               // Parking spaces textfield
               Text('${AppLocalizations.of(context)!.parkingSpaces}*'),
               CreateAdTextfield(
+                controller: _parkingSpacesController,
                 hintText: AppLocalizations.of(context)!.parkingSpacesHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (parkingSpaces) {

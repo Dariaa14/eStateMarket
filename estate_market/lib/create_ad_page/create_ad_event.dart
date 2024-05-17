@@ -2,6 +2,12 @@ part of 'create_ad_bloc.dart';
 
 abstract class CreateAdEvent {}
 
+class InitAdEvent extends CreateAdEvent {
+  final AdEntity? ad;
+
+  InitAdEvent({this.ad});
+}
+
 class InsertInDatabaseEvent extends CreateAdEvent {
   final String title;
   final String description;

@@ -24,7 +24,7 @@
     "adDetails": "Detalii despre anunț: ",
     "adTitle": "Titlu",
     "adTitleHintText": "Introduceți un titlu descriptiv pentru anunțul dvs.",
-    "adCategory": "Categorie*",
+    "adCategory": "Categorie",
     "adDescription": "Descriere",
     "adDescriptionHintText": "Introduceți o descriere detaliată a anunțului dvs.",
     "postAd": "Postează anunț",
@@ -113,7 +113,8 @@
     "myAds": "Anunțurile mele",
     "noMyAds": "Nu ai niciun anunț postat.",
     "conversations": "Conversații",
-    "editProfile": "Editează Profilul",
+    "editProfile": "Editează profilul",
     "logout": "Deconectare",
-    "address": "Adresă"
+    "address": "Adresă",
+    "editAd": "Editează anunț"
 }

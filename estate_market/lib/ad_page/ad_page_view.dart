@@ -139,6 +139,11 @@ class AdPageView extends StatelessWidget {
                             softWrap: true,
                             style: const TextStyle(fontSize: 16),
                           ),
+                          Text(
+                            '${AppLocalizations.of(context)!.adCategory}: ${adCategoryTranslate(ad.adCategory, context)}',
+                            softWrap: true,
+                            style: const TextStyle(fontSize: 16),
+                          ),
                         ],
                       ),
                     ),

@@ -35,7 +35,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     case RouteNames.registerPage:
       return routeBuilder(RegisterPage());
     case RouteNames.createAdPage:
-      return routeBuilder(CreateAdView());
+      return routeBuilder(CreateAdView(ad: settings.arguments as AdEntity?));
     case RouteNames.profilePage:
       return routeBuilder(const ProfilePageView());
     case RouteNames.editProfilePage:

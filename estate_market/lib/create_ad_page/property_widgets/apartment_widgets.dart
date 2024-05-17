@@ -1,3 +1,4 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:estate_market/create_ad_page/property_widgets/residence_widgets.dart';
 import 'package:flutter/material.dart';
@@ -9,18 +10,24 @@ import '../create_ad_bloc.dart';
 import '../widgets/create_ad_textfield.dart';
 
 class ApartmentWidgets extends StatelessWidget {
-  final CreateAdBloc bloc;
-  const ApartmentWidgets({super.key, required this.bloc});
+  final TextEditingController _floorNumberController = TextEditingController();
+  final AdEntity? ad;
+  ApartmentWidgets({super.key, required this.ad}) {
+    if (ad != null && ad!.property is ApartmentEntity) {
+      _floorNumberController.text = (ad!.property! as ApartmentEntity).floor.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final CreateAdBloc bloc = BlocProvider.of<CreateAdBloc>(context);
     return BlocBuilder<CreateAdBloc, CreateAdState>(
         bloc: bloc,
         builder: (context, state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ResidenceWidgets(bloc: bloc),
+              ResidenceWidgets(ad: ad),
 
               // Partitioning dropbox
               Text('${AppLocalizations.of(context)!.partitioningLevel}*'),
@@ -39,6 +46,7 @@ class ApartmentWidgets extends StatelessWidget {
               // Floor number textfield
               Text("${AppLocalizations.of(context)!.floorNumber}*"),
               CreateAdTextfield(
+                controller: _floorNumberController,
                 hintText: AppLocalizations.of(context)!.floorNumberHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (text) => bloc.add(ChangeFloorEvent(floor: text)),

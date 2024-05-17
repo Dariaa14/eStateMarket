@@ -152,6 +152,7 @@ class CreateAdState extends Equatable {
   CreateAdState copyResidence({
     int? numberOfBathrooms,
     int? numberOfRooms,
+    FurnishingLevel? furnishingLevel,
   }) =>
       CreateAdState(
         emptyFields: emptyFields,
@@ -162,7 +163,7 @@ class CreateAdState extends Equatable {
         currentCategory: currentCategory,
         listingType: listingType,
         partitioning: partitioning,
-        furnishingLevel: furnishingLevel,
+        furnishingLevel: furnishingLevel ?? this.furnishingLevel,
         floor: floor,
         numberOfBathrooms: numberOfBathrooms,
         numberOfRooms: numberOfRooms,
@@ -174,6 +175,7 @@ class CreateAdState extends Equatable {
 
   CreateAdState copyApartment({
     int? floor,
+    Partitioning? partitioning,
   }) =>
       CreateAdState(
         emptyFields: emptyFields,
@@ -183,7 +185,7 @@ class CreateAdState extends Equatable {
         isNegotiable: isNegotiable,
         currentCategory: currentCategory,
         listingType: listingType,
-        partitioning: partitioning,
+        partitioning: partitioning ?? this.partitioning,
         furnishingLevel: furnishingLevel,
         floor: floor,
         numberOfBathrooms: numberOfBathrooms,

@@ -27,11 +27,25 @@ class CreateAdView extends StatelessWidget {
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _constructionYearController = TextEditingController();
 
-  CreateAdView({super.key});
+  final AdEntity? ad;
+
+  CreateAdView({super.key, this.ad}) {
+    _initAd();
+  }
+
+  _initAd() {
+    if (ad == null) return;
+    _titleController.text = ad!.title;
+    _descriptionController.text = ad!.description;
+    _surfaceController.text = ad!.property!.surface.toString();
+    _priceController.text = ad!.property!.price.toString();
+    _constructionYearController.text =
+        ad!.property!.constructionYear == null ? '' : ad!.property!.constructionYear.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final CreateAdBloc createAdBloc = CreateAdBloc();
+    final CreateAdBloc createAdBloc = BlocProvider.of<CreateAdBloc>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -46,7 +60,7 @@ class CreateAdView extends StatelessWidget {
         ),
       ),
       body: BlocBuilder<CreateAdBloc, CreateAdState>(
-        bloc: createAdBloc,
+        bloc: createAdBloc..add(InitAdEvent(ad: ad)),
         builder: (context, state) {
           int currentPhotoIndex = 0;
           return BlocListener<CreateAdBloc, CreateAdState>(
@@ -83,7 +97,7 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 16.0),
 
                     // Choose property type dropbox
-                    Text(AppLocalizations.of(context)!.adCategory),
+                    Text('${AppLocalizations.of(context)!.adCategory}*'),
                     DropdownButton<AdCategory>(
                         value: state.currentCategory,
                         items: [
@@ -137,9 +151,9 @@ class CreateAdView extends StatelessWidget {
                       child: InkWell(
                         onTap: () async {
                           if (state.images.isEmpty) {
-                            createAdBloc.add(SetImagesEvent(images: await _pickImageFromGallery(createAdBloc)));
+                            createAdBloc.add(SetImagesEvent(images: await _pickImageFromGallery()));
                           } else {
-                            _showImageModal(context, createAdBloc, currentPhotoIndex);
+                            _showImageModal(context, currentPhotoIndex);
                           }
                         },
                         child: state.images.isNotEmpty
@@ -252,7 +266,7 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 16.0),
 
                     // Specific properties based on category:
-                    _buildPropertyTypeWidgets(createAdBloc),
+                    _buildPropertyTypeWidgets(ad, context),
                     const SizedBox(height: 16.0),
 
                     // Select location
@@ -308,16 +322,21 @@ class CreateAdView extends StatelessWidget {
                       child: PlatformElevatedButton(
                         color: Theme.of(context).colorScheme.primary,
                         onPressed: () {
-                          createAdBloc.add(InsertInDatabaseEvent(
-                              title: _titleController.text,
-                              description: _descriptionController.text,
-                              surface: _surfaceController.text,
-                              price: _priceController.text,
-                              constructionYear: _constructionYearController.text));
+                          if (ad == null) {
+                            createAdBloc.add(InsertInDatabaseEvent(
+                                title: _titleController.text,
+                                description: _descriptionController.text,
+                                surface: _surfaceController.text,
+                                price: _priceController.text,
+                                constructionYear: _constructionYearController.text));
+                            return;
+                          }
                         },
                         child: (state.status == CreateAdStatus.normal)
                             ? Text(
-                                AppLocalizations.of(context)!.postAd,
+                                (ad == null)
+                                    ? AppLocalizations.of(context)!.postAd
+                                    : AppLocalizations.of(context)!.editAd,
                                 style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                               )
                             : Padding(
@@ -336,26 +355,27 @@ class CreateAdView extends StatelessWidget {
     );
   }
 
-  _buildPropertyTypeWidgets(CreateAdBloc bloc) {
-    switch (bloc.state.currentCategory) {
+  _buildPropertyTypeWidgets(AdEntity? ad, BuildContext context) {
+    switch (BlocProvider.of<CreateAdBloc>(context).state.currentCategory) {
       case AdCategory.apartament:
-        return ApartmentWidgets(bloc: bloc);
+        return ApartmentWidgets(ad: ad);
       case AdCategory.deposit:
-        return DepositWidgets(bloc: bloc);
+        return DepositWidgets(ad: ad);
       case AdCategory.garage:
-        return GarageWidgets(bloc: bloc);
+        return GarageWidgets(ad: ad);
       case AdCategory.house:
-        return HouseWidgets(bloc: bloc);
+        return HouseWidgets(ad: ad);
       case AdCategory.terrain:
-        return TerrainWidget(bloc: bloc);
+        return TerrainWidget(ad: ad);
       default:
         return Container();
     }
   }
 
-  void _showImageModal(BuildContext context, CreateAdBloc bloc, int initialIndex) {
+  void _showImageModal(BuildContext context, int initialIndex) {
     final PageController pageController = PageController(initialPage: initialIndex);
     int currentIndex = initialIndex;
+    final CreateAdBloc bloc = BlocProvider.of<CreateAdBloc>(context);
 
     showModalBottomSheet(
       context: context,
@@ -395,7 +415,7 @@ class CreateAdView extends StatelessWidget {
                         padding: const EdgeInsets.all(5.0),
                         child: ElevatedButton(
                           onPressed: () async {
-                            List<File> newImagesFile = await _pickImageFromGallery(bloc);
+                            List<File> newImagesFile = await _pickImageFromGallery();
                             bloc.add(AddImagesEvent(images: newImagesFile));
                           },
                           child: Text(
@@ -436,7 +456,7 @@ class CreateAdView extends StatelessWidget {
     );
   }
 
-  Future<List<File>> _pickImageFromGallery(CreateAdBloc bloc) async {
+  Future<List<File>> _pickImageFromGallery() async {
     final returnedImage = await ImagePicker().pickMultiImage();
     List<File> images = returnedImage.map((imageData) => File(imageData.path)).toList();
     if (images.length > 8) {

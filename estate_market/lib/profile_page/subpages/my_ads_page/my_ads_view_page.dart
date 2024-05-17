@@ -31,7 +31,10 @@ class MyAdsViewPage extends StatelessWidget {
                 itemCount: state.ads.length,
                 itemBuilder: (context, index) {
                   if (state.ads[index] == null) return const SizedBox.shrink();
-                  return AdItem(ad: state.ads[index]!);
+                  return AdItem(
+                    ad: state.ads[index]!,
+                    canUserModifyAdd: true,
+                  );
                 });
           },
         ),

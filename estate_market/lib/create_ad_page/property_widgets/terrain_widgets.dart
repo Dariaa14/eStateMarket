@@ -1,3 +1,4 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
 import 'package:estate_market/create_ad_page/create_ad_bloc.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +8,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../utils/translate_enums.dart';
 
 class TerrainWidget extends StatelessWidget {
-  final CreateAdBloc bloc;
-  const TerrainWidget({super.key, required this.bloc});
+  final AdEntity? ad;
+  const TerrainWidget({super.key, required this.ad});
 
   @override
   Widget build(BuildContext context) {
+    final CreateAdBloc bloc = BlocProvider.of<CreateAdBloc>(context);
     return BlocBuilder<CreateAdBloc, CreateAdState>(
       bloc: bloc,
       builder: (context, state) {

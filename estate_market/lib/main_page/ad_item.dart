@@ -11,8 +11,9 @@ import 'main_page_bloc.dart';
 
 class AdItem extends StatelessWidget {
   final AdEntity ad;
+  final bool canUserModifyAdd;
 
-  const AdItem({super.key, required this.ad});
+  const AdItem({super.key, required this.ad, this.canUserModifyAdd = false});
 
   @override
   Widget build(BuildContext context) {
@@ -106,17 +107,22 @@ class AdItem extends StatelessWidget {
                           children: [
                             Text(
                               ad.title,
+                              maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text("${ad.property!.price}"),
-                            Text(ad.landmark!.getAddressString()),
+                            Text(
+                              ad.landmark!.getAddressString(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             Text(DateFormat.yMd(Localizations.localeOf(context).toString()).format(ad.dateOfAd)),
                             Text("${ad.property!.surface}"),
                           ],
                         ),
                       ),
                     ),
-                    if (state.isUserLoggedIn)
+                    if (state.isUserLoggedIn && !canUserModifyAdd)
                       IconButton(
                           onPressed: () {
                             mainBloc.add(FavoritesButtonPressedEvent(ad: ad));
@@ -124,6 +130,13 @@ class AdItem extends StatelessWidget {
                           icon: mainBloc.isAdFavorite(ad)
                               ? const Icon(Icons.favorite)
                               : const Icon(Icons.favorite_outline)),
+                    if (canUserModifyAdd)
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(RouteNames.createAdPage, arguments: ad);
+                          },
+                          icon: const Icon(Icons.edit)),
+                    if (canUserModifyAdd) IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
                   ],
                 );
               },

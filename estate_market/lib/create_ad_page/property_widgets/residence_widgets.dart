@@ -1,3 +1,4 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,11 +9,19 @@ import '../create_ad_bloc.dart';
 import '../widgets/create_ad_textfield.dart';
 
 class ResidenceWidgets extends StatelessWidget {
-  final CreateAdBloc bloc;
-  const ResidenceWidgets({super.key, required this.bloc});
+  final AdEntity? ad;
+  final TextEditingController _numberOfRoomsController = TextEditingController();
+  final TextEditingController _numberOfBathroomsController = TextEditingController();
+  ResidenceWidgets({super.key, required this.ad}) {
+    if (ad != null && ad!.property is ResidenceEntity) {
+      _numberOfRoomsController.text = (ad!.property! as ResidenceEntity).numberOfRooms.toString();
+      _numberOfBathroomsController.text = (ad!.property! as ResidenceEntity).numberOfBathrooms.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final CreateAdBloc bloc = BlocProvider.of<CreateAdBloc>(context);
     return BlocBuilder<CreateAdBloc, CreateAdState>(
       bloc: bloc,
       builder: (context, state) {
@@ -20,6 +29,7 @@ class ResidenceWidgets extends StatelessWidget {
           // Number of rooms text field
           Text('${AppLocalizations.of(context)!.numberOfRooms}*'),
           CreateAdTextfield(
+            controller: _numberOfRoomsController,
             hintText: AppLocalizations.of(context)!.numberOfRoomsHintText,
             keyboardType: TextInputType.number,
             onChanged: (text) => bloc.add(ChangeNumberOfRoomsEvent(numberOfRooms: text)),
@@ -31,6 +41,7 @@ class ResidenceWidgets extends StatelessWidget {
           // Number of bathrooms text field
           Text('${AppLocalizations.of(context)!.numberOfBathrooms}*'),
           CreateAdTextfield(
+            controller: _numberOfBathroomsController,
             hintText: AppLocalizations.of(context)!.numberOfBathroomsHintText,
             keyboardType: TextInputType.number,
             onChanged: (text) => bloc.add(ChangeNumberOfBathroomsEvent(numberOfBathrooms: text)),

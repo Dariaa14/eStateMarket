@@ -1,3 +1,4 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:estate_market/create_ad_page/create_ad_bloc.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +9,18 @@ import '../../utils/translate_enums.dart';
 import '../widgets/create_ad_textfield.dart';
 
 class GarageWidgets extends StatelessWidget {
-  final CreateAdBloc bloc;
-  const GarageWidgets({super.key, required this.bloc});
+  final AdEntity? ad;
+  final TextEditingController _capacityController = TextEditingController();
+
+  GarageWidgets({super.key, required this.ad}) {
+    if (ad != null && ad!.property is GarageEntity) {
+      _capacityController.text = (ad!.property! as GarageEntity).capacity.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final CreateAdBloc bloc = BlocProvider.of<CreateAdBloc>(context);
     return BlocBuilder<CreateAdBloc, CreateAdState>(
       bloc: bloc,
       builder: (context, state) {
@@ -36,6 +44,7 @@ class GarageWidgets extends StatelessWidget {
             // Set capacity
             Text('${AppLocalizations.of(context)!.capacityOfGarage}*'),
             CreateAdTextfield(
+              controller: _capacityController,
               hintText: AppLocalizations.of(context)!.capacityOfGarageHintText,
               keyboardType: TextInputType.number,
               onChanged: (value) => bloc.add(ChangeParkingCapacityEvent(parkingCapacity: value)),
