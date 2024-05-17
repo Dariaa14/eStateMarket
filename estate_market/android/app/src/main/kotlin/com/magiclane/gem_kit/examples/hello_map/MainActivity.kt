@@ -1,4 +1,4 @@
-package com.magiclane.gem_kit.examples.hello_map
+package app.estate_market
 
 import io.flutter.embedding.android.FlutterActivity
 
