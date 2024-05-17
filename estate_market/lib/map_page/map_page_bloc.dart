@@ -35,6 +35,8 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     on<PermissionStatusUpdatedEvent>(_permissionStatusUpdatedEventHandler);
     on<LocationStatusUpdatedEvent>(_locationStatusUpdatedEventHandler);
     on<InitializeLocationEvent>(_initializeLocationEventHandler);
+
+    on<HighlightLandmarkEvent>(_highlightLandmarkEventHandler);
   }
 
   _initAddressSelectionEventHandler(InitAddressSelectionEvent event, Emitter<MapPageState> emit) {
@@ -50,6 +52,7 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     _mapUseCase = sl.get<MapUseCase>();
     add(InitializeLocationEvent());
     add(CenterOnLandmarkEvent(landmark: event.landmark));
+    add(HighlightLandmarkEvent(landmark: event.landmark));
   }
 
   _centerOnLandmarkEventHandler(CenterOnLandmarkEvent event, Emitter<MapPageState> emit) {
@@ -74,7 +77,11 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
       return;
     }
     emit(state.copyWith(landmark: event.landmark));
-    _mapUseCase!.activateHighlight(event.landmark!);
+    add(HighlightLandmarkEvent(landmark: event.landmark!));
+  }
+
+  _highlightLandmarkEventHandler(HighlightLandmarkEvent event, Emitter<MapPageState> emit) {
+    _mapUseCase!.activateHighlight(event.landmark);
   }
 
   _deactivateLandmarkHightlightEventHandler(DeactivateLandmarkHightlightEvent event, Emitter<MapPageState> emit) {

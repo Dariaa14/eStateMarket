@@ -44,6 +44,12 @@ class LocationStatusUpdatedEvent extends MapPageEvent {
   LocationStatusUpdatedEvent({required this.isEnabled});
 }
 
+class HighlightLandmarkEvent extends MapPageEvent {
+  final LandmarkEntity landmark;
+
+  HighlightLandmarkEvent({required this.landmark});
+}
+
 class DeactivateLandmarkHightlightEvent extends MapPageEvent {}
 
 class InitializeLocationEvent extends MapPageEvent {}
