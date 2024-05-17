@@ -64,7 +64,7 @@ class LandmarkEntityImpl implements LandmarkEntity {
   }
 
   @override
-  void setAddress(AddressEntity address) {}
+  void setAddress(AddressEntity address) => this.address = address;
 
   Map<String, dynamic> toJson() {
     return {
