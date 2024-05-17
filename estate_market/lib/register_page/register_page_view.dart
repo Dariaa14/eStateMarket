@@ -16,7 +16,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RegisterPageBloc registerBloc = BlocProvider.of<RegisterPageBloc>(context);
+    final RegisterPageBloc registerBloc = RegisterPageBloc();
     return BlocBuilder<RegisterPageBloc, RegisterPageState>(
       bloc: registerBloc,
       builder: (context, state) {
@@ -213,32 +213,36 @@ class RegisterPage extends StatelessWidget {
                             ],
                           ),
                           // Login/Signup button
-                          ElevatedButton(
-                            onPressed: () {
-                              if (state.registerPageType == RegisterPageType.signup) {
-                                registerBloc.add(CreateAccountEvent(
-                                    email: _emailController.text, password: _passwordController.text));
-                                // Navigator.pop(context);
-                              } else {
-                                registerBloc
-                                    .add(LoginEvent(email: _emailController.text, password: _passwordController.text));
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).colorScheme.primary,
-                              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                          SizedBox(
+                            height: 50.0,
+                            width: 135.0,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (state.registerPageType == RegisterPageType.signup) {
+                                  registerBloc.add(CreateAccountEvent(
+                                      email: _emailController.text, password: _passwordController.text));
+                                  // Navigator.pop(context);
+                                } else {
+                                  registerBloc.add(
+                                      LoginEvent(email: _emailController.text, password: _passwordController.text));
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context).colorScheme.primary,
+                                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
                               ),
+                              child: (state.isLoading)
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary),
+                                    )
+                                  : Text((state.registerPageType == RegisterPageType.login)
+                                      ? AppLocalizations.of(context)!.login
+                                      : AppLocalizations.of(context)!.signup),
                             ),
-                            child: (state.isLoading)
-                                ? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary),
-                                  )
-                                : Text((state.registerPageType == RegisterPageType.login)
-                                    ? AppLocalizations.of(context)!.login
-                                    : AppLocalizations.of(context)!.signup),
                           ),
 
                           Text(

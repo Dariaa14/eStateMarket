@@ -109,5 +109,10 @@
     "maximumPhotoCount": "Selectează maxim 8 poze",
     "addPhoto": "Adaugă poze",
     "deletePhoto": "Șterge poza",
-    "noFavorites": "Nu ai niciun anunț salvat la favorite."
+    "noFavorites": "Nu ai niciun anunț salvat la favorite.",
+    "myAds": "Anunțurile mele",
+    "noMyAds": "Nu ai niciun anunț postat.",
+    "conversations": "Conversații",
+    "editProfile": "Editează Profilul",
+    "logout": "Delogare"
 }

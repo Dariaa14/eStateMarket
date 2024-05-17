@@ -544,5 +544,30 @@
     "noFavorites": "You don't have any ads saved in favorites.",
     "@noFavorites": {
         "description": "No favorites message"
-    }
+    },
+
+    "myAds": "My Ads",
+    "@myAds": {
+        "description": "My ads"
+    },   
+
+    "noMyAds": "You don't have any ads posted.",
+    "@noMyAds": {
+        "description": "No owned ads message"
+    },
+
+    "conversations": "Conversations",
+    "@conversations": {
+        "description": "Conversations"
+    },
+
+    "editProfile": "Edit Profile",
+    "@editProfile": {
+        "description": "Edit profile"
+    },
+
+    "logout": "Logout",
+    "@logout": {
+        "description": "Logout"
+    }  
 }

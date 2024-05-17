@@ -16,8 +16,6 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
   final LoginUseCase _loginUseCase = sl.get<LoginUseCase>();
 
   RegisterPageBloc() : super(const RegisterPageState()) {
-    on<InitRegisterPageEvent>(_initLoginPageEventHandler);
-
     on<ChangePasswordVisibilityEvent>(_changePasswordVisibilityEventHandler);
     on<ChangeStayConnectedEvent>(_changeStayConnectedEventHandler);
     on<ChangeRegisterTypeEvent>(_changeRegisterTypeEventHandler);
@@ -27,8 +25,6 @@ class RegisterPageBloc extends Bloc<RegisterPageEvent, RegisterPageState> {
 
     on<LoginEvent>(_loginEventHandler);
   }
-
-  _initLoginPageEventHandler(InitRegisterPageEvent event, Emitter<RegisterPageState> emit) {}
 
   _changePasswordVisibilityEventHandler(ChangePasswordVisibilityEvent event, Emitter<RegisterPageState> emit) {
     emit(state.copyWith(isPasswordObscured: !state.isPasswordObscured));

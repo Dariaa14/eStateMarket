@@ -18,7 +18,7 @@ class EditProfilePageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit profile'),
+        title: Text(AppLocalizations.of(context)!.editProfile),
         backgroundColor: Theme.of(context).colorScheme.surface,
         leading: IconButton(
           onPressed: () {

@@ -31,7 +31,7 @@ class CreateAdView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CreateAdBloc createAdBloc = BlocProvider.of<CreateAdBloc>(context);
+    final CreateAdBloc createAdBloc = CreateAdBloc();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -302,25 +302,29 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 16.0),
 
                     // Submit button
-                    PlatformElevatedButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: () {
-                        createAdBloc.add(InsertInDatabaseEvent(
-                            title: _titleController.text,
-                            description: _descriptionController.text,
-                            surface: _surfaceController.text,
-                            price: _priceController.text,
-                            constructionYear: _constructionYearController.text));
-                      },
-                      child: (state.status == CreateAdStatus.normal)
-                          ? Text(
-                              AppLocalizations.of(context)!.postAd,
-                              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary),
-                            ),
+                    SizedBox(
+                      height: 50,
+                      width: 150,
+                      child: PlatformElevatedButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        onPressed: () {
+                          createAdBloc.add(InsertInDatabaseEvent(
+                              title: _titleController.text,
+                              description: _descriptionController.text,
+                              surface: _surfaceController.text,
+                              price: _priceController.text,
+                              constructionYear: _constructionYearController.text));
+                        },
+                        child: (state.status == CreateAdStatus.normal)
+                            ? Text(
+                                AppLocalizations.of(context)!.postAd,
+                                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary),
+                              ),
+                      ),
                     ),
                   ],
                 ),

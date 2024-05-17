@@ -4,7 +4,7 @@ import 'package:estate_market/ad_page/ad_page_view.dart';
 import 'package:estate_market/create_ad_page/create_ad_view.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
 import 'package:estate_market/map_page/map_page_view.dart';
-import 'package:estate_market/my_ads_page/my_ads_view_page.dart';
+import 'package:estate_market/profile_page/subpages/my_ads_page/my_ads_view_page.dart';
 import 'package:estate_market/profile_page/subpages/edit_profile_page/edit_profile_page_view.dart';
 import 'package:estate_market/register_page/register_page_view.dart';
 import 'package:flutter/material.dart';

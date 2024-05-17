@@ -11,8 +11,7 @@ class MapPageView extends StatelessWidget {
   final LandmarkEntity? landmark;
   const MapPageView({super.key, this.landmark});
 
-  Future<void> onMapCreated(GemMapController controller, BuildContext context) async {
-    final MapPageBloc mapBloc = BlocProvider.of<MapPageBloc>(context);
+  Future<void> onMapCreated(MapPageBloc mapBloc, GemMapController controller) async {
     diWithMapController(controller);
 
     if (landmark == null) {
@@ -24,7 +23,7 @@ class MapPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MapPageBloc mapBloc = BlocProvider.of<MapPageBloc>(context);
+    final MapPageBloc mapBloc = MapPageBloc();
     return Scaffold(
       appBar: AppBar(
         title: Text((landmark == null) ? AppLocalizations.of(context)!.selectAddress : ''),
@@ -44,7 +43,7 @@ class MapPageView extends StatelessWidget {
           return Stack(
             children: [
               GemMap(
-                onMapCreated: (controller) => onMapCreated(controller, context),
+                onMapCreated: (controller) => onMapCreated(mapBloc, controller),
               ),
               Align(
                 alignment: Alignment.bottomLeft,

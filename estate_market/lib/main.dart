@@ -8,7 +8,7 @@ import 'package:estate_market/favorites_page/favorites_page_bloc.dart';
 import 'package:estate_market/main_page/main_page_bloc.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
 import 'package:estate_market/map_page/map_page_bloc.dart';
-import 'package:estate_market/my_ads_page/my_ads_bloc.dart';
+import 'package:estate_market/profile_page/subpages/my_ads_page/my_ads_bloc.dart';
 import 'package:estate_market/profile_page/profile_page_bloc.dart';
 import 'package:estate_market/register_page/register_page_bloc.dart';
 import 'package:flutter/services.dart';

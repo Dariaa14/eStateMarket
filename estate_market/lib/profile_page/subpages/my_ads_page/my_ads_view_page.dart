@@ -1,9 +1,9 @@
-import 'package:estate_market/my_ads_page/my_ads_bloc.dart';
+import 'package:estate_market/profile_page/subpages/my_ads_page/my_ads_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../main_page/ad_item.dart';
+import '../../../main_page/ad_item.dart';
 
 class MyAdsViewPage extends StatelessWidget {
   const MyAdsViewPage({super.key});
@@ -14,7 +14,7 @@ class MyAdsViewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: const Text('my ads'),
+        title: Text(AppLocalizations.of(context)!.myAds),
       ),
       body: Container(
         color: Theme.of(context).colorScheme.background,

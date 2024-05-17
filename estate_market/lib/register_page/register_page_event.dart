@@ -2,8 +2,6 @@ part of 'register_page_bloc.dart';
 
 abstract class RegisterPageEvent {}
 
-class InitRegisterPageEvent extends RegisterPageEvent {}
-
 class ChangePasswordVisibilityEvent extends RegisterPageEvent {
   ChangePasswordVisibilityEvent();
 }
