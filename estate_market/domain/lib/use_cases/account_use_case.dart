@@ -12,6 +12,7 @@ class AccountUseCase {
 
   final _accountController = StreamController<bool>.broadcast();
   final _favoriteAdsController = StreamController<List<AdEntity>>.broadcast();
+  final _myAdsController = StreamController<List<AdEntity>>.broadcast();
 
   AccountUseCase({required AccountRepository accountRepository, required DatabaseRepository databaseRepository})
       : _accountRepository = accountRepository,
@@ -21,6 +22,9 @@ class AccountUseCase {
     });
     _accountRepository.favoriteAdsStream.listen((favoriteAds) {
       _favoriteAdsController.add(favoriteAds ?? []);
+    });
+    _accountRepository.myAdsStream.listen((myAds) {
+      _myAdsController.add(myAds ?? []);
     });
   }
 
@@ -44,6 +48,7 @@ class AccountUseCase {
 
   Stream<bool> get accountStatus => _accountController.stream;
   Stream<List<AdEntity>> get favoriteAdsStream => _favoriteAdsController.stream;
+  Stream<List<AdEntity>> get myAdsStream => _myAdsController.stream;
 
   AccountEntity? get currentAccount {
     return _accountRepository.currentAccount;
@@ -51,6 +56,10 @@ class AccountUseCase {
 
   List<AdEntity>? get favoriteAds {
     return _accountRepository.favoriteAds;
+  }
+
+  List<AdEntity>? get myAds {
+    return _accountRepository.myAds;
   }
 
   void dispose() {

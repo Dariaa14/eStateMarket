@@ -25,6 +25,11 @@ class AccountRepositoryImpl implements AccountRepository {
   final _favoritesController = StreamController<List<AdEntity>?>.broadcast();
 
   @override
+  List<AdEntity>? myAds;
+
+  final _myAdsController = StreamController<List<AdEntity>?>.broadcast();
+
+  @override
   Future<void> updateAccount(String? phoneNumber, SellerType? sellerType) async {
     final AccountEntity newAccountData = AccountEntityImpl(
         email: currentAccount!.email,
@@ -46,8 +51,10 @@ class AccountRepositoryImpl implements AccountRepository {
     currentAccount = accountsWithGivenEmail.first;
     currentAccountDocument = await _getCurrentUserDocumentReference();
     favoriteAds = await _getFavoriteAds();
+    myAds = await _getMyAds();
     _favoritesController.add(favoriteAds);
     _accountController.add(currentAccount);
+    _myAdsController.add(myAds);
   }
 
   @override
@@ -68,12 +75,31 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
+  void addMyAd(AdEntity ad) {
+    myAds!.add(ad);
+    _myAdsController.add(myAds);
+  }
+
+  @override
+  void removeMyAd(AdEntity ad) {
+    for (int index = 0; index < myAds!.length; index++) {
+      if (myAds![index].dateOfAd.compareTo(ad.dateOfAd) == 0) {
+        myAds!.removeAt(index);
+        _myAdsController.add(myAds);
+        return;
+      }
+    }
+  }
+
+  @override
   void removeCurrentAccount() {
     currentAccount = null;
     currentAccountDocument = null;
     favoriteAds = null;
+    myAds = null;
     _accountController.add(null);
     _favoritesController.add(null);
+    _myAdsController.add(null);
   }
 
   Future<DocumentReferenceEntity?> _getCurrentUserDocumentReference() async {
@@ -96,6 +122,14 @@ class AccountRepositoryImpl implements AccountRepository {
     return favoriteAds;
   }
 
+  Future<List<AdEntity>?> _getMyAds() async {
+    if (currentAccountDocument == null) throw Exception('Current account is not set');
+    CollectionReferenceEntity adsCollection = CollectionReferenceEntityImpl(collection: Collections.ad);
+    final reference = (currentAccountDocument as DocumentReferenceEntityImpl).ref;
+    final myAds = await adsCollection.where('account', WhereOperations.isEqualTo, reference).get<AdEntity>();
+    return myAds;
+  }
+
   @override
   Future<List<AdEntity>> getAccountsAds() async {
     if (currentAccountDocument == null) throw Exception('Current account is not set');
@@ -110,4 +144,7 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   Stream<List<AdEntity>?> get favoriteAdsStream => _favoritesController.stream;
+
+  @override
+  Stream<List<AdEntity>?> get myAdsStream => _myAdsController.stream;
 }

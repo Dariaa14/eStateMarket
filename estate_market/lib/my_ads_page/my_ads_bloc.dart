@@ -19,9 +19,10 @@ class MyAdsBloc extends Bloc<MyAdsEvent, MyAdsState> {
   }
 
   _initMyAdsPageEventHandler(InitMyAdsPageEvent event, Emitter<MyAdsState> emit) {
-    // _myAdsSubscription = _accountUseCase.myAds.listen((List<AdEntity?> ads) {
-    //   add(SetMyAdsEvent(ads: ads));
-    // });
+    add(SetMyAdsEvent(ads: _accountUseCase.myAds ?? []));
+    _myAdsSubscription = _accountUseCase.myAdsStream.listen((List<AdEntity?> ads) {
+      add(SetMyAdsEvent(ads: ads));
+    });
   }
 
   _setFavoritesEventHandler(SetMyAdsEvent event, Emitter<MyAdsState> emit) => emit(state.copyWith(ads: event.ads));
