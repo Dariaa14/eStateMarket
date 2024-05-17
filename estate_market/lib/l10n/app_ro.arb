@@ -114,5 +114,6 @@
     "noMyAds": "Nu ai niciun anunț postat.",
     "conversations": "Conversații",
     "editProfile": "Editează Profilul",
-    "logout": "Delogare"
+    "logout": "Deconectare",
+    "address": "Adresă"
 }

@@ -54,6 +54,7 @@ class AdPageView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Images:
               if (ad.imagesUrls.isNotEmpty)
                 SizedBox(
                   height: 250,
@@ -101,6 +102,8 @@ class AdPageView extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+
+              // Title, date, price, negotiable, listing type:
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
@@ -142,6 +145,8 @@ class AdPageView extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
+
+                    // Description:
                     Container(
                         width: MediaQuery.of(context).size.width - 20,
                         padding: const EdgeInsets.all(5.0),
@@ -164,6 +169,8 @@ class AdPageView extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
+
+                    // Property details:
                     Container(
                         width: MediaQuery.of(context).size.width - 20,
                         padding: const EdgeInsets.all(5.0),
@@ -187,12 +194,15 @@ class AdPageView extends StatelessWidget {
                                 softWrap: true,
                                 style: const TextStyle(fontSize: 16),
                               ),
+                            Text('${AppLocalizations.of(context)!.address}: ${ad.landmark!.getAddressString()}',
+                                style: const TextStyle(fontSize: 16)),
                             buildPropertyTypeWidgets(),
                           ],
                         )),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
+                    // Seller details:
                     Container(
                       width: MediaQuery.of(context).size.width - 20,
                       padding: const EdgeInsets.all(5.0),
@@ -219,10 +229,11 @@ class AdPageView extends StatelessWidget {
                         ],
                       ),
                     ),
+                    // Location:
                     if (ad.landmark != null)
                       Container(
                         height: 45,
-                        margin: const EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Theme.of(context).colorScheme.surface,

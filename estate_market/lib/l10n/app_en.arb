@@ -569,5 +569,10 @@
     "logout": "Logout",
     "@logout": {
         "description": "Logout"
-    }  
+    },
+
+    "address": "Address",
+    "@address": {
+        "description": "Address"
+    }
 }
