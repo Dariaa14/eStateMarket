@@ -10,11 +10,11 @@ import '../widgets/create_ad_textfield.dart';
 
 class GarageWidgets extends StatelessWidget {
   final AdEntity? ad;
-  final TextEditingController _capacityController = TextEditingController();
+  final TextEditingController capacityController;
 
-  GarageWidgets({super.key, required this.ad}) {
+  GarageWidgets({super.key, required this.ad, required this.capacityController}) {
     if (ad != null && ad!.property is GarageEntity) {
-      _capacityController.text = (ad!.property! as GarageEntity).capacity.toString();
+      capacityController.text = (ad!.property! as GarageEntity).capacity.toString();
     }
   }
 
@@ -44,7 +44,7 @@ class GarageWidgets extends StatelessWidget {
             // Set capacity
             Text('${AppLocalizations.of(context)!.capacityOfGarage}*'),
             CreateAdTextfield(
-              controller: _capacityController,
+              controller: capacityController,
               hintText: AppLocalizations.of(context)!.capacityOfGarageHintText,
               keyboardType: TextInputType.number,
               onChanged: (value) => bloc.add(ChangeParkingCapacityEvent(parkingCapacity: value)),

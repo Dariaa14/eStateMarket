@@ -30,6 +30,22 @@ class CreateAdView extends StatelessWidget {
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _constructionYearController = TextEditingController();
 
+  final TextEditingController _insideSurfaceController = TextEditingController();
+  final TextEditingController _outsideSurfaceController = TextEditingController();
+  final TextEditingController _numberOfFloorsController = TextEditingController();
+
+  final TextEditingController _numberOfRoomsController = TextEditingController();
+  final TextEditingController _numberOfBathroomsController = TextEditingController();
+
+  final TextEditingController _floorNumberController = TextEditingController();
+
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _usableSurfaceController = TextEditingController();
+  final TextEditingController _administrativeSurfaceController = TextEditingController();
+  final TextEditingController _parkingSpacesController = TextEditingController();
+
+  final TextEditingController _capacityController = TextEditingController();
+
   final AdEntity? ad;
 
   CreateAdView({super.key, this.ad}) {
@@ -374,13 +390,28 @@ class CreateAdView extends StatelessWidget {
   _buildPropertyTypeWidgets(AdEntity? ad, BuildContext context) {
     switch (BlocProvider.of<CreateAdBloc>(context).state.currentCategory) {
       case AdCategory.apartament:
-        return ApartmentWidgets(ad: ad);
+        return ApartmentWidgets(
+            ad: ad,
+            floorNumberController: _floorNumberController,
+            numberOfRoomsController: _numberOfRoomsController,
+            numberOfBathroomsController: _numberOfBathroomsController);
       case AdCategory.deposit:
-        return DepositWidgets(ad: ad);
+        return DepositWidgets(
+            ad: ad,
+            heightController: _heightController,
+            usableSurfaceController: _usableSurfaceController,
+            administrativeSurfaceController: _administrativeSurfaceController,
+            parkingSpacesController: _parkingSpacesController);
       case AdCategory.garage:
-        return GarageWidgets(ad: ad);
+        return GarageWidgets(ad: ad, capacityController: _capacityController);
       case AdCategory.house:
-        return HouseWidgets(ad: ad);
+        return HouseWidgets(
+            ad: ad,
+            insideSurfaceController: _insideSurfaceController,
+            outsideSurfaceController: _outsideSurfaceController,
+            numberOfFloorsController: _numberOfFloorsController,
+            numberOfRoomsController: _numberOfRoomsController,
+            numberOfBathroomsController: _numberOfBathroomsController);
       case AdCategory.terrain:
         return TerrainWidget(ad: ad);
       default:

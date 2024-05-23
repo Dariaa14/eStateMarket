@@ -10,17 +10,23 @@ import '../widgets/create_ad_textfield.dart';
 
 class DepositWidgets extends StatelessWidget {
   final AdEntity? ad;
-  final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _usableSurfaceController = TextEditingController();
-  final TextEditingController _administrativeSurfaceController = TextEditingController();
-  final TextEditingController _parkingSpacesController = TextEditingController();
+  final TextEditingController heightController;
+  final TextEditingController usableSurfaceController;
+  final TextEditingController administrativeSurfaceController;
+  final TextEditingController parkingSpacesController;
 
-  DepositWidgets({super.key, required this.ad}) {
+  DepositWidgets(
+      {super.key,
+      required this.ad,
+      required this.heightController,
+      required this.usableSurfaceController,
+      required this.administrativeSurfaceController,
+      required this.parkingSpacesController}) {
     if (ad != null && ad!.property is DepositEntity) {
-      _heightController.text = (ad!.property! as DepositEntity).height.toString();
-      _usableSurfaceController.text = (ad!.property! as DepositEntity).usableSurface.toString();
-      _administrativeSurfaceController.text = (ad!.property! as DepositEntity).administrativeSurface.toString();
-      _parkingSpacesController.text = (ad!.property! as DepositEntity).parkingSpaces.toString();
+      heightController.text = (ad!.property! as DepositEntity).height.toString();
+      usableSurfaceController.text = (ad!.property! as DepositEntity).usableSurface.toString();
+      administrativeSurfaceController.text = (ad!.property! as DepositEntity).administrativeSurface.toString();
+      parkingSpacesController.text = (ad!.property! as DepositEntity).parkingSpaces.toString();
     }
   }
 
@@ -36,7 +42,7 @@ class DepositWidgets extends StatelessWidget {
               // Height textfield
               Text('${AppLocalizations.of(context)!.height}*'),
               CreateAdTextfield(
-                controller: _heightController,
+                controller: heightController,
                 hintText: AppLocalizations.of(context)!.heightHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (height) {
@@ -49,7 +55,7 @@ class DepositWidgets extends StatelessWidget {
               // Usable surface textfield
               Text('${AppLocalizations.of(context)!.usableSurface}*'),
               CreateAdTextfield(
-                controller: _usableSurfaceController,
+                controller: usableSurfaceController,
                 hintText: AppLocalizations.of(context)!.usableSurfaceHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (usableSurface) {
@@ -62,7 +68,7 @@ class DepositWidgets extends StatelessWidget {
               // Administrative surface textfield
               Text('${AppLocalizations.of(context)!.administrativeSurface}*'),
               CreateAdTextfield(
-                controller: _administrativeSurfaceController,
+                controller: administrativeSurfaceController,
                 hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (administrativeSurface) {
@@ -88,7 +94,7 @@ class DepositWidgets extends StatelessWidget {
               // Parking spaces textfield
               Text('${AppLocalizations.of(context)!.parkingSpaces}*'),
               CreateAdTextfield(
-                controller: _parkingSpacesController,
+                controller: parkingSpacesController,
                 hintText: AppLocalizations.of(context)!.parkingSpacesHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (parkingSpaces) {

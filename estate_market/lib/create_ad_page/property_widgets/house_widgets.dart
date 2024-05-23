@@ -10,14 +10,23 @@ import '../widgets/create_ad_textfield.dart';
 
 class HouseWidgets extends StatelessWidget {
   final AdEntity? ad;
-  final TextEditingController _insideSurfaceController = TextEditingController();
-  final TextEditingController _outsideSurfaceController = TextEditingController();
-  final TextEditingController _numberOfFloorsController = TextEditingController();
-  HouseWidgets({super.key, required this.ad}) {
+  final TextEditingController insideSurfaceController;
+  final TextEditingController outsideSurfaceController;
+  final TextEditingController numberOfFloorsController;
+  final TextEditingController numberOfRoomsController;
+  final TextEditingController numberOfBathroomsController;
+  HouseWidgets(
+      {super.key,
+      required this.ad,
+      required this.insideSurfaceController,
+      required this.outsideSurfaceController,
+      required this.numberOfFloorsController,
+      required this.numberOfRoomsController,
+      required this.numberOfBathroomsController}) {
     if (ad != null && ad!.property is HouseEntity) {
-      _insideSurfaceController.text = (ad!.property! as HouseEntity).insideSurface.toString();
-      _outsideSurfaceController.text = (ad!.property! as HouseEntity).outsideSurface.toString();
-      _numberOfFloorsController.text = (ad!.property! as HouseEntity).numberOfFloors.toString();
+      insideSurfaceController.text = (ad!.property! as HouseEntity).insideSurface.toString();
+      outsideSurfaceController.text = (ad!.property! as HouseEntity).outsideSurface.toString();
+      numberOfFloorsController.text = (ad!.property! as HouseEntity).numberOfFloors.toString();
     }
   }
 
@@ -30,12 +39,15 @@ class HouseWidgets extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ResidenceWidgets(ad: ad),
+              ResidenceWidgets(
+                  ad: ad,
+                  numberOfRoomsController: numberOfRoomsController,
+                  numberOfBathroomsController: numberOfBathroomsController),
 
               // Inside surface textfield
               Text('${AppLocalizations.of(context)!.insideSurface}*'),
               CreateAdTextfield(
-                controller: _insideSurfaceController,
+                controller: insideSurfaceController,
                 hintText: AppLocalizations.of(context)!.insideSurfaceHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (text) => bloc.add(ChangeInsideSurfaceEvent(insideSurface: text)),
@@ -46,7 +58,7 @@ class HouseWidgets extends StatelessWidget {
               // Outside surface textfield
               Text('${AppLocalizations.of(context)!.outsideSurface}*'),
               CreateAdTextfield(
-                controller: _outsideSurfaceController,
+                controller: outsideSurfaceController,
                 hintText: AppLocalizations.of(context)!.outsideSurfaceHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (text) => bloc.add(ChangeOutsideSurfaceEvent(outsideSurface: text)),
@@ -57,7 +69,7 @@ class HouseWidgets extends StatelessWidget {
               // Floors number textfield
               Text('${AppLocalizations.of(context)!.numberOfFloors}*'),
               CreateAdTextfield(
-                controller: _numberOfFloorsController,
+                controller: numberOfFloorsController,
                 hintText: AppLocalizations.of(context)!.numberOfFloorsHintText,
                 keyboardType: TextInputType.number,
                 onChanged: (text) => bloc.add(ChangeNumberOfFloorsEvent(numberOfFloors: text)),
