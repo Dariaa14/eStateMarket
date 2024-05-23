@@ -1,15 +1,20 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart';
 import 'package:data/entities_impl/account_entity_impl.dart';
-import 'package:data/entities_impl/ad_enitity_impl.dart';
 import 'package:data/entities_impl/wrappers/collection_reference_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/document_reference_entity_impl.dart';
 import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/favorites_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
+import 'package:domain/entities/wrappers/query_snapshot_entity.dart';
 import 'package:domain/repositories/account_repository.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
+
+import '../entities_impl/ad_enitity_impl.dart';
+
+import 'package:rxdart/rxdart.dart';
 
 class AccountRepositoryImpl implements AccountRepository {
   @override
@@ -24,11 +29,6 @@ class AccountRepositoryImpl implements AccountRepository {
   List<AdEntity>? favoriteAds;
 
   final _favoritesController = StreamController<List<AdEntity>?>.broadcast();
-
-  @override
-  List<AdEntity>? myAds;
-
-  final _myAdsController = StreamController<List<AdEntity>?>.broadcast();
 
   @override
   Future<void> updateAccount(String? phoneNumber, SellerType? sellerType) async {
@@ -52,10 +52,8 @@ class AccountRepositoryImpl implements AccountRepository {
     currentAccount = accountsWithGivenEmail.first;
     currentAccountDocument = await _getCurrentUserDocumentReference();
     favoriteAds = await _getFavoriteAds();
-    myAds = await _getMyAds();
     _favoritesController.add(favoriteAds);
     _accountController.add(currentAccount);
-    _myAdsController.add(myAds);
   }
 
   @override
@@ -76,31 +74,12 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  void addMyAd(AdEntity ad) {
-    myAds!.add(ad);
-    _myAdsController.add(myAds);
-  }
-
-  @override
-  void removeMyAd(AdEntity ad) {
-    for (int index = 0; index < myAds!.length; index++) {
-      if (myAds![index].dateOfAd.compareTo(ad.dateOfAd) == 0) {
-        myAds!.removeAt(index);
-        _myAdsController.add(myAds);
-        return;
-      }
-    }
-  }
-
-  @override
   void removeCurrentAccount() {
     currentAccount = null;
     currentAccountDocument = null;
     favoriteAds = null;
-    myAds = null;
     _accountController.add(null);
     _favoritesController.add(null);
-    _myAdsController.add(null);
   }
 
   Future<DocumentReferenceEntity?> _getCurrentUserDocumentReference() async {
@@ -123,22 +102,23 @@ class AccountRepositoryImpl implements AccountRepository {
     return favoriteAds;
   }
 
-  Future<List<AdEntity>?> _getMyAds() async {
-    if (currentAccountDocument == null) throw Exception('Current account is not set');
-    CollectionReferenceEntity adsCollection = CollectionReferenceEntityImpl(collection: Collections.ad);
-    final reference = (currentAccountDocument as DocumentReferenceEntityImpl).ref;
-    final myAds = await adsCollection.where('account', WhereOperations.isEqualTo, reference).get<AdEntity>();
-    final adsDocuments =
-        await adsCollection.where('account', WhereOperations.isEqualTo, reference).getDocuments<AdEntity>();
+  @override
+  Stream<List<AdEntity?>> get myAdsStream {
+    CollectionReferenceEntity adsCollection =
+        CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);
+    return Rx.combineLatest2(accountStream, adsCollection.snapshots(), (account, snapshot) => Tuple2(account, snapshot))
+        .asyncMap((tuple) async {
+      final AccountEntity? account = tuple.head;
+      final QuerySnapshotEntity snapshot = tuple.tail;
+      if (account == null) {
+        return [];
+      }
+      List<DocumentReferenceEntity> docRefs = snapshot.transformToDocumentReferenceList();
+      List<Future<AdEntity?>> futures = docRefs.map((docRef) => AdEntityImpl.getAdFromDocument(docRef)).toList();
+      List<AdEntity?> allAds = await Future.wait(futures);
 
-    for (final adDoc in adsDocuments) {
-      adDoc.listen(
-          onModify: () async {
-            _myAdsController.add(myAds);
-          },
-          onDelete: () {});
-    }
-    return myAds;
+      return allAds.where((ad) => ad?.account?.email == account.email).toList();
+    });
   }
 
   @override
@@ -146,7 +126,4 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   Stream<List<AdEntity>?> get favoriteAdsStream => _favoritesController.stream;
-
-  @override
-  Stream<List<AdEntity>?> get myAdsStream => _myAdsController.stream;
 }

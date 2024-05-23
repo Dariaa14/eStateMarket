@@ -19,7 +19,6 @@ class MyAdsBloc extends Bloc<MyAdsEvent, MyAdsState> {
   }
 
   _initMyAdsPageEventHandler(InitMyAdsPageEvent event, Emitter<MyAdsState> emit) {
-    add(SetMyAdsEvent(ads: _accountUseCase.myAds ?? []));
     _myAdsSubscription = _accountUseCase.myAdsStream.listen((List<AdEntity?> ads) {
       add(SetMyAdsEvent(ads: ads));
     });

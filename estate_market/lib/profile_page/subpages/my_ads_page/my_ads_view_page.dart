@@ -23,7 +23,7 @@ class MyAdsViewPage extends StatelessWidget {
           bloc: myAdsBloc..add(InitMyAdsPageEvent()),
           builder: (context, state) {
             if (state.ads.isEmpty) {
-              return Center(child: Text(AppLocalizations.of(context)!.noFavorites));
+              return Center(child: Text(AppLocalizations.of(context)!.noMyAds));
             }
             return ListView.builder(
                 shrinkWrap: true,

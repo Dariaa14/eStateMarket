@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:domain/repositories/account_repository.dart';
 import 'package:domain/repositories/database_repository.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../entities/account_entity.dart';
 import '../entities/ad_entity.dart';
@@ -12,7 +13,7 @@ class AccountUseCase {
 
   final _accountController = StreamController<bool>.broadcast();
   final _favoriteAdsController = StreamController<List<AdEntity>>.broadcast();
-  final _myAdsController = StreamController<List<AdEntity>>.broadcast();
+  final BehaviorSubject<List<AdEntity?>> _myAdsController = BehaviorSubject();
 
   AccountUseCase({required AccountRepository accountRepository, required DatabaseRepository databaseRepository})
       : _accountRepository = accountRepository,
@@ -24,7 +25,7 @@ class AccountUseCase {
       _favoriteAdsController.add(favoriteAds ?? []);
     });
     _accountRepository.myAdsStream.listen((myAds) {
-      _myAdsController.add(myAds ?? []);
+      _myAdsController.add(myAds);
     });
   }
 
@@ -48,7 +49,7 @@ class AccountUseCase {
 
   Stream<bool> get accountStatus => _accountController.stream;
   Stream<List<AdEntity>> get favoriteAdsStream => _favoriteAdsController.stream;
-  Stream<List<AdEntity>> get myAdsStream => _myAdsController.stream;
+  Stream<List<AdEntity?>> get myAdsStream => _myAdsController.stream;
 
   AccountEntity? get currentAccount {
     return _accountRepository.currentAccount;
@@ -58,12 +59,9 @@ class AccountUseCase {
     return _accountRepository.favoriteAds;
   }
 
-  List<AdEntity>? get myAds {
-    return _accountRepository.myAds;
-  }
-
   void dispose() {
     _accountController.close();
     _favoriteAdsController.close();
+    _myAdsController.close();
   }
 }
