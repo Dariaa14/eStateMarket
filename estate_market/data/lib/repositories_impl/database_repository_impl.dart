@@ -246,4 +246,41 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         CollectionReferenceEntityImpl(collection: Collections.landmarks, withConverter: false);
     return await landmarks.add((landmark as LandmarkEntityImpl).toJson());
   }
+
+  @override
+  Future<void> updateLandmarkEntity(
+      {required LandmarkEntity previousLandmark, required LandmarkEntity landmark}) async {
+    CollectionReferenceEntity landmarks =
+        CollectionReferenceEntityImpl(collection: Collections.landmarks, withConverter: false);
+    final landmarkDocument = await landmarks
+        .where('latitude', WhereOperations.isEqualTo, previousLandmark.getCoordinates().getLatitude())
+        .where('longitude', WhereOperations.isEqualTo, previousLandmark.getCoordinates().getLongitude())
+        .getDocuments();
+    await landmarkDocument.first.set((landmark as LandmarkEntityImpl).toJson());
+  }
+
+  @override
+  Future<void> updateAdEntity(
+      {required AdEntity previousAd,
+      required String title,
+      required AdCategory category,
+      required String description,
+      required ListingType listingType,
+      required List<String> images}) async {
+    CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);
+    final adDocument = await ads
+        .where('dateOfAd', WhereOperations.isEqualTo, convertDateTimeToTimestamp(previousAd.dateOfAd))
+        .getDocuments();
+    AdEntity ad = AdEntityImpl(
+        title: title,
+        adCategory: category,
+        description: description,
+        imagesUrls: images,
+        propertyReference: null,
+        accountReference: null,
+        landmarkReference: null,
+        listingType: listingType,
+        dateOfAd: previousAd.dateOfAd);
+    await adDocument.first.set((ad as AdEntityImpl).toJson());
+  }
 }

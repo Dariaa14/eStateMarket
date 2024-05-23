@@ -1,4 +1,3 @@
-import 'package:data/entities_impl/wrappers/landmark_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/map_controller_entity_impl.dart';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
@@ -40,14 +39,6 @@ class MapRepositoryImpl implements MapRepository {
         onTap(street);
         return;
       }
-
-      final coordinates = mapController.transformScreenToCoordinates(pos);
-      if (coordinates == null) return;
-
-      LandmarkEntityImpl landmark = LandmarkEntityImpl.create();
-      landmark.setCoordinates(coordinates);
-      landmark.setName('GPS Coordinates');
-      onTap(landmark);
     });
   }
 

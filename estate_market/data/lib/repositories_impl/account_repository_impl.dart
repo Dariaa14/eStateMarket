@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:data/entities_impl/account_entity_impl.dart';
+import 'package:data/entities_impl/ad_enitity_impl.dart';
 import 'package:data/entities_impl/wrappers/collection_reference_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/document_reference_entity_impl.dart';
 import 'package:domain/entities/account_entity.dart';
@@ -127,16 +128,17 @@ class AccountRepositoryImpl implements AccountRepository {
     CollectionReferenceEntity adsCollection = CollectionReferenceEntityImpl(collection: Collections.ad);
     final reference = (currentAccountDocument as DocumentReferenceEntityImpl).ref;
     final myAds = await adsCollection.where('account', WhereOperations.isEqualTo, reference).get<AdEntity>();
-    return myAds;
-  }
+    final adsDocuments =
+        await adsCollection.where('account', WhereOperations.isEqualTo, reference).getDocuments<AdEntity>();
 
-  @override
-  Future<List<AdEntity>> getAccountsAds() async {
-    if (currentAccountDocument == null) throw Exception('Current account is not set');
-    CollectionReferenceEntity adsCollection = CollectionReferenceEntityImpl(collection: Collections.ad);
-    final reference = (currentAccountDocument as DocumentReferenceEntityImpl).ref;
-    final ads = await adsCollection.where('account', WhereOperations.isEqualTo, reference).get<AdEntity>();
-    return ads;
+    for (final adDoc in adsDocuments) {
+      adDoc.listen(
+          onModify: () async {
+            _myAdsController.add(myAds);
+          },
+          onDelete: () {});
+    }
+    return myAds;
   }
 
   @override

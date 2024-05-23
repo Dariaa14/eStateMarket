@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../config/route_names.dart';
+import '../profile_page/subpages/my_ads_page/my_ads_bloc.dart';
 import 'main_page_bloc.dart';
 
 class AdItem extends StatelessWidget {
@@ -133,7 +134,10 @@ class AdItem extends StatelessWidget {
                     if (canUserModifyAdd)
                       IconButton(
                           onPressed: () {
-                            Navigator.of(context).pushNamed(RouteNames.createAdPage, arguments: ad);
+                            Navigator.of(context).pushNamed(RouteNames.createAdPage, arguments: ad).then((value) {
+                              final myAdsBloc = BlocProvider.of<MyAdsBloc>(context);
+                              myAdsBloc.add(InitMyAdsPageEvent());
+                            });
                           },
                           icon: const Icon(Icons.edit)),
                     if (canUserModifyAdd) IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),

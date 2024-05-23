@@ -8,11 +8,22 @@ class DocumentReferenceEntityImpl implements DocumentReferenceEntity {
 
   @override
   Future<void> set(Map<String, Object?> json) async {
-    await ref.set(json);
+    await ref.set(json, SetOptions(merge: true));
   }
 
   @override
   Future<void> delete() async {
     await ref.delete();
+  }
+
+  @override
+  void listen({required void Function() onModify, required void Function() onDelete}) {
+    ref.snapshots().listen((refSnapshot) {
+      if (refSnapshot.exists) {
+        onModify();
+      } else {
+        onDelete();
+      }
+    });
   }
 }

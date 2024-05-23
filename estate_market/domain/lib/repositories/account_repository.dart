@@ -14,11 +14,10 @@ abstract class AccountRepository {
   Future<void> setCurrentAccountByEmail(String email);
   Future<void> updateAccount(String? phoneNumber, SellerType? sellerType);
 
-  Future<List<AdEntity>> getAccountsAds();
-
   void addFavoriteAd(AdEntity ad);
   void removeFavoriteAd(AdEntity ad);
 
+  // TODO: use this when creating new ad
   void addMyAd(AdEntity ad);
   void removeMyAd(AdEntity ad);
 

@@ -85,7 +85,16 @@ abstract class DatabaseRepository {
     required SellerType sellerType,
   });
 
+  Future<void> updateAdEntity(
+      {required AdEntity previousAd,
+      required String title,
+      required AdCategory category,
+      required String description,
+      required ListingType listingType,
+      required List<String> images});
+
   Future<DocumentReferenceEntity> insertLandmarkEntity({required LandmarkEntity landmark});
+  Future<void> updateLandmarkEntity({required LandmarkEntity previousLandmark, required LandmarkEntity landmark});
 
   Future<void> insertFavoriteAd({required AccountEntity account, required AdEntity ad});
 

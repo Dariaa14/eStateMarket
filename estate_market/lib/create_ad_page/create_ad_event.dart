@@ -24,6 +24,26 @@ class InsertInDatabaseEvent extends CreateAdEvent {
       required this.constructionYear});
 }
 
+class UpdateDatabaseEvent extends CreateAdEvent {
+  final String title;
+  final String description;
+
+  final String surface;
+  final String price;
+  final String constructionYear;
+
+  final AdEntity ad;
+
+  UpdateDatabaseEvent({
+    required this.title,
+    required this.description,
+    required this.surface,
+    required this.price,
+    required this.constructionYear,
+    required this.ad,
+  });
+}
+
 class ChangeIsNegotiableEvent extends CreateAdEvent {
   final bool? isNegotiable;
 

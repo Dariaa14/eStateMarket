@@ -284,24 +284,28 @@ class CreateAdView extends StatelessWidget {
                             if (value != null) createAdBloc.add(SetLandmarkEvent(landmark: value as LandmarkEntity));
                           });
                         },
-                        child: Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                (state.landmark == null)
-                                    ? AppLocalizations.of(context)!.selectAddress
-                                    : state.landmark!.getAddressString(),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  (state.landmark == null)
+                                      ? AppLocalizations.of(context)!.selectAddress
+                                      : state.landmark!.getAddressString(),
+                                  maxLines: 2,
+                                ),
                               ),
-                              if (state.landmark != null)
-                                IconButton(
-                                    onPressed: () => createAdBloc.add(SetLandmarkEvent(landmark: null)),
-                                    icon: Icon(
-                                      Icons.close,
-                                      color: Theme.of(context).colorScheme.onSurface,
-                                    )),
-                            ],
-                          ),
+                            ),
+                            if (state.landmark != null)
+                              IconButton(
+                                  onPressed: () => createAdBloc.add(SetLandmarkEvent(landmark: null)),
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  )),
+                          ],
                         ),
                       ),
                     ),
@@ -331,6 +335,15 @@ class CreateAdView extends StatelessWidget {
                                 constructionYear: _constructionYearController.text));
                             return;
                           }
+                          createAdBloc.add(
+                            UpdateDatabaseEvent(
+                                title: _titleController.text,
+                                description: _descriptionController.text,
+                                surface: _surfaceController.text,
+                                price: _priceController.text,
+                                constructionYear: _constructionYearController.text,
+                                ad: ad!),
+                          );
                         },
                         child: (state.status == CreateAdStatus.normal)
                             ? Text(

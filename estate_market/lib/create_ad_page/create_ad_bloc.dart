@@ -38,6 +38,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     on<InitAdEvent>(_initAdEventHandler);
 
     on<InsertInDatabaseEvent>(_insertInDatabaseEventHandler);
+    on<UpdateDatabaseEvent>(_updateDatabaseEventHandler);
 
     on<ChangeIsNegotiableEvent>(_changeIsNegotiableEventHandler);
 
@@ -87,6 +88,9 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       currentCategory: event.ad!.adCategory,
       listingType: event.ad!.listingType,
       landmark: event.ad!.landmark,
+      showErrors: false,
+      status: CreateAdStatus.normal,
+      emptyFields: [],
     ));
 
     switch (event.ad!.adCategory) {
@@ -280,6 +284,24 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
         landmark: landmarkReference,
         listingType: state.listingType,
         images: (imageUploadResult as Right).value);
+    emit(state.copyWith(status: CreateAdStatus.finished));
+  }
+
+  _updateDatabaseEventHandler(UpdateDatabaseEvent event, Emitter<CreateAdState> emit) {
+    if (state.landmark == null) {
+      emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
+      return;
+    }
+
+    _databaseUseCase.updateLandmark(previousLandmark: event.ad.landmark!, landmark: state.landmark!);
+    _databaseUseCase.updateAd(
+        previousAd: event.ad,
+        title: event.title,
+        category: state.currentCategory,
+        description: event.description,
+        listingType: state.listingType,
+        images: event.ad.imagesUrls);
+
     emit(state.copyWith(status: CreateAdStatus.finished));
   }
 

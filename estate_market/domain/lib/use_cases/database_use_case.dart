@@ -179,4 +179,24 @@ class DatabaseUseCase {
     final result = await _imageUploadRepository.uploadImages(paths);
     return result;
   }
+
+  Future<void> updateLandmark({required LandmarkEntity previousLandmark, required LandmarkEntity landmark}) async {
+    await _databaseRepository.updateLandmarkEntity(landmark: landmark, previousLandmark: previousLandmark);
+  }
+
+  Future<void> updateAd(
+      {required AdEntity previousAd,
+      required String title,
+      required AdCategory category,
+      required String description,
+      required ListingType listingType,
+      required List<String> images}) async {
+    await _databaseRepository.updateAdEntity(
+        title: title,
+        category: category,
+        description: description,
+        listingType: listingType,
+        images: images,
+        previousAd: previousAd);
+  }
 }
