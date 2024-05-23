@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloudinary_flutter/image/cld_image.dart';
+import 'package:data/config.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:estate_market/config/route_names.dart';
@@ -8,6 +10,7 @@ import 'package:estate_market/create_ad_page/property_widgets/deposit_widgets.da
 import 'package:estate_market/create_ad_page/property_widgets/garage_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/house_widgets.dart';
 import 'package:estate_market/create_ad_page/property_widgets/terrain_widgets.dart';
+import 'package:estate_market/utils/custom_image.dart';
 import 'package:estate_market/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -410,9 +413,16 @@ class CreateAdView extends StatelessWidget {
                           pageSnapping: true,
                           onPageChanged: (index) => currentIndex = index,
                           itemBuilder: (context, index) {
-                            return Image.file(
-                              bloc.state.images[index],
-                              fit: BoxFit.contain,
+                            if (bloc.state.images[index].image != null) {
+                              return Image.file(
+                                bloc.state.images[index].image!,
+                                fit: BoxFit.contain,
+                              );
+                            }
+                            return CldImageWidget(
+                              publicId: bloc.state.images[index].path!,
+                              cloudinary: cloudinary,
+                              fit: BoxFit.fitWidth,
                             );
                           }),
                     );
@@ -428,7 +438,7 @@ class CreateAdView extends StatelessWidget {
                         padding: const EdgeInsets.all(5.0),
                         child: ElevatedButton(
                           onPressed: () async {
-                            List<File> newImagesFile = await _pickImageFromGallery();
+                            List<CustomImage> newImagesFile = await _pickImageFromGallery();
                             bloc.add(AddImagesEvent(images: newImagesFile));
                           },
                           child: Text(
@@ -443,7 +453,7 @@ class CreateAdView extends StatelessWidget {
                         padding: const EdgeInsets.all(5.0),
                         child: ElevatedButton(
                           onPressed: () {
-                            List<File> newImagesList = List.from(bloc.state.images);
+                            List<CustomImage> newImagesList = List.from(bloc.state.images);
                             newImagesList.removeAt(currentIndex);
                             bloc.add(SetImagesEvent(images: newImagesList));
                             if (newImagesList.isEmpty) {
@@ -469,9 +479,9 @@ class CreateAdView extends StatelessWidget {
     );
   }
 
-  Future<List<File>> _pickImageFromGallery() async {
+  Future<List<CustomImage>> _pickImageFromGallery() async {
     final returnedImage = await ImagePicker().pickMultiImage();
-    List<File> images = returnedImage.map((imageData) => File(imageData.path)).toList();
+    List<CustomImage> images = returnedImage.map((imageData) => CustomImage(image: File(imageData.path))).toList();
     if (images.length > 8) {
       images = images.sublist(0, 8);
     }

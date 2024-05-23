@@ -171,13 +171,13 @@ class SetEmptyFieldsEvent extends CreateAdEvent {
 }
 
 class SetImagesEvent extends CreateAdEvent {
-  final List<File> images;
+  final List<CustomImage> images;
 
   SetImagesEvent({required this.images});
 }
 
 class AddImagesEvent extends CreateAdEvent {
-  final List<File> images;
+  final List<CustomImage> images;
 
   AddImagesEvent({required this.images});
 }

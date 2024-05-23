@@ -25,7 +25,7 @@ class CreateAdState extends Equatable {
   final List<CreateAdFields> emptyFields;
   final bool showErrors;
   final CreateAdStatus status;
-  final List<File> images;
+  final List<CustomImage> images;
   final LandmarkEntity? landmark;
 
   final bool isNegotiable;
@@ -86,7 +86,7 @@ class CreateAdState extends Equatable {
           {List<CreateAdFields>? emptyFields,
           bool? showErrors,
           CreateAdStatus? status,
-          List<File>? images,
+          List<CustomImage>? images,
           bool? isNegotiable,
           AdCategory? currentCategory,
           ListingType? listingType,

@@ -1,9 +1,10 @@
-import 'dart:io';
-
+import 'package:cloudinary_flutter/image/cld_image.dart';
+import 'package:data/config.dart';
+import 'package:estate_market/utils/custom_image.dart';
 import 'package:flutter/material.dart';
 
 class ImageSlider extends StatefulWidget {
-  final List<File> images;
+  final List<CustomImage> images;
   final Function(int)? onPageChanged;
 
   const ImageSlider({super.key, required this.images, this.onPageChanged});
@@ -44,10 +45,16 @@ class _ImageSliderState extends State<ImageSlider> {
                       topLeft: Radius.circular(10.0),
                       topRight: Radius.circular(10.0),
                     ),
-                    child: Image.file(
-                      widget.images[index],
-                      fit: BoxFit.fitWidth,
-                    ),
+                    child: (widget.images[index].image != null)
+                        ? Image.file(
+                            widget.images[index].image!,
+                            fit: BoxFit.fitWidth,
+                          )
+                        : CldImageWidget(
+                            publicId: widget.images[index].path!,
+                            cloudinary: cloudinary,
+                            fit: BoxFit.fitWidth,
+                          ),
                   ),
                 );
               }),

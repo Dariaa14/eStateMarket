@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
 import 'package:dartz/dartz.dart';
@@ -14,6 +12,7 @@ import 'package:domain/entities/wrappers/document_reference_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/use_cases/database_use_case.dart';
 import 'package:equatable/equatable.dart';
+import 'package:estate_market/utils/custom_image.dart';
 
 part 'create_ad_event.dart';
 part 'create_ad_state.dart';
@@ -78,7 +77,6 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   }
 
   _initAdEventHandler(InitAdEvent event, Emitter<CreateAdState> emit) {
-    // TODO: images
     if (event.ad == null) {
       emit(const CreateAdState());
       return;
@@ -91,6 +89,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       showErrors: false,
       status: CreateAdStatus.normal,
       emptyFields: [],
+      images: event.ad!.imagesUrls.map((url) => CustomImage(path: url)).toList(),
     ));
 
     switch (event.ad!.adCategory) {
@@ -169,7 +168,8 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       return;
     }
 
-    final imageUploadResult = await _databaseUseCase.uploadImages(state.images.map((image) => image.path).toList());
+    final imageUploadResult = await _databaseUseCase
+        .uploadImages(state.images.where((image) => image.image != null).map((image) => image.path!).toList());
     if (imageUploadResult.isLeft()) {
       emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
       return;
@@ -482,16 +482,16 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       emit(state.copyWith(images: event.images));
 
   _addImagesEventHandler(AddImagesEvent event, Emitter<CreateAdState> emit) {
-    List<File> allImages = List.from(event.images);
+    List<CustomImage> allImages = List.from(event.images);
     allImages.addAll(state.images);
 
-    Set<String> uniquePaths = allImages.map((image) => image.path.substring(image.path.lastIndexOf('/') + 1)).toSet();
-    List<File> uniqueImages =
-        uniquePaths.map((uniquePath) => allImages.firstWhere((image) => image.path.endsWith(uniquePath))).toList();
-    if (uniqueImages.length > 8) {
-      uniqueImages = uniqueImages.sublist(0, 8);
+    // Set<String> uniquePaths = allImages.map((image) => image.path.substring(image.path.lastIndexOf('/') + 1)).toSet();
+    // List<File> uniqueImages =
+    //     uniquePaths.map((uniquePath) => allImages.firstWhere((image) => image.path.endsWith(uniquePath))).toList();
+    if (allImages.length > 8) {
+      allImages = allImages.sublist(0, 8);
     }
-    emit(state.copyWith(images: uniqueImages));
+    emit(state.copyWith(images: allImages));
   }
 
   _setLandmarkEventHandler(SetLandmarkEvent event, Emitter<CreateAdState> emit) {
