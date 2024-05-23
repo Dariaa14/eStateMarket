@@ -169,7 +169,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     }
 
     final imageUploadResult = await _databaseUseCase
-        .uploadImages(state.images.where((image) => image.image != null).map((image) => image.path!).toList());
+        .uploadImages(state.images.where((image) => image.image != null).map((image) => image.image!.path).toList());
     if (imageUploadResult.isLeft()) {
       emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
       return;
@@ -287,11 +287,20 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     emit(state.copyWith(status: CreateAdStatus.finished));
   }
 
-  _updateDatabaseEventHandler(UpdateDatabaseEvent event, Emitter<CreateAdState> emit) {
+  _updateDatabaseEventHandler(UpdateDatabaseEvent event, Emitter<CreateAdState> emit) async {
     if (state.landmark == null) {
       emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
       return;
     }
+
+    final imageUploadResult = await _databaseUseCase
+        .uploadImages(state.images.where((image) => image.image != null).map((image) => image.image!.path).toList());
+    if (imageUploadResult.isLeft()) {
+      emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
+      return;
+    }
+    List<String> imageUrls = (imageUploadResult as Right).value;
+    imageUrls.addAll(event.ad.imagesUrls);
 
     _databaseUseCase.updateLandmark(previousLandmark: event.ad.landmark!, landmark: state.landmark!);
     _databaseUseCase.updateAd(
@@ -300,7 +309,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
         category: state.currentCategory,
         description: event.description,
         listingType: state.listingType,
-        images: event.ad.imagesUrls);
+        images: imageUrls);
 
     emit(state.copyWith(status: CreateAdStatus.finished));
   }
