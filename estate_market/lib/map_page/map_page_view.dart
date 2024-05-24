@@ -55,7 +55,7 @@ class MapPageView extends StatelessWidget {
                       shape: BoxShape.circle),
                   margin: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    onTap: () => _onLocationButtonPressed(context),
+                    onTap: () => _onLocationButtonPressed(mapBloc, context),
                     child: (state.hasLocationPermission)
                         ? Icon(Icons.location_on, color: Theme.of(context).colorScheme.onPrimary, size: 40)
                         : Icon(Icons.location_off, color: Theme.of(context).colorScheme.onPrimary, size: 40),
@@ -114,9 +114,8 @@ class MapPageView extends StatelessWidget {
     );
   }
 
-  _onLocationButtonPressed(BuildContext context) {
+  _onLocationButtonPressed(MapPageBloc mapBloc, BuildContext context) {
     {
-      final MapPageBloc mapBloc = BlocProvider.of<MapPageBloc>(context);
       final mapState = mapBloc.state;
       if (!mapState.hasLocationPermission) {
         mapBloc.add(RequestLocationPermissionEvent());
