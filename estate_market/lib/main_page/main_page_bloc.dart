@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
+import 'package:dartz/dartz.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/use_cases/account_use_case.dart';
 import 'package:domain/use_cases/database_use_case.dart';
@@ -26,6 +27,9 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     on<DeleteAdEvent>(_deleteAdEventHandler);
 
     on<ChangeCurrentCategoryEvent>(_changeCurrentCategoryEventHandler);
+    on<ChangeCurrentListingTypeEvent>(_changeCurrentListingTypeEventHandler);
+    on<ChangePriceRangeEvent>(_changePriceRangeEventHandler);
+    on<ChangeSurfaceRangeEvent>(_changeSurfaceRangeEventHandler);
   }
 
   _initMainPageEventHandler(InitMainPageEvent event, Emitter<MainPageState> emit) async {
@@ -68,6 +72,25 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
       return;
     }
     emit(state.copyWith(currentCategory: event.category));
+  }
+
+  _changeCurrentListingTypeEventHandler(ChangeCurrentListingTypeEvent event, Emitter<MainPageState> emit) {
+    // _filterUseCase.setCurrentListingType(event.listingType);
+    if (event.listingType == null) {
+      emit(state.copyWithNullListingType());
+      return;
+    }
+    emit(state.copyWith(currentListingType: event.listingType));
+  }
+
+  _changePriceRangeEventHandler(ChangePriceRangeEvent event, Emitter<MainPageState> emit) {
+    //_filterUseCase.setPriceRange(event.priceRange);
+    emit(state.copyWith(priceRange: event.priceRange));
+  }
+
+  _changeSurfaceRangeEventHandler(ChangeSurfaceRangeEvent event, Emitter<MainPageState> emit) {
+    //_filterUseCase.setSurfaceRange(event.surfaceRange);
+    emit(state.copyWith(surfaceRange: event.surfaceRange));
   }
 
   bool isAdFavorite(AdEntity ad) {

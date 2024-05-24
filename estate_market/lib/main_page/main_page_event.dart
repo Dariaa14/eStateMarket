@@ -33,3 +33,21 @@ class ChangeCurrentCategoryEvent extends MainPageEvent {
 
   ChangeCurrentCategoryEvent({required this.category});
 }
+
+class ChangeCurrentListingTypeEvent extends MainPageEvent {
+  final ListingType? listingType;
+
+  ChangeCurrentListingTypeEvent({required this.listingType});
+}
+
+class ChangePriceRangeEvent extends MainPageEvent {
+  final Tuple2<double?, double?> priceRange;
+
+  ChangePriceRangeEvent({required this.priceRange});
+}
+
+class ChangeSurfaceRangeEvent extends MainPageEvent {
+  final Tuple2<double?, double?> surfaceRange;
+
+  ChangeSurfaceRangeEvent({required this.surfaceRange});
+}
