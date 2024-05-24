@@ -316,4 +316,8 @@ class DatabaseUseCase {
         isInBuildUpArea: isInBuildUpArea,
         landUseCategory: landUseCategory);
   }
+
+  Future<void> removeAd({required AdEntity ad}) async {
+    await _databaseRepository.removeAd(ad: ad);
+  }
 }

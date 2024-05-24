@@ -21,3 +21,9 @@ class CurrentUserChangedEvent extends MainPageEvent {
 
   CurrentUserChangedEvent({required this.isLoggedIn});
 }
+
+class DeleteAdEvent extends MainPageEvent {
+  final AdEntity ad;
+
+  DeleteAdEvent({required this.ad});
+}

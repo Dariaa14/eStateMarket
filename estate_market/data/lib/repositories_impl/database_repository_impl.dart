@@ -241,6 +241,27 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
   }
 
   @override
+  Future<void> removeAd({required AdEntity ad}) async {
+    CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);
+    final adDocument =
+        await ads.where('dateOfAd', WhereOperations.isEqualTo, convertDateTimeToTimestamp(ad.dateOfAd)).getDocuments();
+    if (adDocument.isEmpty) {
+      throw Exception('Ad not found');
+    }
+
+    CollectionReferenceEntity favorites = CollectionReferenceEntityImpl(collection: Collections.favorites);
+    final favoriteDocument = await favorites
+        .where('ad', WhereOperations.isEqualTo, (adDocument.first as DocumentReferenceEntityImpl).ref)
+        .getDocuments();
+
+    for (final favorites in favoriteDocument) {
+      await favorites.delete();
+    }
+    await ad.propertyDocument.delete();
+    await adDocument.first.delete();
+  }
+
+  @override
   Future<DocumentReferenceEntity> insertLandmarkEntity({required LandmarkEntity landmark}) async {
     CollectionReferenceEntity landmarks =
         CollectionReferenceEntityImpl(collection: Collections.landmarks, withConverter: false);

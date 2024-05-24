@@ -141,7 +141,12 @@ class AdItem extends StatelessWidget {
                             });
                           },
                           icon: const Icon(Icons.edit)),
-                    if (canUserModifyAdd) IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+                    if (canUserModifyAdd)
+                      IconButton(
+                          onPressed: () {
+                            mainBloc.add(DeleteAdEvent(ad: ad));
+                          },
+                          icon: const Icon(Icons.delete)),
                   ],
                 );
               },

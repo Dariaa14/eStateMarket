@@ -54,7 +54,14 @@ class AdPageView extends StatelessWidget {
                   Navigator.of(context).popAndPushNamed(RouteNames.createAdPage, arguments: ad);
                 },
                 icon: const Icon(Icons.edit)),
-          if (canUserModifyAdd) IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+          if (canUserModifyAdd)
+            IconButton(
+                onPressed: () {
+                  final mainBloc = BlocProvider.of<main.MainPageBloc>(context);
+                  mainBloc.add(main.DeleteAdEvent(ad: ad));
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.delete)),
         ],
       ),
       body: Stack(children: [

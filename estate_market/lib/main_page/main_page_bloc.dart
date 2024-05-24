@@ -20,6 +20,8 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     on<FavoritesButtonPressedEvent>(_favoritesButtonPressedEventHandler);
 
     on<CurrentUserChangedEvent>(_currentUserChangedEventHandler);
+
+    on<DeleteAdEvent>(_deleteAdEventHandler);
   }
 
   _initMainPageEventHandler(InitMainPageEvent event, Emitter<MainPageState> emit) async {
@@ -48,6 +50,10 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
 
   _currentUserChangedEventHandler(CurrentUserChangedEvent event, Emitter<MainPageState> emit) =>
       emit(state.copyWith(isUserLoggedIn: event.isLoggedIn));
+
+  _deleteAdEventHandler(DeleteAdEvent event, Emitter<MainPageState> emit) async {
+    await _databaseUseCase.removeAd(ad: event.ad);
+  }
 
   bool isAdFavorite(AdEntity ad) {
     if (_accountUseCase.favoriteAds == null) return false;
