@@ -43,6 +43,9 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     });
 
     _filterUseCase.setCurrentCategory(null);
+    _filterUseCase.setCurrentListingType(null);
+    _filterUseCase.setPriceRange(const Tuple2(null, null));
+    _filterUseCase.setSurfaceRange(const Tuple2(null, null));
   }
 
   _setAdsEventHandler(SetAdsEvent event, Emitter<MainPageState> emit) => emit(state.copyWith(ads: event.ads));
@@ -75,7 +78,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   }
 
   _changeCurrentListingTypeEventHandler(ChangeCurrentListingTypeEvent event, Emitter<MainPageState> emit) {
-    // _filterUseCase.setCurrentListingType(event.listingType);
+    _filterUseCase.setCurrentListingType(event.listingType);
     if (event.listingType == null) {
       emit(state.copyWithNullListingType());
       return;
@@ -84,12 +87,12 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   }
 
   _changePriceRangeEventHandler(ChangePriceRangeEvent event, Emitter<MainPageState> emit) {
-    //_filterUseCase.setPriceRange(event.priceRange);
+    _filterUseCase.setPriceRange(event.priceRange);
     emit(state.copyWith(priceRange: event.priceRange));
   }
 
   _changeSurfaceRangeEventHandler(ChangeSurfaceRangeEvent event, Emitter<MainPageState> emit) {
-    //_filterUseCase.setSurfaceRange(event.surfaceRange);
+    _filterUseCase.setSurfaceRange(event.surfaceRange);
     emit(state.copyWith(surfaceRange: event.surfaceRange));
   }
 

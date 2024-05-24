@@ -57,7 +57,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     case RouteNames.myAdsPage:
       return routeBuilder(const MyAdsViewPage());
     case RouteNames.filtersPage:
-      return routeBuilder(const FiltersPageView());
+      return routeBuilder(FiltersPageView());
   }
   return null;
 }

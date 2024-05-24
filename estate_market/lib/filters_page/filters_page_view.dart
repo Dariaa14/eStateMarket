@@ -10,11 +10,24 @@ import '../utils/translate_enums.dart';
 import '../widgets/custom_textfield.dart';
 
 class FiltersPageView extends StatelessWidget {
-  const FiltersPageView({super.key});
+  final TextEditingController _minPriceController = TextEditingController();
+  final TextEditingController _maxPriceController = TextEditingController();
+  final TextEditingController _minSurfaceController = TextEditingController();
+  final TextEditingController _maxSurfaceController = TextEditingController();
+
+  FiltersPageView({super.key});
+
+  _initTextfields(MainPageBloc mainBloc) {
+    _minPriceController.text = mainBloc.state.priceRange.head?.toString() ?? '';
+    _maxPriceController.text = mainBloc.state.priceRange.tail?.toString() ?? '';
+    _minSurfaceController.text = mainBloc.state.surfaceRange.head?.toString() ?? '';
+    _maxSurfaceController.text = mainBloc.state.surfaceRange.tail?.toString() ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
     final MainPageBloc mainBloc = BlocProvider.of<MainPageBloc>(context);
+    _initTextfields(mainBloc);
 
     return Scaffold(
       appBar: AppBar(
@@ -100,6 +113,7 @@ class FiltersPageView extends StatelessWidget {
                     children: [
                       Expanded(
                           child: CustomTextfield(
+                        controller: _minPriceController,
                         hintText: 'From',
                         keyboardType: TextInputType.number,
                         onChanged: (minPrice) {
@@ -116,6 +130,7 @@ class FiltersPageView extends StatelessWidget {
                       ),
                       Expanded(
                           child: CustomTextfield(
+                        controller: _maxPriceController,
                         hintText: 'To',
                         keyboardType: TextInputType.number,
                         onChanged: (maxPrice) {
@@ -142,6 +157,7 @@ class FiltersPageView extends StatelessWidget {
                     children: [
                       Expanded(
                           child: CustomTextfield(
+                        controller: _minSurfaceController,
                         hintText: 'From',
                         keyboardType: TextInputType.number,
                         onChanged: (minSurface) {
@@ -158,6 +174,7 @@ class FiltersPageView extends StatelessWidget {
                       ),
                       Expanded(
                           child: CustomTextfield(
+                        controller: _maxSurfaceController,
                         hintText: 'To',
                         keyboardType: TextInputType.number,
                         onChanged: (maxSurface) {
