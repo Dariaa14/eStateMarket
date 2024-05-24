@@ -300,7 +300,7 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
       return;
     }
     List<String> imageUrls = (imageUploadResult as Right).value;
-    imageUrls.addAll(event.ad.imagesUrls);
+    imageUrls.addAll(state.images.where((image) => image.path != null).map((image) => image.path!).toList());
 
     _databaseUseCase.updateLandmark(previousLandmark: event.ad.landmark!, landmark: state.landmark!);
     _databaseUseCase.updateAd(
