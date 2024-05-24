@@ -23,7 +23,8 @@ class AdItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(RouteNames.adPage, arguments: ad);
+          final arguments = {'ad': ad, 'canUserModifyAdd': canUserModifyAdd};
+          Navigator.of(context).pushNamed(RouteNames.adPage, arguments: arguments);
         },
         child: Container(
           height: 300,

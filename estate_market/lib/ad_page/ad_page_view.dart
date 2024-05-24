@@ -24,8 +24,9 @@ import 'property_widgets/terrain_view.dart';
 
 class AdPageView extends StatelessWidget {
   final AdEntity ad;
+  final bool canUserModifyAdd;
 
-  const AdPageView({super.key, required this.ad});
+  const AdPageView({super.key, required this.ad, this.canUserModifyAdd = false});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class AdPageView extends StatelessWidget {
       appBar: PlatformAppBar(
         automaticallyImplyLeading: true,
         trailingActions: [
-          if (mainBloc.state.isUserLoggedIn)
+          if (mainBloc.state.isUserLoggedIn && !canUserModifyAdd)
             BlocBuilder<AdPageBloc, AdPageState>(
               bloc: adBloc,
               builder: (context, state) {
@@ -47,6 +48,13 @@ class AdPageView extends StatelessWidget {
                     icon: mainBloc.isAdFavorite(ad) ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline));
               },
             ),
+          if (canUserModifyAdd)
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).popAndPushNamed(RouteNames.createAdPage, arguments: ad);
+                },
+                icon: const Icon(Icons.edit)),
+          if (canUserModifyAdd) IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
         ],
       ),
       body: Stack(children: [
