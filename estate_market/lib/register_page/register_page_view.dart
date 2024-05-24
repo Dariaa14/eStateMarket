@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:domain/errors/register_errors.dart';
-import 'package:estate_market/widgets/searchbar.dart';
+import 'package:estate_market/widgets/custom_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,7 +108,8 @@ class RegisterPage extends StatelessWidget {
                               ),
 
                               // Email textfield:
-                              CustomTextField(
+                              CustomTextfield(
+                                showPrefix: true,
                                 hintText: AppLocalizations.of(context)!.email,
                                 controller: _emailController,
                                 prefix: Icon(
@@ -122,7 +123,8 @@ class RegisterPage extends StatelessWidget {
                               ),
 
                               // Password textfield:
-                              CustomTextField(
+                              CustomTextfield(
+                                showPrefix: true,
                                 controller: _passwordController,
                                 hintText: AppLocalizations.of(context)!.password,
                                 obscureText: state.isPasswordObscured,

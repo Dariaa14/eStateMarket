@@ -20,7 +20,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../utils/translate_enums.dart';
 import 'create_ad_bloc.dart';
-import 'widgets/create_ad_textfield.dart';
+import '../widgets/custom_textfield.dart';
 
 class CreateAdView extends StatelessWidget {
   final TextEditingController _titleController = TextEditingController();
@@ -106,7 +106,7 @@ class CreateAdView extends StatelessWidget {
                     Text(
                       '${AppLocalizations.of(context)!.adTitle}*',
                     ),
-                    CreateAdTextfield(
+                    CustomTextfield(
                       hintText: AppLocalizations.of(context)!.adTitleHintText,
                       controller: _titleController,
                       onChanged: (title) => createAdBloc
@@ -130,7 +130,7 @@ class CreateAdView extends StatelessWidget {
 
                     // Write description textbox
                     Text('${AppLocalizations.of(context)!.adDescription}*'),
-                    CreateAdTextfield(
+                    CustomTextfield(
                       hintText: AppLocalizations.of(context)!.adDescriptionHintText,
                       controller: _descriptionController,
                       onChanged: (description) => createAdBloc.add(
@@ -218,7 +218,7 @@ class CreateAdView extends StatelessWidget {
 
                     // Surface textfield
                     Text('${AppLocalizations.of(context)!.surface}*'),
-                    CreateAdTextfield(
+                    CustomTextfield(
                       hintText: AppLocalizations.of(context)!.surfaceHintText,
                       controller: _surfaceController,
                       keyboardType: TextInputType.number,
@@ -232,7 +232,7 @@ class CreateAdView extends StatelessWidget {
 
                     // Price textfield
                     Text('${AppLocalizations.of(context)!.price}*'),
-                    CreateAdTextfield(
+                    CustomTextfield(
                       hintText: AppLocalizations.of(context)!.priceHintText,
                       controller: _priceController,
                       keyboardType: TextInputType.number,
@@ -277,7 +277,7 @@ class CreateAdView extends StatelessWidget {
 
                     // Construction year textfield
                     Text(AppLocalizations.of(context)!.constructionYear),
-                    CreateAdTextfield(
+                    CustomTextfield(
                       hintText: AppLocalizations.of(context)!.constructionYearHintText,
                       keyboardType: TextInputType.number,
                       controller: _constructionYearController,

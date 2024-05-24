@@ -3,6 +3,7 @@ import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/use_cases/account_use_case.dart';
 import 'package:domain/use_cases/database_use_case.dart';
+import 'package:domain/use_cases/filter_use_case.dart';
 import 'package:domain/use_cases/login_use_case.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,6 +12,7 @@ part 'main_page_state.dart';
 
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   final DatabaseUseCase _databaseUseCase = sl.get<DatabaseUseCase>();
+  final FilterUseCase _filterUseCase = sl.get<FilterUseCase>();
   final LoginUseCase _loginUseCase = sl.get<LoginUseCase>();
   final AccountUseCase _accountUseCase = sl.get<AccountUseCase>();
 
@@ -22,6 +24,8 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     on<CurrentUserChangedEvent>(_currentUserChangedEventHandler);
 
     on<DeleteAdEvent>(_deleteAdEventHandler);
+
+    on<ChangeCurrentCategoryEvent>(_changeCurrentCategoryEventHandler);
   }
 
   _initMainPageEventHandler(InitMainPageEvent event, Emitter<MainPageState> emit) async {
@@ -30,9 +34,11 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
       add(CurrentUserChangedEvent(isLoggedIn: isLoggedIn));
     });
 
-    _databaseUseCase.getAllAds().listen((List<AdEntity> ads) {
+    _filterUseCase.adsStream.listen((List<AdEntity> ads) {
       add(SetAdsEvent(ads: ads));
     });
+
+    _filterUseCase.setCurrentCategory(null);
   }
 
   _setAdsEventHandler(SetAdsEvent event, Emitter<MainPageState> emit) => emit(state.copyWith(ads: event.ads));
@@ -53,6 +59,15 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
 
   _deleteAdEventHandler(DeleteAdEvent event, Emitter<MainPageState> emit) async {
     await _databaseUseCase.removeAd(ad: event.ad);
+  }
+
+  _changeCurrentCategoryEventHandler(ChangeCurrentCategoryEvent event, Emitter<MainPageState> emit) {
+    _filterUseCase.setCurrentCategory(event.category);
+    if (event.category == null) {
+      emit(state.copyWithNullCategory());
+      return;
+    }
+    emit(state.copyWith(currentCategory: event.category));
   }
 
   bool isAdFavorite(AdEntity ad) {

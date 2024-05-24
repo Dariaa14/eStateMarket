@@ -5,14 +5,43 @@ class MainPageState extends Equatable {
   final bool favoritesChanged;
   final bool isUserLoggedIn;
 
-  const MainPageState({required this.ads, this.favoritesChanged = false, this.isUserLoggedIn = false});
+  final AdCategory? currentCategory;
+  final double? minPrice;
+  final double? maxPrice;
 
-  MainPageState copyWith({List<AdEntity>? ads, bool? favoritesChanged, bool? isUserLoggedIn}) => MainPageState(
+  const MainPageState(
+      {required this.ads,
+      this.favoritesChanged = false,
+      this.isUserLoggedIn = false,
+      this.currentCategory,
+      this.minPrice,
+      this.maxPrice});
+
+  MainPageState copyWith(
+          {List<AdEntity>? ads,
+          bool? favoritesChanged,
+          bool? isUserLoggedIn,
+          AdCategory? currentCategory,
+          double? minPrice,
+          double? maxPrice}) =>
+      MainPageState(
         ads: ads ?? this.ads,
         favoritesChanged: favoritesChanged ?? this.favoritesChanged,
         isUserLoggedIn: isUserLoggedIn ?? this.isUserLoggedIn,
+        currentCategory: currentCategory ?? this.currentCategory,
+        minPrice: minPrice ?? this.minPrice,
+        maxPrice: maxPrice ?? this.maxPrice,
+      );
+
+  MainPageState copyWithNullCategory() => MainPageState(
+        ads: ads,
+        favoritesChanged: favoritesChanged,
+        isUserLoggedIn: isUserLoggedIn,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        currentCategory: null,
       );
 
   @override
-  List<Object?> get props => [ads, favoritesChanged, isUserLoggedIn];
+  List<Object?> get props => [ads, favoritesChanged, isUserLoggedIn, currentCategory, minPrice, maxPrice];
 }

@@ -2,27 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class CreateAdTextfield extends StatelessWidget {
+class CustomTextfield extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
   final TextInputType? keyboardType;
   final void Function(String)? onChanged;
   final bool showPrefix;
 
-  const CreateAdTextfield(
-      {super.key, this.controller, this.hintText, this.keyboardType, this.onChanged, this.showPrefix = false});
+  final Widget? prefix;
+  final Widget? suffix;
+
+  final bool obscureText;
+
+  const CustomTextfield(
+      {super.key,
+      this.controller,
+      this.hintText,
+      this.keyboardType,
+      this.onChanged,
+      this.showPrefix = false,
+      this.prefix,
+      this.suffix,
+      this.obscureText = false});
 
   @override
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
       child: PlatformTextField(
+        obscureText: obscureText,
         controller: controller,
         hintText: hintText,
         keyboardType: keyboardType,
         textAlignVertical: TextAlignVertical.center,
-        material: (context, platform) => getMaterialTextfieldData(context, platform, showPrefix),
-        cupertino: (context, platform) => getCupertinoTextfieldData(context, platform, showPrefix),
+        material: (context, platform) =>
+            getMaterialTextfieldData(context, platform, showPrefix, prefix: prefix, suffix: suffix),
+        cupertino: (context, platform) =>
+            getCupertinoTextfieldData(context, platform, showPrefix, prefix: prefix, suffix: suffix),
         cursorColor: Theme.of(context).colorScheme.onPrimary,
         onChanged: onChanged,
       ),
@@ -30,7 +46,8 @@ class CreateAdTextfield extends StatelessWidget {
   }
 }
 
-CupertinoTextFieldData getCupertinoTextfieldData(BuildContext context, PlatformTarget target, bool showPrefix) {
+CupertinoTextFieldData getCupertinoTextfieldData(BuildContext context, PlatformTarget target, bool showPrefix,
+    {Widget? prefix, Widget? suffix}) {
   return CupertinoTextFieldData(
     style: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.onSurfaceVariant),
     placeholderStyle: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.onSurfaceVariant),
@@ -43,18 +60,21 @@ CupertinoTextFieldData getCupertinoTextfieldData(BuildContext context, PlatformT
   );
 }
 
-MaterialTextFieldData getMaterialTextfieldData(BuildContext context, PlatformTarget target, bool showPrefix) {
+MaterialTextFieldData getMaterialTextfieldData(BuildContext context, PlatformTarget target, bool showPrefix,
+    {Widget? prefix, Widget? suffix}) {
   return MaterialTextFieldData(
     textAlignVertical: TextAlignVertical.center,
     style: TextStyle(fontSize: 15, color: Theme.of(context).colorScheme.onSurfaceVariant),
     decoration: InputDecoration(
-      errorText: showPrefix ? AppLocalizations.of(context)!.requiredField : null,
+      errorText: showPrefix && prefix == null ? AppLocalizations.of(context)!.requiredField : null,
       prefixIcon: showPrefix
-          ? const Icon(
-              Icons.not_interested,
-              color: Colors.red,
-            )
+          ? prefix ??
+              const Icon(
+                Icons.not_interested,
+                color: Colors.red,
+              )
           : null,
+      suffixIcon: suffix,
       contentPadding: const EdgeInsets.all(10.0),
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

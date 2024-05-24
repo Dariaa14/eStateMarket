@@ -27,3 +27,9 @@ class DeleteAdEvent extends MainPageEvent {
 
   DeleteAdEvent({required this.ad});
 }
+
+class ChangeCurrentCategoryEvent extends MainPageEvent {
+  final AdCategory? category;
+
+  ChangeCurrentCategoryEvent({required this.category});
+}

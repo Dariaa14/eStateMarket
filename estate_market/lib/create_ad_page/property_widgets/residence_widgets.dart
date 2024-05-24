@@ -6,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utils/translate_enums.dart';
 import '../create_ad_bloc.dart';
-import '../widgets/create_ad_textfield.dart';
+import '../../widgets/custom_textfield.dart';
 
 class ResidenceWidgets extends StatelessWidget {
   final AdEntity? ad;
@@ -29,7 +29,7 @@ class ResidenceWidgets extends StatelessWidget {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Number of rooms text field
           Text('${AppLocalizations.of(context)!.numberOfRooms}*'),
-          CreateAdTextfield(
+          CustomTextfield(
             controller: numberOfRoomsController,
             hintText: AppLocalizations.of(context)!.numberOfRoomsHintText,
             keyboardType: TextInputType.number,
@@ -41,7 +41,7 @@ class ResidenceWidgets extends StatelessWidget {
 
           // Number of bathrooms text field
           Text('${AppLocalizations.of(context)!.numberOfBathrooms}*'),
-          CreateAdTextfield(
+          CustomTextfield(
             controller: numberOfBathroomsController,
             hintText: AppLocalizations.of(context)!.numberOfBathroomsHintText,
             keyboardType: TextInputType.number,

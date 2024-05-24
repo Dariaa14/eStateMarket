@@ -6,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utils/translate_enums.dart';
 import '../create_ad_bloc.dart';
-import '../widgets/create_ad_textfield.dart';
+import '../../widgets/custom_textfield.dart';
 
 class DepositWidgets extends StatelessWidget {
   final AdEntity? ad;
@@ -41,7 +41,7 @@ class DepositWidgets extends StatelessWidget {
             children: [
               // Height textfield
               Text('${AppLocalizations.of(context)!.height}*'),
-              CreateAdTextfield(
+              CustomTextfield(
                 controller: heightController,
                 hintText: AppLocalizations.of(context)!.heightHintText,
                 keyboardType: TextInputType.number,
@@ -54,7 +54,7 @@ class DepositWidgets extends StatelessWidget {
 
               // Usable surface textfield
               Text('${AppLocalizations.of(context)!.usableSurface}*'),
-              CreateAdTextfield(
+              CustomTextfield(
                 controller: usableSurfaceController,
                 hintText: AppLocalizations.of(context)!.usableSurfaceHintText,
                 keyboardType: TextInputType.number,
@@ -67,7 +67,7 @@ class DepositWidgets extends StatelessWidget {
 
               // Administrative surface textfield
               Text('${AppLocalizations.of(context)!.administrativeSurface}*'),
-              CreateAdTextfield(
+              CustomTextfield(
                 controller: administrativeSurfaceController,
                 hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText,
                 keyboardType: TextInputType.number,
@@ -93,7 +93,7 @@ class DepositWidgets extends StatelessWidget {
 
               // Parking spaces textfield
               Text('${AppLocalizations.of(context)!.parkingSpaces}*'),
-              CreateAdTextfield(
+              CustomTextfield(
                 controller: parkingSpacesController,
                 hintText: AppLocalizations.of(context)!.parkingSpacesHintText,
                 keyboardType: TextInputType.number,

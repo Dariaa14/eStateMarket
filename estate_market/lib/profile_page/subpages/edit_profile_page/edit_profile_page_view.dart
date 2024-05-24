@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import '../../../create_ad_page/widgets/create_ad_textfield.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../utils/translate_enums.dart';
+import '../../../widgets/custom_textfield.dart';
 
 class EditProfilePageView extends StatelessWidget {
   final TextEditingController _phoneNumberController = TextEditingController();
@@ -45,7 +45,7 @@ class EditProfilePageView extends StatelessWidget {
               listener: (context, state) {
                 _phoneNumberController.text = state.phoneNumber;
               },
-              child: CreateAdTextfield(
+              child: CustomTextfield(
                 controller: _phoneNumberController,
                 onChanged: (phoneNumber) => {
                   editProfileBloc.add(ChangePhoneNumberEvent(phoneNumber: phoneNumber)),

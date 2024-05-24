@@ -1,13 +1,14 @@
 import 'package:domain/entities/ad_entity.dart';
+import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/main_page/category_item.dart';
 import 'package:estate_market/main_page/main_page_bloc.dart';
 import 'package:estate_market/main_page/ad_item.dart';
-import 'package:estate_market/widgets/searchbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../sidebar_menu/sidebar_menu_view.dart';
+import '../widgets/custom_textfield.dart';
 
 class MainPageView extends StatelessWidget {
   const MainPageView({super.key});
@@ -18,7 +19,8 @@ class MainPageView extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: CustomTextField(
+          title: CustomTextfield(
+            showPrefix: true,
             hintText: AppLocalizations.of(context)!.search,
             prefix: Icon(
               CupertinoIcons.search,
@@ -28,7 +30,9 @@ class MainPageView extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.surface,
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, RouteNames.filtersPage);
+                },
                 icon: Icon(
                   Icons.filter_alt,
                   color: Theme.of(context).colorScheme.onSurface,

@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../create_ad_bloc.dart';
-import '../widgets/create_ad_textfield.dart';
+import '../../widgets/custom_textfield.dart';
 
 class HouseWidgets extends StatelessWidget {
   final AdEntity? ad;
@@ -46,7 +46,7 @@ class HouseWidgets extends StatelessWidget {
 
               // Inside surface textfield
               Text('${AppLocalizations.of(context)!.insideSurface}*'),
-              CreateAdTextfield(
+              CustomTextfield(
                 controller: insideSurfaceController,
                 hintText: AppLocalizations.of(context)!.insideSurfaceHintText,
                 keyboardType: TextInputType.number,
@@ -57,7 +57,7 @@ class HouseWidgets extends StatelessWidget {
 
               // Outside surface textfield
               Text('${AppLocalizations.of(context)!.outsideSurface}*'),
-              CreateAdTextfield(
+              CustomTextfield(
                 controller: outsideSurfaceController,
                 hintText: AppLocalizations.of(context)!.outsideSurfaceHintText,
                 keyboardType: TextInputType.number,
@@ -68,7 +68,7 @@ class HouseWidgets extends StatelessWidget {
 
               // Floors number textfield
               Text('${AppLocalizations.of(context)!.numberOfFloors}*'),
-              CreateAdTextfield(
+              CustomTextfield(
                 controller: numberOfFloorsController,
                 hintText: AppLocalizations.of(context)!.numberOfFloorsHintText,
                 keyboardType: TextInputType.number,

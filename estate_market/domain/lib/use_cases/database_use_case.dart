@@ -27,10 +27,6 @@ class DatabaseUseCase {
         _imageUploadRepository = imageUploadRepository,
         _accountRepository = accountRepository;
 
-  Stream<List<AdEntity>> getAllAds() {
-    return _databaseRepository.streamAds().map((list) => list.whereType<AdEntity>().toList());
-  }
-
   Future<DocumentReferenceEntity> insertGarageEntity({
     required double surface,
     required double price,

@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utils/translate_enums.dart';
 import '../create_ad_bloc.dart';
-import '../widgets/create_ad_textfield.dart';
+import '../../widgets/custom_textfield.dart';
 
 class ApartmentWidgets extends StatelessWidget {
   final TextEditingController floorNumberController;
@@ -55,7 +55,7 @@ class ApartmentWidgets extends StatelessWidget {
 
               // Floor number textfield
               Text("${AppLocalizations.of(context)!.floorNumber}*"),
-              CreateAdTextfield(
+              CustomTextfield(
                 controller: floorNumberController,
                 hintText: AppLocalizations.of(context)!.floorNumberHintText,
                 keyboardType: TextInputType.number,

@@ -2,6 +2,7 @@ import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:estate_market/ad_page/ad_page_view.dart';
 import 'package:estate_market/create_ad_page/create_ad_view.dart';
+import 'package:estate_market/filters_page/filters_page_view.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
 import 'package:estate_market/map_page/map_page_view.dart';
 import 'package:estate_market/profile_page/subpages/my_ads_page/my_ads_view_page.dart';
@@ -26,6 +27,8 @@ class RouteNames {
   static const String favoritesPage = '/favorites';
 
   static const String adPage = '/adPage';
+
+  static const String filtersPage = '/filters';
 }
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -53,6 +56,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return routeBuilder(const FavoritesViewPage());
     case RouteNames.myAdsPage:
       return routeBuilder(const MyAdsViewPage());
+    case RouteNames.filtersPage:
+      return routeBuilder(const FiltersPageView());
   }
   return null;
 }
