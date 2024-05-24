@@ -58,9 +58,10 @@ class MainPageView extends StatelessWidget {
                         height: 100,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: AdCategory.values.length,
+                          itemCount: AdCategory.values.length + 1,
                           itemBuilder: (context, index) {
-                            return CategoryItem(category: AdCategory.values[index]);
+                            if (index == 0) return const CategoryItem(category: null);
+                            return CategoryItem(category: AdCategory.values[index - 1]);
                           },
                         ),
                       ),
