@@ -1,6 +1,7 @@
 import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/property_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
+import 'package:domain/entities/wrappers/document_reference_entity.dart';
 
 enum AdCategory { apartament, house, terrain, garage, deposit }
 
@@ -29,4 +30,6 @@ abstract class AdEntity {
       required this.dateOfAd});
 
   Future<void> setReferences();
+
+  DocumentReferenceEntity get propertyDocument;
 }

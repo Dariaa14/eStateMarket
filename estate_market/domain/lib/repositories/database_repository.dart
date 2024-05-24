@@ -21,6 +21,15 @@ abstract class DatabaseRepository {
     required int capacity,
   });
 
+  Future<void> updateGarageEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required ParkingType parkingType,
+      required int capacity});
+
   Future<DocumentReferenceEntity> insertApartmentEntity({
     required double surface,
     required double price,
@@ -32,6 +41,18 @@ abstract class DatabaseRepository {
     required int numberOfBathrooms,
     required FurnishingLevel furnishingLevel,
   });
+
+  Future<void> updateApartmentEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required Partitioning partitioning,
+      required int floor,
+      required int numberOfRooms,
+      required int numberOfBathrooms,
+      required FurnishingLevel furnishingLevel});
 
   Future<DocumentReferenceEntity> insertHouseEntity({
     required double surface,
@@ -46,6 +67,19 @@ abstract class DatabaseRepository {
     required FurnishingLevel furnishingLevel,
   });
 
+  Future<void> updateHouseEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required double insideSurface,
+      required double outsideSurface,
+      required int numberOfFloors,
+      required int numberOfRooms,
+      required int numberOfBathrooms,
+      required FurnishingLevel furnishingLevel});
+
   Future<DocumentReferenceEntity> insertTerrainEntity({
     required double surface,
     required double price,
@@ -54,6 +88,15 @@ abstract class DatabaseRepository {
     required bool isInBuildUpArea,
     required LandUseCategories landUseCategory,
   });
+
+  Future<void> updateTerrainEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required bool isInBuildUpArea,
+      required LandUseCategories landUseCategory});
 
   Future<DocumentReferenceEntity> insertDepositEntity({
     required double surface,
@@ -66,6 +109,18 @@ abstract class DatabaseRepository {
     required DepositType depositType,
     required int parkingSpaces,
   });
+
+  Future<void> updateDepositEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required double height,
+      required double usableSurface,
+      required double administrativeSurface,
+      required DepositType depositType,
+      required int parkingSpaces});
 
   Future<void> insertAdEntity({
     required String title,

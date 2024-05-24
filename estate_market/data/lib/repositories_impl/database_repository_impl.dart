@@ -283,4 +283,120 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         dateOfAd: previousAd.dateOfAd);
     await adDocument.first.set((ad as AdEntityImpl).toJson());
   }
+
+  @override
+  Future<void> updateGarageEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required ParkingType parkingType,
+      required int capacity}) async {
+    GarageEntity garage = GarageEntityImpl(
+        parkingType: parkingType,
+        capacity: capacity,
+        surface: surface,
+        price: price,
+        isNegotiable: isNegotiable,
+        constructionYear: constructionYear);
+    await previousProperty.set((garage as GarageEntityImpl).toJson());
+  }
+
+  @override
+  Future<void> updateApartmentEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required Partitioning partitioning,
+      required int floor,
+      required int numberOfRooms,
+      required int numberOfBathrooms,
+      required FurnishingLevel furnishingLevel}) async {
+    ApartmentEntity apartment = ApartmentEntityImpl(
+        surface: surface,
+        price: price,
+        isNegotiable: isNegotiable,
+        partitioning: partitioning,
+        floor: floor,
+        numberOfRooms: numberOfRooms,
+        numberOfBathrooms: numberOfBathrooms,
+        furnishingLevel: furnishingLevel,
+        constructionYear: constructionYear);
+    await previousProperty.set((apartment as ApartmentEntityImpl).toJson());
+  }
+
+  @override
+  Future<void> updateHouseEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required double insideSurface,
+      required double outsideSurface,
+      required int numberOfFloors,
+      required int numberOfRooms,
+      required int numberOfBathrooms,
+      required FurnishingLevel furnishingLevel}) async {
+    HouseEntity house = HouseEntityImpl(
+        surface: surface,
+        price: price,
+        isNegotiable: isNegotiable,
+        numberOfRooms: numberOfRooms,
+        numberOfBathrooms: numberOfBathrooms,
+        furnishingLevel: furnishingLevel,
+        insideSurface: insideSurface,
+        outsideSurface: outsideSurface,
+        numberOfFloors: numberOfFloors,
+        constructionYear: constructionYear);
+    await previousProperty.set((house as HouseEntityImpl).toJson());
+  }
+
+  @override
+  Future<void> updateDepositEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required double height,
+      required double usableSurface,
+      required double administrativeSurface,
+      required DepositType depositType,
+      required int parkingSpaces}) async {
+    DepositEntity deposit = DepositEntityImpl(
+      surface: surface,
+      price: price,
+      isNegotiable: isNegotiable,
+      constructionYear: constructionYear,
+      height: height,
+      usableSurface: usableSurface,
+      administrativeSurface: administrativeSurface,
+      depositType: depositType,
+      parkingSpaces: parkingSpaces,
+    );
+    await previousProperty.set((deposit as DepositEntityImpl).toJson());
+  }
+
+  @override
+  Future<void> updateTerrainEntity(
+      {required DocumentReferenceEntity previousProperty,
+      required double surface,
+      required double price,
+      required bool isNegotiable,
+      required int? constructionYear,
+      required bool isInBuildUpArea,
+      required LandUseCategories landUseCategory}) async {
+    TerrainEntity terrain = TerrainEntityImpl(
+        isInBuildUpArea: isInBuildUpArea,
+        landUseCategory: landUseCategory,
+        surface: surface,
+        price: price,
+        isNegotiable: isNegotiable,
+        constructionYear: constructionYear);
+    await previousProperty.set((terrain as TerrainEntityImpl).toJson());
+  }
 }

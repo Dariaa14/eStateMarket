@@ -288,6 +288,15 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
   }
 
   _updateDatabaseEventHandler(UpdateDatabaseEvent event, Emitter<CreateAdState> emit) async {
+    emit(state.copyWith(status: CreateAdStatus.loading));
+    if (state.emptyFields.contains(CreateAdFields.title) ||
+        state.emptyFields.contains(CreateAdFields.description) ||
+        state.emptyFields.contains(CreateAdFields.surface) ||
+        state.emptyFields.contains(CreateAdFields.price)) {
+      emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
+      return;
+    }
+
     if (state.landmark == null) {
       emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
       return;
@@ -301,6 +310,98 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     }
     List<String> imageUrls = (imageUploadResult as Right).value;
     imageUrls.addAll(state.images.where((image) => image.path != null).map((image) => image.path!).toList());
+
+    switch (state.currentCategory) {
+      case AdCategory.apartament:
+        if (state.emptyFields.contains(CreateAdFields.floorNumber) ||
+            state.emptyFields.contains(CreateAdFields.numberOfBathrooms) ||
+            state.emptyFields.contains(CreateAdFields.numberOfRooms)) {
+          emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
+          return;
+        }
+        await _databaseUseCase.updateApartmentEntity(
+          surface: double.parse(event.surface),
+          price: double.parse(event.price),
+          isNegotiable: state.isNegotiable,
+          constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+          partitioning: state.partitioning,
+          furnishingLevel: state.furnishingLevel,
+          floor: state.floor!,
+          numberOfBathrooms: state.numberOfBathrooms!,
+          numberOfRooms: state.numberOfRooms!,
+          previousProperty: event.ad.propertyDocument,
+        );
+        break;
+      case AdCategory.house:
+        if (state.emptyFields.contains(CreateAdFields.numberOfFloors) ||
+            state.emptyFields.contains(CreateAdFields.numberOfBathrooms) ||
+            state.emptyFields.contains(CreateAdFields.numberOfRooms) ||
+            state.emptyFields.contains(CreateAdFields.insideSurface) ||
+            state.emptyFields.contains(CreateAdFields.outsideSurface)) {
+          emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
+          return;
+        }
+        await _databaseUseCase.updateHouseEntity(
+          surface: double.parse(event.surface),
+          price: double.parse(event.price),
+          isNegotiable: state.isNegotiable,
+          constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+          furnishingLevel: state.furnishingLevel,
+          numberOfBathrooms: state.numberOfBathrooms!,
+          numberOfRooms: state.numberOfRooms!,
+          insideSurface: state.insideSurface!,
+          outsideSurface: state.outsideSurface!,
+          numberOfFloors: state.numberOfFloors!,
+          previousProperty: event.ad.propertyDocument,
+        );
+        break;
+      case AdCategory.terrain:
+        await _databaseUseCase.updateTerrainEntity(
+          surface: double.parse(event.surface),
+          price: double.parse(event.price),
+          isNegotiable: state.isNegotiable,
+          constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+          isInBuildUpArea: state.isInBuildUpArea,
+          landUseCategory: state.landUseCategory,
+          previousProperty: event.ad.propertyDocument,
+        );
+        break;
+      case AdCategory.garage:
+        if (state.emptyFields.contains(CreateAdFields.garageCapacity)) {
+          emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
+          return;
+        }
+        await _databaseUseCase.updateGarageEntity(
+          surface: double.parse(event.surface),
+          price: double.parse(event.price),
+          isNegotiable: state.isNegotiable,
+          constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+          parkingType: state.parkingType,
+          capacity: state.parkingCapacity!,
+          previousProperty: event.ad.propertyDocument,
+        );
+        break;
+      case AdCategory.deposit:
+        if (state.emptyFields.contains(CreateAdFields.usableSurface) ||
+            state.emptyFields.contains(CreateAdFields.administrativeSurface) ||
+            state.emptyFields.contains(CreateAdFields.parkingSpaces)) {
+          emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
+          return;
+        }
+        await _databaseUseCase.updateDepositEntity(
+          surface: double.parse(event.surface),
+          price: double.parse(event.price),
+          isNegotiable: state.isNegotiable,
+          constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
+          height: state.height!,
+          usableSurface: state.usableSurface!,
+          administrativeSurface: state.administrativeSurface!,
+          depositType: state.depositType,
+          parkingSpaces: state.parkingSpaces!,
+          previousProperty: event.ad.propertyDocument,
+        );
+        break;
+    }
 
     _databaseUseCase.updateLandmark(previousLandmark: event.ad.landmark!, landmark: state.landmark!);
     _databaseUseCase.updateAd(

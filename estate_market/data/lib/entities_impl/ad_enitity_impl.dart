@@ -150,4 +150,7 @@ class AdEntityImpl implements AdEntity {
     await ad.setReferences();
     return ad;
   }
+
+  @override
+  DocumentReferenceEntity get propertyDocument => _propertyReference!;
 }

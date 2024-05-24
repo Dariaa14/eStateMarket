@@ -199,4 +199,121 @@ class DatabaseUseCase {
         images: images,
         previousAd: previousAd);
   }
+
+  Future<void> updateGarageEntity({
+    required DocumentReferenceEntity previousProperty,
+    required double surface,
+    required double price,
+    required bool isNegotiable,
+    required int? constructionYear,
+    required ParkingType parkingType,
+    required int capacity,
+  }) async {
+    await _databaseRepository.updateGarageEntity(
+        previousProperty: previousProperty,
+        surface: surface,
+        price: price,
+        isNegotiable: isNegotiable,
+        constructionYear: constructionYear,
+        parkingType: parkingType,
+        capacity: capacity);
+  }
+
+  Future<void> updateApartmentEntity({
+    required DocumentReferenceEntity previousProperty,
+    required double surface,
+    required double price,
+    required bool isNegotiable,
+    required int? constructionYear,
+    required Partitioning partitioning,
+    required int floor,
+    required int numberOfRooms,
+    required int numberOfBathrooms,
+    required FurnishingLevel furnishingLevel,
+  }) async {
+    await _databaseRepository.updateApartmentEntity(
+      previousProperty: previousProperty,
+      surface: surface,
+      price: price,
+      isNegotiable: isNegotiable,
+      constructionYear: constructionYear,
+      partitioning: partitioning,
+      floor: floor,
+      numberOfRooms: numberOfRooms,
+      numberOfBathrooms: numberOfBathrooms,
+      furnishingLevel: furnishingLevel,
+    );
+  }
+
+  Future<void> updateHouseEntity({
+    required DocumentReferenceEntity previousProperty,
+    required double surface,
+    required double price,
+    required bool isNegotiable,
+    required int? constructionYear,
+    required double insideSurface,
+    required double outsideSurface,
+    required int numberOfFloors,
+    required int numberOfRooms,
+    required int numberOfBathrooms,
+    required FurnishingLevel furnishingLevel,
+  }) async {
+    await _databaseRepository.updateHouseEntity(
+      previousProperty: previousProperty,
+      surface: surface,
+      price: price,
+      isNegotiable: isNegotiable,
+      constructionYear: constructionYear,
+      insideSurface: insideSurface,
+      outsideSurface: outsideSurface,
+      numberOfFloors: numberOfFloors,
+      numberOfRooms: numberOfRooms,
+      numberOfBathrooms: numberOfBathrooms,
+      furnishingLevel: furnishingLevel,
+    );
+  }
+
+  Future<void> updateDepositEntity({
+    required DocumentReferenceEntity previousProperty,
+    required double surface,
+    required double price,
+    required bool isNegotiable,
+    required int? constructionYear,
+    required double height,
+    required double usableSurface,
+    required double administrativeSurface,
+    required DepositType depositType,
+    required int parkingSpaces,
+  }) async {
+    await _databaseRepository.updateDepositEntity(
+        previousProperty: previousProperty,
+        surface: surface,
+        price: price,
+        isNegotiable: isNegotiable,
+        constructionYear: constructionYear,
+        height: height,
+        usableSurface: usableSurface,
+        administrativeSurface: administrativeSurface,
+        depositType: depositType,
+        parkingSpaces: parkingSpaces);
+  }
+
+  Future<void> updateTerrainEntity({
+    required DocumentReferenceEntity previousProperty,
+    required double surface,
+    required double price,
+    required bool isNegotiable,
+    required int? constructionYear,
+    required bool isInBuildUpArea,
+    required LandUseCategories landUseCategory,
+  }) async {
+    await _databaseRepository.updateTerrainEntity(
+        previousProperty: previousProperty,
+        surface: surface,
+        price: price,
+        isNegotiable: isNegotiable,
+        constructionYear: constructionYear,
+        isInBuildUpArea: isInBuildUpArea,
+        landUseCategory: landUseCategory);
+  }
 }
