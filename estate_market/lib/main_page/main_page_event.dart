@@ -51,3 +51,9 @@ class ChangeSurfaceRangeEvent extends MainPageEvent {
 
   ChangeSurfaceRangeEvent({required this.surfaceRange});
 }
+
+class ChangeSearchQueryEvent extends MainPageEvent {
+  final String searchQuery;
+
+  ChangeSearchQueryEvent({required this.searchQuery});
+}

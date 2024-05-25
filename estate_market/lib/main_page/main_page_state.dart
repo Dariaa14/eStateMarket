@@ -11,6 +11,8 @@ class MainPageState extends Equatable {
   final Tuple2<double?, double?> priceRange;
   final Tuple2<double?, double?> surfaceRange;
 
+  final String searchQuery;
+
   const MainPageState(
       {required this.ads,
       this.favoritesChanged = false,
@@ -18,7 +20,8 @@ class MainPageState extends Equatable {
       this.currentCategory,
       this.currentListingType,
       this.priceRange = const Tuple2(null, null),
-      this.surfaceRange = const Tuple2(null, null)});
+      this.surfaceRange = const Tuple2(null, null),
+      this.searchQuery = ''});
 
   MainPageState copyWith(
           {List<AdEntity>? ads,
@@ -27,7 +30,8 @@ class MainPageState extends Equatable {
           AdCategory? currentCategory,
           ListingType? currentListingType,
           Tuple2<double?, double?>? priceRange,
-          Tuple2<double?, double?>? surfaceRange}) =>
+          Tuple2<double?, double?>? surfaceRange,
+          String? searchQuery}) =>
       MainPageState(
         ads: ads ?? this.ads,
         favoritesChanged: favoritesChanged ?? this.favoritesChanged,
@@ -36,6 +40,7 @@ class MainPageState extends Equatable {
         currentListingType: currentListingType ?? this.currentListingType,
         priceRange: priceRange ?? this.priceRange,
         surfaceRange: surfaceRange ?? this.surfaceRange,
+        searchQuery: searchQuery ?? this.searchQuery,
       );
 
   MainPageState copyWithNullCategory() => MainPageState(
@@ -46,6 +51,7 @@ class MainPageState extends Equatable {
         surfaceRange: surfaceRange,
         currentListingType: currentListingType,
         currentCategory: null,
+        searchQuery: searchQuery,
       );
 
   MainPageState copyWithNullListingType() => MainPageState(
@@ -56,9 +62,18 @@ class MainPageState extends Equatable {
         surfaceRange: surfaceRange,
         currentListingType: null,
         currentCategory: currentCategory,
+        searchQuery: searchQuery,
       );
 
   @override
-  List<Object?> get props =>
-      [ads, favoritesChanged, isUserLoggedIn, currentCategory, currentListingType, priceRange, surfaceRange];
+  List<Object?> get props => [
+        ads,
+        favoritesChanged,
+        isUserLoggedIn,
+        currentCategory,
+        currentListingType,
+        priceRange,
+        surfaceRange,
+        searchQuery
+      ];
 }

@@ -9,4 +9,5 @@ abstract class FilterRepository {
   void setCurrentListingType(ListingType? listingType);
   void setPriceRange(Tuple2<double?, double?> priceRange);
   void setSurfaceRange(Tuple2<double?, double?> surfaceRange);
+  void setSearchQuery(String text);
 }

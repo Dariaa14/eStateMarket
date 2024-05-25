@@ -16,24 +16,27 @@ class FilterRepositoryImpl implements FilterRepository {
   final _listingTypeController = StreamController<ListingType?>.broadcast();
   final _priceRangeController = StreamController<Tuple2<double?, double?>>.broadcast();
   final _surfaceRangeController = StreamController<Tuple2<double?, double?>>.broadcast();
+  final _searchQueryController = StreamController<String>.broadcast();
 
   @override
   Stream<List<AdEntity>> streamAds() {
     CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad, withConverter: false);
 
-    return Rx.combineLatest5(
+    return Rx.combineLatest6(
         _categoryController.stream,
         _listingTypeController.stream,
         _priceRangeController.stream,
         _surfaceRangeController.stream,
+        _searchQueryController.stream,
         ads.snapshots(),
-        (category, listingType, priceRange, surfaceRange, snapshot) =>
-            Tuple5(category, listingType, priceRange, surfaceRange, snapshot)).asyncMap((tuple) async {
+        (category, listingType, priceRange, surfaceRange, searchQuery, snapshot) =>
+            Tuple6(category, listingType, priceRange, surfaceRange, searchQuery, snapshot)).asyncMap((tuple) async {
       final AdCategory? category = tuple.value1;
       final ListingType? listingType = tuple.value2;
       final Tuple2<double?, double?> priceRange = tuple.value3;
       final Tuple2<double?, double?> surfaceRange = tuple.value4;
-      final QuerySnapshotEntity snapshot = tuple.value5;
+      final String searchQuery = tuple.value5;
+      final QuerySnapshotEntity snapshot = tuple.value6;
 
       List<DocumentReferenceEntity> docRefs = snapshot.transformToDocumentReferenceList();
       List<Future<AdEntity?>> futures = docRefs.map((docRef) => AdEntityImpl.getAdFromDocument(docRef)).toList();
@@ -50,7 +53,9 @@ class FilterRepositoryImpl implements FilterRepository {
           .where((ad) => surfaceRange.head == null || surfaceRange.head! <= ad.property!.surface)
           .where((ad) => surfaceRange.tail == null || surfaceRange.tail! >= ad.property!.surface)
           .toList();
-      return sortedBySurface;
+      final sortedBySearchQuery =
+          sortedBySurface.where((ad) => ad.title.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      return sortedBySearchQuery;
     });
   }
 
@@ -72,5 +77,10 @@ class FilterRepositoryImpl implements FilterRepository {
   @override
   void setSurfaceRange(Tuple2<double?, double?> surfaceRange) {
     _surfaceRangeController.add(surfaceRange);
+  }
+
+  @override
+  void setSearchQuery(String text) {
+    _searchQueryController.add(text);
   }
 }

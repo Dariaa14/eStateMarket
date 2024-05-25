@@ -116,5 +116,8 @@
     "editProfile": "Editează profilul",
     "logout": "Deconectare",
     "address": "Adresă",
-    "editAd": "Editează anunț"
+    "editAd": "Editează anunț",
+    "any": "Orice",
+    "from": "De la",
+    "to": "Până la"
 }

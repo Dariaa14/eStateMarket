@@ -32,6 +32,10 @@ class FilterUseCase {
     _filterRepository.setSurfaceRange(surfaceRange);
   }
 
+  void setSearchQuery(String text) {
+    _filterRepository.setSearchQuery(text);
+  }
+
   void dispose() {
     _adsController.close();
   }

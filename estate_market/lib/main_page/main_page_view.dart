@@ -26,6 +26,9 @@ class MainPageView extends StatelessWidget {
               CupertinoIcons.search,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
+            onChanged: (text) {
+              mainBloc.add(ChangeSearchQueryEvent(searchQuery: text));
+            },
           ),
           backgroundColor: Theme.of(context).colorScheme.surface,
           actions: [
@@ -45,6 +48,7 @@ class MainPageView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 children: [
                   Column(

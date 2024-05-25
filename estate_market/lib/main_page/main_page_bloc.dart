@@ -30,6 +30,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     on<ChangeCurrentListingTypeEvent>(_changeCurrentListingTypeEventHandler);
     on<ChangePriceRangeEvent>(_changePriceRangeEventHandler);
     on<ChangeSurfaceRangeEvent>(_changeSurfaceRangeEventHandler);
+    on<ChangeSearchQueryEvent>(_changeSearchQueryEventHandler);
   }
 
   _initMainPageEventHandler(InitMainPageEvent event, Emitter<MainPageState> emit) async {
@@ -46,6 +47,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     _filterUseCase.setCurrentListingType(null);
     _filterUseCase.setPriceRange(const Tuple2(null, null));
     _filterUseCase.setSurfaceRange(const Tuple2(null, null));
+    _filterUseCase.setSearchQuery('');
   }
 
   _setAdsEventHandler(SetAdsEvent event, Emitter<MainPageState> emit) => emit(state.copyWith(ads: event.ads));
@@ -94,6 +96,11 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   _changeSurfaceRangeEventHandler(ChangeSurfaceRangeEvent event, Emitter<MainPageState> emit) {
     _filterUseCase.setSurfaceRange(event.surfaceRange);
     emit(state.copyWith(surfaceRange: event.surfaceRange));
+  }
+
+  _changeSearchQueryEventHandler(ChangeSearchQueryEvent event, Emitter<MainPageState> emit) {
+    _filterUseCase.setSearchQuery(event.searchQuery);
+    emit(state.copyWith(searchQuery: event.searchQuery));
   }
 
   bool isAdFavorite(AdEntity ad) {

@@ -579,5 +579,20 @@
     "editAd": "Edit ad",
     "@editAd":{
         "description": "Edit ad"
+    },
+
+    "any": "Any",
+    "@any":{
+        "description": "Any"
+    },
+
+    "from": "From",
+    "@from":{
+        "description": "From"
+    },
+
+    "to": "To",
+    "@to":{
+        "description": "To"
     }
 }

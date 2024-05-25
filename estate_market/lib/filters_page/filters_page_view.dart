@@ -57,7 +57,7 @@ class FiltersPageView extends StatelessWidget {
                   return DropdownButton<AdCategory?>(
                       value: state.currentCategory,
                       items: [
-                        const DropdownMenuItem(value: null, child: Text('Any category')),
+                        DropdownMenuItem(value: null, child: Text(AppLocalizations.of(context)!.any)),
                         for (final category in AdCategory.values)
                           DropdownMenuItem(value: category, child: Text(adCategoryTranslate(category, context))),
                       ],
@@ -78,7 +78,7 @@ class FiltersPageView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ListTile(
-                        title: const Text('Any'),
+                        title: Text(AppLocalizations.of(context)!.any),
                         leading: Radio<ListingType?>(
                           value: null,
                           groupValue: state.currentListingType,
@@ -114,7 +114,7 @@ class FiltersPageView extends StatelessWidget {
                       Expanded(
                           child: CustomTextfield(
                         controller: _minPriceController,
-                        hintText: 'From',
+                        hintText: AppLocalizations.of(context)!.from,
                         keyboardType: TextInputType.number,
                         onChanged: (minPrice) {
                           mainBloc.add(ChangePriceRangeEvent(
@@ -131,7 +131,7 @@ class FiltersPageView extends StatelessWidget {
                       Expanded(
                           child: CustomTextfield(
                         controller: _maxPriceController,
-                        hintText: 'To',
+                        hintText: AppLocalizations.of(context)!.to,
                         keyboardType: TextInputType.number,
                         onChanged: (maxPrice) {
                           mainBloc.add(ChangePriceRangeEvent(
@@ -158,7 +158,7 @@ class FiltersPageView extends StatelessWidget {
                       Expanded(
                           child: CustomTextfield(
                         controller: _minSurfaceController,
-                        hintText: 'From',
+                        hintText: AppLocalizations.of(context)!.from,
                         keyboardType: TextInputType.number,
                         onChanged: (minSurface) {
                           mainBloc.add(ChangeSurfaceRangeEvent(
@@ -175,7 +175,7 @@ class FiltersPageView extends StatelessWidget {
                       Expanded(
                           child: CustomTextfield(
                         controller: _maxSurfaceController,
-                        hintText: 'To',
+                        hintText: AppLocalizations.of(context)!.to,
                         keyboardType: TextInputType.number,
                         onChanged: (maxSurface) {
                           mainBloc.add(ChangeSurfaceRangeEvent(

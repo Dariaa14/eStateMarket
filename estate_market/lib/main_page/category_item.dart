@@ -1,7 +1,8 @@
 import 'package:domain/entities/ad_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../utils/translate_enums.dart';
 import 'main_page_bloc.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -28,7 +29,7 @@ class CategoryItem extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primaryContainer,
               ),
             ),
-            Text(category != null ? category!.name : 'all'),
+            Text(category != null ? adCategoryTranslate(category!, context) : AppLocalizations.of(context)!.any),
           ],
         ),
       ),
