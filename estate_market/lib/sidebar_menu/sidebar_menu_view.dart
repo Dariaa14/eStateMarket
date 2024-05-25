@@ -20,11 +20,6 @@ class SidebarMenu extends StatelessWidget {
               child: Image.asset('assets/icon/icon_with_title.png'),
             ),
             ListTile(
-              leading: const Icon(Icons.explore),
-              title: Text(AppLocalizations.of(context)!.explore),
-              onTap: () {},
-            ),
-            ListTile(
               leading: const Icon(Icons.favorite),
               title: Text(AppLocalizations.of(context)!.favorites),
               onTap: () {
@@ -47,11 +42,6 @@ class SidebarMenu extends StatelessWidget {
                   Navigator.pushNamed(context, RouteNames.registerPage);
                 }
               },
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_filter),
-              title: Text(AppLocalizations.of(context)!.photoEditor),
-              onTap: () {},
             ),
             Expanded(child: Container()),
             const Divider(
