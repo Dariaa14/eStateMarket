@@ -594,5 +594,20 @@
     "to": "To",
     "@to":{
         "description": "To"
+    },
+
+    "call": "Call",
+    "@call":{
+        "description": "Call"
+    },
+
+    "sendSms": "Send SMS",
+    "@sendSms":{
+        "description": "Send SMS"
+    },
+
+    "contactInApp": "Contact in app",
+    "@contactInApp":{
+        "description": "contactInApp"
     }
 }

@@ -370,7 +370,7 @@ class AdPageView extends StatelessWidget {
                             backgroundColor: Theme.of(context).colorScheme.primary,
                             foregroundColor: Theme.of(context).colorScheme.onPrimary),
                         icon: const Icon(Icons.call),
-                        label: const Text('Call'),
+                        label: Text(AppLocalizations.of(context)!.call),
                         onPressed: () {
                           launchUrlString("tel://$phoneNumber");
                           Navigator.pop(context);
@@ -382,7 +382,7 @@ class AdPageView extends StatelessWidget {
                             backgroundColor: Theme.of(context).colorScheme.primary,
                             foregroundColor: Theme.of(context).colorScheme.onPrimary),
                         icon: const Icon(Icons.message),
-                        label: const Text('Send SMS'),
+                        label: Text(AppLocalizations.of(context)!.sendSms),
                         onPressed: () {
                           launchUrlString("sms://$phoneNumber");
                           Navigator.pop(context);
@@ -394,9 +394,8 @@ class AdPageView extends StatelessWidget {
                           backgroundColor: Theme.of(context).colorScheme.primary,
                           foregroundColor: Theme.of(context).colorScheme.onPrimary),
                       icon: const Icon(Icons.contact_page),
-                      label: const Text('Contact in App'),
+                      label: Text(AppLocalizations.of(context)!.contactInApp),
                       onPressed: () {
-                        // Implement contact in app functionality here
                         Navigator.pop(context);
                       },
                     ),
