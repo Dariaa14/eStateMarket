@@ -1,3 +1,4 @@
+import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:estate_market/ad_page/ad_page_view.dart';
@@ -10,6 +11,7 @@ import 'package:estate_market/profile_page/subpages/edit_profile_page/edit_profi
 import 'package:estate_market/register_page/register_page_view.dart';
 import 'package:flutter/material.dart';
 
+import '../chat_page/chat_page_view.dart';
 import '../favorites_page/favorites_view_page.dart';
 import '../profile_page/profile_page_view.dart';
 
@@ -29,6 +31,8 @@ class RouteNames {
   static const String adPage = '/adPage';
 
   static const String filtersPage = '/filters';
+
+  static const String chatPage = '/chat';
 }
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -58,6 +62,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return routeBuilder(const MyAdsViewPage());
     case RouteNames.filtersPage:
       return routeBuilder(FiltersPageView());
+    case RouteNames.chatPage:
+      return routeBuilder(ChatPageView(receiver: settings.arguments as AccountEntity));
   }
   return null;
 }

@@ -1,5 +1,6 @@
 import 'package:cloudinary_flutter/image/cld_image.dart';
 import 'package:core/config.dart';
+import 'package:domain/entities/account_entity.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
@@ -290,7 +291,7 @@ class AdPageView extends StatelessWidget {
             color: Theme.of(context).colorScheme.primaryContainer,
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () => _showContactModal(context, ad.account!.phoneNumber),
+              onPressed: () => _showContactModal(context, ad.account!),
               child: Text(AppLocalizations.of(context)!.contactSeller),
             ),
           ),
@@ -324,13 +325,13 @@ class AdPageView extends StatelessWidget {
     }
   }
 
-  void _showContactModal(BuildContext context, String? phoneNumber) {
+  void _showContactModal(BuildContext context, AccountEntity account) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return SizedBox(
           width: MediaQuery.of(context).size.width - 40,
-          height: (phoneNumber != null && phoneNumber.isNotEmpty) ? 225 : 75,
+          height: (account.phoneNumber != null && account.phoneNumber!.isNotEmpty) ? 225 : 75,
           child: Stack(
             children: [
               Align(
@@ -351,20 +352,20 @@ class AdPageView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (phoneNumber != null && phoneNumber.isNotEmpty)
+                    if (account.phoneNumber != null && account.phoneNumber!.isNotEmpty)
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Column(
                           children: [
                             Text(AppLocalizations.of(context)!.phoneNumber),
                             Text(
-                              phoneNumber,
+                              account.phoneNumber!,
                               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                       ),
-                    if (phoneNumber != null && phoneNumber.isNotEmpty)
+                    if (account.phoneNumber != null && account.phoneNumber!.isNotEmpty)
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).colorScheme.primary,
@@ -372,11 +373,11 @@ class AdPageView extends StatelessWidget {
                         icon: const Icon(Icons.call),
                         label: Text(AppLocalizations.of(context)!.call),
                         onPressed: () {
-                          launchUrlString("tel://$phoneNumber");
+                          launchUrlString("tel://${account.phoneNumber}");
                           Navigator.pop(context);
                         },
                       ),
-                    if (phoneNumber != null && phoneNumber.isNotEmpty)
+                    if (account.phoneNumber != null && account.phoneNumber!.isNotEmpty)
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).colorScheme.primary,
@@ -384,11 +385,11 @@ class AdPageView extends StatelessWidget {
                         icon: const Icon(Icons.message),
                         label: Text(AppLocalizations.of(context)!.sendSms),
                         onPressed: () {
-                          launchUrlString("sms://$phoneNumber");
+                          launchUrlString("sms://${account.phoneNumber}");
                           Navigator.pop(context);
                         },
                       ),
-                    if (phoneNumber == null || phoneNumber.isEmpty) const SizedBox(height: 10),
+                    if (account.phoneNumber == null || account.phoneNumber!.isEmpty) const SizedBox(height: 10),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).colorScheme.primary,
@@ -396,7 +397,13 @@ class AdPageView extends StatelessWidget {
                       icon: const Icon(Icons.contact_page),
                       label: Text(AppLocalizations.of(context)!.contactInApp),
                       onPressed: () {
-                        Navigator.pop(context);
+                        // Add check if user is himself
+                        final main.MainPageBloc mainBloc = BlocProvider.of<main.MainPageBloc>(context);
+                        if (mainBloc.state.isUserLoggedIn) {
+                          Navigator.pushNamed(context, RouteNames.chatPage, arguments: account);
+                        } else {
+                          Navigator.pushNamed(context, RouteNames.registerPage);
+                        }
                       },
                     ),
                   ],
