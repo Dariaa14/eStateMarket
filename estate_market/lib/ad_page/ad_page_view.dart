@@ -19,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'property_widgets/terrain_view.dart';
 
@@ -289,7 +290,7 @@ class AdPageView extends StatelessWidget {
             color: Theme.of(context).colorScheme.primaryContainer,
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => _showContactModal(context, ad.account!.phoneNumber),
               child: Text(AppLocalizations.of(context)!.contactSeller),
             ),
           ),
@@ -321,5 +322,91 @@ class AdPageView extends StatelessWidget {
       default:
         return Container();
     }
+  }
+
+  void _showContactModal(BuildContext context, String? phoneNumber) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          width: MediaQuery.of(context).size.width - 40,
+          height: (phoneNumber != null && phoneNumber.isNotEmpty) ? 225 : 75,
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (phoneNumber != null && phoneNumber.isNotEmpty)
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Column(
+                          children: [
+                            Text(AppLocalizations.of(context)!.phoneNumber),
+                            Text(
+                              phoneNumber,
+                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (phoneNumber != null && phoneNumber.isNotEmpty)
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            foregroundColor: Theme.of(context).colorScheme.onPrimary),
+                        icon: const Icon(Icons.call),
+                        label: const Text('Call'),
+                        onPressed: () {
+                          launchUrlString("tel://$phoneNumber");
+                          Navigator.pop(context);
+                        },
+                      ),
+                    if (phoneNumber != null && phoneNumber.isNotEmpty)
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            foregroundColor: Theme.of(context).colorScheme.onPrimary),
+                        icon: const Icon(Icons.message),
+                        label: const Text('Send SMS'),
+                        onPressed: () {
+                          launchUrlString("sms://$phoneNumber");
+                          Navigator.pop(context);
+                        },
+                      ),
+                    if (phoneNumber == null || phoneNumber.isEmpty) const SizedBox(height: 10),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          foregroundColor: Theme.of(context).colorScheme.onPrimary),
+                      icon: const Icon(Icons.contact_page),
+                      label: const Text('Contact in App'),
+                      onPressed: () {
+                        // Implement contact in app functionality here
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
