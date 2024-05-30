@@ -3,10 +3,12 @@ import 'package:data/entities_impl/wrappers/document_reference_entity_impl.dart'
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/favorites_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
+import 'package:domain/entities/wrappers/query_document_snapshot_entity.dart';
 import 'package:domain/entities/wrappers/query_snapshot_entity.dart';
 
 import '../ad_enitity_impl.dart';
 import '../favorites_entity_impl.dart';
+import 'query_document_snapshot_entity_impl.dart';
 
 class QuerySnapshotEntityImpl extends QuerySnapshotEntity {
   final QuerySnapshot<Object?> ref;
@@ -38,5 +40,10 @@ class QuerySnapshotEntityImpl extends QuerySnapshotEntity {
       allItems.add(document);
     }
     return allItems;
+  }
+
+  @override
+  List<QueryDocumentSnapshotEntity> docs() {
+    return ref.docs.map((doc) => QueryDocumentSnapshotEntityImpl(ref: doc)).toList();
   }
 }

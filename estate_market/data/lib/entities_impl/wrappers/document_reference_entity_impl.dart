@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data/entities_impl/wrappers/collection_reference_entity_impl.dart';
+import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/document_reference_entity.dart';
 
 class DocumentReferenceEntityImpl implements DocumentReferenceEntity {
@@ -26,4 +28,10 @@ class DocumentReferenceEntityImpl implements DocumentReferenceEntity {
       }
     });
   }
+
+  @override
+  CollectionReferenceEntity collection(String path) => CollectionReferenceEntityImpl.fromRef(ref: ref.collection(path));
+
+  @override
+  String get id => ref.id;
 }

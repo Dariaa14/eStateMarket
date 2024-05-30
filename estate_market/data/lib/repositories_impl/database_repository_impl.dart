@@ -3,6 +3,7 @@ import 'package:data/entities_impl/apartment_entity_impl.dart';
 import 'package:data/entities_impl/deposit_entity_impl.dart';
 import 'package:data/entities_impl/garage_entity_impl.dart';
 import 'package:data/entities_impl/house_entity_impl.dart';
+import 'package:data/entities_impl/message_entity_impl.dart';
 import 'package:data/entities_impl/terrain_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/collection_reference_entity_impl.dart';
 import 'package:domain/entities/account_entity.dart';
@@ -11,6 +12,7 @@ import 'package:domain/entities/apartment_entity.dart';
 import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/house_entity.dart';
+import 'package:domain/entities/message_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
@@ -408,5 +410,18 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
         isNegotiable: isNegotiable,
         constructionYear: constructionYear);
     await previousProperty.set((terrain as TerrainEntityImpl).toJson());
+  }
+
+  @override
+  Future<void> insertMessage(
+      {required AccountEntity sender, required AccountEntity receiver, required String message}) async {
+    CollectionReferenceEntity messages = CollectionReferenceEntityImpl(collection: Collections.chats);
+    final users = [sender.email, receiver.email]..sort();
+    final chatDocument = '${users[0]}_${users[1]}';
+    final messageRef = messages.doc(chatDocument).collection('messages');
+    final currentTime = DateTime.timestamp();
+    MessageEntity messageEntity =
+        MessageEntityImpl(message: message, isSenderFirst: sender.email == users[0], timestamp: currentTime);
+    await messageRef.doc(currentTime.toIso8601String()).set((messageEntity as MessageEntityImpl).toJson());
   }
 }

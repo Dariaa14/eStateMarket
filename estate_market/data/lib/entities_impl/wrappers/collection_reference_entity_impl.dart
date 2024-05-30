@@ -23,6 +23,8 @@ class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
     ref = _getCollection(collection, withConverter: withConverter);
   }
 
+  CollectionReferenceEntityImpl.fromRef({required this.ref});
+
   @override
   Future<DocumentReferenceEntity> add(Map<String, dynamic> map) async {
     DocumentReference docRef = await ref.add(map);
@@ -107,11 +109,18 @@ class CollectionReferenceEntityImpl extends CollectionReferenceEntity {
               );
         }
         return FirebaseFirestore.instance.collection('landmarks');
+      case Collections.chats:
+        return FirebaseFirestore.instance.collection('chats');
     }
   }
 
   @override
   Stream<QuerySnapshotEntity> snapshots() {
     return ref.snapshots().map((querySnapshot) => QuerySnapshotEntityImpl(ref: querySnapshot));
+  }
+
+  @override
+  DocumentReferenceEntity doc(String path) {
+    return DocumentReferenceEntityImpl(ref: ref.doc(path));
   }
 }

@@ -316,4 +316,9 @@ class DatabaseUseCase {
   Future<void> removeAd({required AdEntity ad}) async {
     await _databaseRepository.removeAd(ad: ad);
   }
+
+  Future<void> insertMessage(
+      {required AccountEntity sender, required AccountEntity receiver, required String message}) async {
+    await _databaseRepository.insertMessage(sender: sender, receiver: receiver, message: message);
+  }
 }

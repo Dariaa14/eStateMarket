@@ -11,4 +11,19 @@ class MessageEntityImpl implements MessageEntity {
   DateTime timestamp;
 
   MessageEntityImpl({required this.message, required this.isSenderFirst, required this.timestamp});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'message': message,
+      'isSenderFirst': isSenderFirst,
+    };
+  }
+
+  factory MessageEntityImpl.fromJson(Map<String, Object?> json) {
+    return MessageEntityImpl(
+      message: json['message'] as String,
+      isSenderFirst: json['isSenderFirst'] as bool,
+      timestamp: DateTime.parse(json['timestamp'] as String),
+    );
+  }
 }
