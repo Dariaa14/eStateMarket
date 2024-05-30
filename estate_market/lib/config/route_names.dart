@@ -6,6 +6,7 @@ import 'package:estate_market/create_ad_page/create_ad_view.dart';
 import 'package:estate_market/filters_page/filters_page_view.dart';
 import 'package:estate_market/main_page/main_page_view.dart';
 import 'package:estate_market/map_page/map_page_view.dart';
+import 'package:estate_market/profile_page/subpages/conversations_page/conversations_page_view.dart';
 import 'package:estate_market/profile_page/subpages/my_ads_page/my_ads_view_page.dart';
 import 'package:estate_market/profile_page/subpages/edit_profile_page/edit_profile_page_view.dart';
 import 'package:estate_market/register_page/register_page_view.dart';
@@ -25,6 +26,7 @@ class RouteNames {
   static const String profilePage = '/profile';
   static const String editProfilePage = '/profile/editProfile';
   static const String myAdsPage = '/profile/myAds';
+  static const String conversations = '/profile/conversations';
 
   static const String favoritesPage = '/favorites';
 
@@ -64,6 +66,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return routeBuilder(FiltersPageView());
     case RouteNames.chatPage:
       return routeBuilder(ChatPageView(receiver: settings.arguments as AccountEntity));
+    case RouteNames.conversations:
+      return routeBuilder(const ConversationsPageView());
   }
   return null;
 }

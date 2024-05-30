@@ -6,6 +6,7 @@ import 'package:estate_market/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// REFRESH WHEN CHANGING CHAT WITH USER (probably change tuple of users in 2 controllers)
 class ChatPageView extends StatelessWidget {
   final AccountEntity receiver;
   final TextEditingController _controller = TextEditingController();

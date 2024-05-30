@@ -38,7 +38,9 @@ class ProfilePageView extends StatelessWidget {
           ProfileListTile(
             icon: Icons.chat_rounded,
             title: AppLocalizations.of(context)!.conversations,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, RouteNames.conversations);
+            },
           ),
           ProfileListTile(
             icon: Icons.edit,

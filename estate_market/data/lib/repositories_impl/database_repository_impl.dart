@@ -416,9 +416,13 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
   Future<void> insertMessage(
       {required AccountEntity sender, required AccountEntity receiver, required String message}) async {
     CollectionReferenceEntity messages = CollectionReferenceEntityImpl(collection: Collections.chats);
-    final users = [sender.email, receiver.email]..sort();
+    final users = [sender.email.trim(), receiver.email.trim()]..sort();
     final chatDocument = '${users[0]}_${users[1]}';
     final messageRef = messages.doc(chatDocument).collection('messages');
+
+    final chatDocRef = messages.doc(chatDocument);
+    await chatDocRef.set({'dummyField': true});
+
     final currentTime = DateTime.timestamp();
     MessageEntity messageEntity =
         MessageEntityImpl(message: message, isSenderFirst: sender.email == users[0], timestamp: currentTime);

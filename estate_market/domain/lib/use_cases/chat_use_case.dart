@@ -6,14 +6,21 @@ import 'package:rxdart/rxdart.dart';
 class ChatUseCase {
   final ChatRepository _chatRepository;
   final BehaviorSubject<List<MessageEntity>> _messagesController = BehaviorSubject();
+  final BehaviorSubject<List<String>> _usersController = BehaviorSubject();
 
   ChatUseCase({required ChatRepository chatRepository}) : _chatRepository = chatRepository {
     _messagesController.addStream(_chatRepository.getMessages());
+    _usersController.addStream(_chatRepository.getChatUsers());
   }
 
   Stream<List<MessageEntity>> get messagesStream => _messagesController.stream;
+  Stream<List<String>> get usersStream => _usersController.stream;
 
   void setChatUsers(AccountEntity sender, AccountEntity receiver) {
     _chatRepository.setChatUsers(sender, receiver);
+  }
+
+  void setCurrentUser(AccountEntity user) {
+    _chatRepository.setCurrentUser(user);
   }
 }

@@ -11,6 +11,7 @@ import '../entities_impl/wrappers/collection_reference_entity_impl.dart';
 
 class ChatRepositoryImpl implements ChatRepository {
   final _accountsController = StreamController<Tuple2<AccountEntity, AccountEntity>>.broadcast();
+  final _currentUserController = StreamController<AccountEntity>.broadcast();
 
   @override
   Stream<List<MessageEntity>> getMessages() {
@@ -33,8 +34,36 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
+  Stream<List<String>> getChatUsers() {
+    CollectionReferenceEntity chats =
+        CollectionReferenceEntityImpl(collection: Collections.chats, withConverter: false);
+    return _currentUserController.stream.asyncExpand((currentUser) async* {
+      final documents = await chats.getDocuments();
+
+      final otherUsers = <String>{};
+      for (var doc in documents) {
+        final docId = doc.id;
+        final emails = docId.split('_');
+        if (emails.contains(currentUser.email)) {
+          final otherEmail = emails.firstWhere((email) => email != currentUser.email);
+
+          otherUsers.add(otherEmail);
+        }
+      }
+
+      yield otherUsers.toList();
+    });
+  }
+
+  @override
   void setChatUsers(AccountEntity sender, AccountEntity receiver) {
     _accountsController.add(Tuple2(sender, receiver));
+    setCurrentUser(sender);
+  }
+
+  @override
+  void setCurrentUser(AccountEntity user) {
+    _currentUserController.add(user);
   }
 
   String _getChatDocumentId(String email1, String email2) {
