@@ -283,19 +283,20 @@ class AdPageView extends StatelessWidget {
             ],
           ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 60,
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).colorScheme.primaryContainer,
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () => _showContactModal(context, ad.account!),
-              child: Text(AppLocalizations.of(context)!.contactSeller),
+        if (mainBloc.currentAccount == null || mainBloc.currentAccount!.email != ad.account!.email)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 60,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).colorScheme.primaryContainer,
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () => _showContactModal(context, ad.account!),
+                child: Text(AppLocalizations.of(context)!.contactSeller),
+              ),
             ),
           ),
-        ),
       ]),
     );
   }
@@ -397,7 +398,6 @@ class AdPageView extends StatelessWidget {
                       icon: const Icon(Icons.contact_page),
                       label: Text(AppLocalizations.of(context)!.contactInApp),
                       onPressed: () {
-                        // Add check if user is himself
                         final main.MainPageBloc mainBloc = BlocProvider.of<main.MainPageBloc>(context);
                         if (mainBloc.state.isUserLoggedIn) {
                           Navigator.pushNamed(context, RouteNames.chatPage, arguments: account);

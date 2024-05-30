@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/entities/ad_entity.dart';
+import 'package:domain/entities/account_entity.dart';
 import 'package:domain/use_cases/account_use_case.dart';
 import 'package:domain/use_cases/database_use_case.dart';
 import 'package:domain/use_cases/filter_use_case.dart';
@@ -110,4 +111,6 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     }
     return false;
   }
+
+  AccountEntity? get currentAccount => _accountUseCase.currentAccount;
 }
