@@ -69,7 +69,7 @@ class FiltersPageView extends StatelessWidget {
               const SizedBox(height: 16.0),
 
               // Listing type
-              Text('${AppLocalizations.of(context)!.listingType}*'),
+              Text('${AppLocalizations.of(context)!.listingType}:'),
 
               BlocBuilder<MainPageBloc, MainPageState>(
                 bloc: mainBloc,

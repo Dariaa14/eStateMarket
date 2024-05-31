@@ -608,6 +608,16 @@
 
     "contactInApp": "Contact in app",
     "@contactInApp":{
-        "description": "contactInApp"
+        "description": "Contact In app"
+    },
+
+    "chatWith": "Chat with",
+    "@chatWith":{
+        "description": "Chat with"
+    },
+
+    "typeMessage": "Type a message...",
+    "@typeMessage":{
+        "description": "Type a message in chat"
     }
 }

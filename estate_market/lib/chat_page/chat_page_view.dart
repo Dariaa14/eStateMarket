@@ -5,6 +5,7 @@ import 'package:estate_market/main_page/main_page_bloc.dart';
 import 'package:estate_market/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatPageView extends StatelessWidget {
   final AccountEntity receiver;
@@ -62,7 +63,7 @@ class ChatPageView extends StatelessWidget {
                     Expanded(
                       child: CustomTextfield(
                         controller: _controller,
-                        hintText: 'Type a message...',
+                        hintText: AppLocalizations.of(context)!.typeMessage,
                       ),
                     ),
                     IconButton(

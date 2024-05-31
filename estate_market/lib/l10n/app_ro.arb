@@ -122,5 +122,7 @@
     "to": "Până la",
     "call": "Sună",
     "sendSms": "Trimite SMS",
-    "contactInApp": "Contactează în aplicație"
+    "contactInApp": "Contactează în aplicație",
+    "chatWith": "Vorbește cu",
+    "typeMessage": "Scrie un mesaj..."
 }

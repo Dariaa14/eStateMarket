@@ -1,7 +1,7 @@
 import 'package:estate_market/config/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'conversations_page_bloc.dart';
 
 class ConversationsPageView extends StatelessWidget {
@@ -12,7 +12,7 @@ class ConversationsPageView extends StatelessWidget {
     final ConversationsPageBloc conversationsBloc = ConversationsPageBloc();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Conversations'),
+        title: Text(AppLocalizations.of(context)!.conversations),
         backgroundColor: Theme.of(context).colorScheme.surface,
         leading: IconButton(
           onPressed: () {
@@ -35,7 +35,7 @@ class ConversationsPageView extends StatelessWidget {
                 return ListTile(
                   tileColor: Theme.of(context).colorScheme.surface,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                  title: Text('Chat with ${state.users[index].email}'),
+                  title: Text('${AppLocalizations.of(context)!.chatWith} ${state.users[index].email}'),
                   onTap: () {
                     Navigator.pushNamed(context, RouteNames.chatPage, arguments: state.users[index]);
                   },
