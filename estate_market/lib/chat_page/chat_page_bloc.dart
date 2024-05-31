@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/account_entity.dart';
@@ -15,17 +17,21 @@ class ChatPageBloc extends Bloc<ChatPageEvent, ChatPageState> {
   final AccountUseCase _accountUseCase = sl.get<AccountUseCase>();
   final ChatUseCase _chatUseCase = sl.get<ChatUseCase>();
 
+  late StreamSubscription<List<MessageEntity>> _messagesSubscription;
+
   ChatPageBloc() : super(const ChatPageState()) {
     on<InitChatPageEvent>(_initChatPageEventHandler);
     on<MessageSentEvent>(_messageSentEventHandler);
+
     on<SetMessagesEvent>(_setMessagesEventHandler);
   }
 
   void _initChatPageEventHandler(InitChatPageEvent event, Emitter<ChatPageState> emit) {
-    _chatUseCase.messagesStream.listen((messages) {
+    _messagesSubscription = _chatUseCase.messagesStream.listen((messages) {
       add(SetMessagesEvent(messages: messages));
     });
-    _chatUseCase.setChatUsers(_accountUseCase.currentAccount!, event.receiver);
+    _chatUseCase.setCurrentUser(_accountUseCase.currentAccount!);
+    _chatUseCase.setOtherUser(event.receiver);
   }
 
   void _messageSentEventHandler(MessageSentEvent event, Emitter<ChatPageState> emit) async {
@@ -35,5 +41,12 @@ class ChatPageBloc extends Bloc<ChatPageEvent, ChatPageState> {
 
   void _setMessagesEventHandler(SetMessagesEvent event, Emitter<ChatPageState> emit) {
     emit(state.copyWith(messages: event.messages));
+  }
+
+  @override
+  Future<void> close() async {
+    _chatUseCase.dispose();
+    _messagesSubscription.cancel();
+    super.close();
   }
 }

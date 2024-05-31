@@ -5,6 +5,6 @@ abstract class ChatRepository {
   Stream<List<MessageEntity>> getMessages();
   Stream<List<String>> getChatUsers();
 
-  void setChatUsers(AccountEntity sender, AccountEntity receiver);
   void setCurrentUser(AccountEntity user);
+  void setOtherUser(AccountEntity user);
 }

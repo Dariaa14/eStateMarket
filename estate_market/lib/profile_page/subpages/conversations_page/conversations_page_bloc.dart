@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/use_cases/account_use_case.dart';
@@ -11,13 +13,15 @@ class ConversationsPageBloc extends Bloc<ConversationsPageEvent, ConversationsPa
   final ChatUseCase _chatUseCase = sl.get<ChatUseCase>();
   final AccountUseCase _accountUseCase = sl.get<AccountUseCase>();
 
+  late StreamSubscription<List<String>> _usersSubscription;
+
   ConversationsPageBloc() : super(const ConversationsPageState()) {
     on<InitConversationsPageEvent>(_onInitConversationsPageEvent);
     on<SetChatUsersEvent>(_onSetChatUsersEvent);
   }
 
   void _onInitConversationsPageEvent(InitConversationsPageEvent event, Emitter<ConversationsPageState> emit) {
-    _chatUseCase.usersStream.listen((users) {
+    _usersSubscription = _chatUseCase.usersStream.listen((users) {
       add(SetChatUsersEvent(users: users));
     });
     _chatUseCase.setCurrentUser(_accountUseCase.currentAccount!);
@@ -25,5 +29,11 @@ class ConversationsPageBloc extends Bloc<ConversationsPageEvent, ConversationsPa
 
   void _onSetChatUsersEvent(SetChatUsersEvent event, Emitter<ConversationsPageState> emit) {
     emit(state.copyWith(users: event.users));
+  }
+
+  @override
+  Future<void> close() async {
+    _usersSubscription.cancel();
+    super.close();
   }
 }

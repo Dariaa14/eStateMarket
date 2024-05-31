@@ -16,11 +16,16 @@ class ChatUseCase {
   Stream<List<MessageEntity>> get messagesStream => _messagesController.stream;
   Stream<List<String>> get usersStream => _usersController.stream;
 
-  void setChatUsers(AccountEntity sender, AccountEntity receiver) {
-    _chatRepository.setChatUsers(sender, receiver);
+  void setOtherUser(AccountEntity user) {
+    _chatRepository.setOtherUser(user);
   }
 
   void setCurrentUser(AccountEntity user) {
     _chatRepository.setCurrentUser(user);
+  }
+
+  void dispose() {
+    _messagesController.close();
+    _usersController.close();
   }
 }

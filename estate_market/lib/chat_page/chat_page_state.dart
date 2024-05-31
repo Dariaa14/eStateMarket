@@ -6,7 +6,9 @@ class ChatPageState extends Equatable {
   const ChatPageState({this.messages = const []});
 
   ChatPageState copyWith({List<MessageEntity>? messages}) {
-    return ChatPageState(messages: messages ?? this.messages);
+    return ChatPageState(
+      messages: messages ?? this.messages,
+    );
   }
 
   @override
