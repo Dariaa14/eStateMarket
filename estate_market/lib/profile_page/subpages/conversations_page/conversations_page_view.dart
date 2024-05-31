@@ -29,15 +29,20 @@ class ConversationsPageView extends StatelessWidget {
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: state.users.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('Chat with ${state.users[index]}'),
+                  tileColor: Theme.of(context).colorScheme.surface,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                  title: Text('Chat with ${state.users[index].email}'),
                   onTap: () {
-                    Navigator.pushNamed(context, RouteNames.chatPage);
+                    Navigator.pushNamed(context, RouteNames.chatPage, arguments: state.users[index]);
                   },
                 );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 10);
               },
             ),
           );

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
+import 'package:domain/entities/account_entity.dart';
 import 'package:domain/use_cases/account_use_case.dart';
 import 'package:domain/use_cases/chat_use_case.dart';
 import 'package:equatable/equatable.dart';
@@ -13,7 +14,7 @@ class ConversationsPageBloc extends Bloc<ConversationsPageEvent, ConversationsPa
   final ChatUseCase _chatUseCase = sl.get<ChatUseCase>();
   final AccountUseCase _accountUseCase = sl.get<AccountUseCase>();
 
-  late StreamSubscription<List<String>> _usersSubscription;
+  late StreamSubscription<List<AccountEntity>> _usersSubscription;
 
   ConversationsPageBloc() : super(const ConversationsPageState()) {
     on<InitConversationsPageEvent>(_onInitConversationsPageEvent);

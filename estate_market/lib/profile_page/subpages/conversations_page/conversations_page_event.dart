@@ -5,7 +5,7 @@ abstract class ConversationsPageEvent {}
 class InitConversationsPageEvent extends ConversationsPageEvent {}
 
 class SetChatUsersEvent extends ConversationsPageEvent {
-  final List<String> users;
+  final List<AccountEntity> users;
 
   SetChatUsersEvent({required this.users});
 }

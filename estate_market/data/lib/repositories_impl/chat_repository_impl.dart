@@ -38,24 +38,28 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Stream<List<String>> getChatUsers() {
+  Stream<List<AccountEntity>> getChatUsers() {
     CollectionReferenceEntity chats =
         CollectionReferenceEntityImpl(collection: Collections.chats, withConverter: false);
-    return _currentUserController.stream.asyncExpand((currentUser) async* {
+    CollectionReferenceEntity accounts = CollectionReferenceEntityImpl(collection: Collections.accounts);
+
+    return _currentUserController.stream.asyncMap((currentUser) async {
       final documents = await chats.getDocuments();
 
-      final otherUsers = <String>{};
+      final List<AccountEntity> otherUsers = [];
+
       for (var doc in documents) {
         final docId = doc.id;
         final emails = docId.split('_');
         if (emails.contains(currentUser.email)) {
           final otherEmail = emails.firstWhere((email) => email != currentUser.email);
-
-          otherUsers.add(otherEmail);
+          final account =
+              (await accounts.where('email', WhereOperations.isEqualTo, otherEmail).get<AccountEntity>()).first;
+          otherUsers.add(account);
         }
       }
 
-      yield otherUsers.toList();
+      return otherUsers;
     });
   }
 
