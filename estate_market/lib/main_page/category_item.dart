@@ -26,13 +26,34 @@ class CategoryItem extends StatelessWidget {
               height: 70,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Theme.of(context).colorScheme.primaryContainer,
+                color: Theme.of(context).colorScheme.surface,
               ),
+              child: _getImageForCategory(category),
             ),
             Text(category != null ? adCategoryTranslate(category!, context) : AppLocalizations.of(context)!.any),
           ],
         ),
       ),
     );
+  }
+
+  _getImageForCategory(AdCategory? category) {
+    if (category == null) {
+      return Image.asset('assets/Any.png');
+    }
+    switch (category) {
+      case AdCategory.apartament:
+        return Image.asset('assets/Apartment.png');
+      case AdCategory.deposit:
+        return Image.asset('assets/Deposit.png');
+      case AdCategory.garage:
+        return Image.asset('assets/Garage.png');
+      case AdCategory.house:
+        return Image.asset('assets/House.png');
+      case AdCategory.terrain:
+        return Image.asset('assets/Terrain.png');
+      default:
+        return Image.asset('assets/Any.png');
+    }
   }
 }
