@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:data/entities_impl/wrappers/map_controller_entity_impl.dart';
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
@@ -7,6 +10,7 @@ import 'package:domain/repositories/map_repository.dart';
 import 'package:gem_kit/d3Scene.dart';
 
 import '../entities_impl/wrappers/collection_reference_entity_impl.dart';
+import '../entities_impl/wrappers/document_reference_entity_impl.dart';
 
 class MapRepositoryImpl implements MapRepository {
   final MapControllerEntity mapController;
@@ -67,8 +71,44 @@ class MapRepositoryImpl implements MapRepository {
     mapController.activateHighlight(landmarks);
   }
 
+  @override
+  Future<AdEntity?> getAdOfLandmark(LandmarkEntity landmark) async {
+    CollectionReferenceEntity landmarks = CollectionReferenceEntityImpl(collection: Collections.landmarks);
+    final landmarkDocument = await landmarks.getDocuments();
+    final landmarkEntities = await _getLandmarksFromDatabase();
+
+    for (int index = 0; index < landmarkEntities.length; index++) {
+      final distance = _calculateDistance(landmark.getCoordinates(), landmarkEntities[index].getCoordinates());
+      if (distance < 100) {
+        CollectionReferenceEntity ads = CollectionReferenceEntityImpl(collection: Collections.ad);
+        final ad = (await ads
+                .where(
+                    'landmark', WhereOperations.isEqualTo, (landmarkDocument[index] as DocumentReferenceEntityImpl).ref)
+                .get<AdEntity>())
+            .first;
+        return ad;
+      }
+    }
+
+    return null;
+  }
+
   Future<List<LandmarkEntity>> _getLandmarksFromDatabase() async {
     CollectionReferenceEntity landmarks = CollectionReferenceEntityImpl(collection: Collections.landmarks);
     return await landmarks.get<LandmarkEntity>();
+  }
+
+  double _calculateDistance(CoordinatesEntity coords1, CoordinatesEntity coords2) {
+    const R = 6371e3;
+    final phi1 = coords1.getLatitude()! * pi / 180;
+    final phi2 = coords2.getLatitude()! * pi / 180;
+    final deltaPhi = (coords2.getLatitude()! - coords1.getLatitude()!) * pi / 180;
+    final deltaLambda = (coords2.getLongitude()! - coords1.getLongitude()!) * pi / 180;
+
+    final a =
+        sin(deltaPhi / 2) * sin(deltaPhi / 2) + cos(phi1) * cos(phi2) * sin(deltaLambda / 2) * sin(deltaLambda / 2);
+    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    return R * c;
   }
 }

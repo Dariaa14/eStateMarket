@@ -16,6 +16,12 @@ class SelectedLandmarkUpdateEvent extends MapPageEvent {
   SelectedLandmarkUpdateEvent({required this.landmark});
 }
 
+class SelectedAdUpdateEvent extends MapPageEvent {
+  final AdEntity? ad;
+
+  SelectedAdUpdateEvent({required this.ad});
+}
+
 class CenterOnLandmarkEvent extends MapPageEvent {
   final LandmarkEntity landmark;
 

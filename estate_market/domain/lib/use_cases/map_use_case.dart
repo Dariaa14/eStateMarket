@@ -1,3 +1,4 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 
 import '../entities/wrappers/landmark_entity.dart';
@@ -30,5 +31,9 @@ class MapUseCase {
 
   Future<void> highlightAllProperties() {
     return _mapRepository.highlightAllProperties();
+  }
+
+  Future<AdEntity?> getAdOfLandmark(LandmarkEntity landmark) {
+    return _mapRepository.getAdOfLandmark(landmark);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 
 import '../entities/wrappers/landmark_entity.dart';
@@ -13,4 +14,6 @@ abstract class MapRepository {
   void deactivateAllHighlights();
 
   Future<void> highlightAllProperties();
+
+  Future<AdEntity?> getAdOfLandmark(LandmarkEntity landmark);
 }

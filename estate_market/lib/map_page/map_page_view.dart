@@ -115,6 +115,21 @@ class MapPageView extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+              if (state.ad != null && type == MapType.seeProperties)
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      state.ad!.title,
+                    ),
+                  ),
                 )
             ],
           );

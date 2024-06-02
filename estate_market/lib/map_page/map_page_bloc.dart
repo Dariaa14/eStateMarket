@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
+import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/position_entity.dart';
 import 'package:domain/use_cases/location_use_case.dart';
 import 'package:domain/use_cases/map_use_case.dart';
@@ -29,6 +30,8 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     on<InitPropertiesEvent>(_initPropertiesEventHandler);
 
     on<SelectedLandmarkUpdateEvent>(_selectedLandmarkUpdateEventHandler);
+    on<SelectedAdUpdateEvent>(_selectedAdUpdateEventHandler);
+
     on<DeactivateLandmarkHightlightEvent>(_deactivateLandmarkHightlightEventHandler);
     on<CenterOnLandmarkEvent>(_centerOnLandmarkEventHandler);
 
@@ -60,6 +63,17 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     _mapUseCase = sl.get<MapUseCase>();
     add(InitializeLocationEvent());
     _mapUseCase!.highlightAllProperties();
+
+    _mapUseCase!.registerMapGestureCallbacks((landmark) async {
+      final AdEntity? ad = await _mapUseCase!.getAdOfLandmark(landmark);
+      if (ad != null) {
+        add(SelectedAdUpdateEvent(ad: ad));
+      }
+    });
+  }
+
+  _selectedAdUpdateEventHandler(SelectedAdUpdateEvent event, Emitter<MapPageState> emit) {
+    emit(state.copyWith(ad: event.ad));
   }
 
   _centerOnLandmarkEventHandler(CenterOnLandmarkEvent event, Emitter<MapPageState> emit) {
