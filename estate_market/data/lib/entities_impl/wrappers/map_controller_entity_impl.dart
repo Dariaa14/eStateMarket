@@ -75,12 +75,15 @@ class MapControllerEntityImpl implements MapControllerEntity {
   }
 
   @override
-  void activateHighlight(LandmarkEntity landmark) {
+  void activateHighlight(List<LandmarkEntity> landmarks) {
     final landmarksToHighlight = LandmarkList.create();
-    final gemLandmark = (landmark as LandmarkEntityImpl).ref;
-    gemLandmark.setImageFromIconId(GemIcon.Search_Results_Pin);
 
-    landmarksToHighlight.push_back(gemLandmark);
+    for (final landmark in landmarks) {
+      final gemLandmark = (landmark as LandmarkEntityImpl).ref;
+      gemLandmark.setImageFromIconId(GemIcon.Search_Results_Pin);
+
+      landmarksToHighlight.push_back(gemLandmark);
+    }
 
     ref.activateHighlight(landmarksToHighlight);
   }

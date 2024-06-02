@@ -18,6 +18,6 @@ abstract class MapControllerEntity {
 
   void centerOnCoordinates(CoordinatesEntity coordinates);
 
-  void activateHighlight(LandmarkEntity landmark);
+  void activateHighlight(List<LandmarkEntity> landmarks);
   void deactivateAllHighlights();
 }

@@ -11,4 +11,6 @@ abstract class MapRepository {
 
   void activateHighlight(LandmarkEntity landmark);
   void deactivateAllHighlights();
+
+  Future<void> highlightAllProperties();
 }

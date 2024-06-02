@@ -8,6 +8,8 @@ class FollowPositionEvent extends MapPageEvent {}
 
 class InitAddressSelectionEvent extends MapPageEvent {}
 
+class InitPropertiesEvent extends MapPageEvent {}
+
 class SelectedLandmarkUpdateEvent extends MapPageEvent {
   final LandmarkEntity? landmark;
 

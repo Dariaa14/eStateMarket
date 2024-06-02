@@ -32,4 +32,5 @@ abstract class AdEntity {
   Future<void> setReferences();
 
   DocumentReferenceEntity get propertyDocument;
+  DocumentReferenceEntity get landmarkDocument;
 }

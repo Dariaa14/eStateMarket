@@ -249,6 +249,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       await favorites.delete();
     }
     await ad.propertyDocument.delete();
+    await ad.landmarkDocument.delete();
     await adDocument.first.delete();
   }
 

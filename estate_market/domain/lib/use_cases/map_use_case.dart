@@ -27,4 +27,8 @@ class MapUseCase {
   void deactivateAllHighlights() {
     _mapRepository.deactivateAllHighlights();
   }
+
+  Future<void> highlightAllProperties() {
+    return _mapRepository.highlightAllProperties();
+  }
 }

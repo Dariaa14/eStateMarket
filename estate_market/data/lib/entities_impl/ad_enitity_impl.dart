@@ -153,4 +153,7 @@ class AdEntityImpl implements AdEntity {
 
   @override
   DocumentReferenceEntity get propertyDocument => _propertyReference!;
+
+  @override
+  DocumentReferenceEntity get landmarkDocument => _landmarkReference!;
 }

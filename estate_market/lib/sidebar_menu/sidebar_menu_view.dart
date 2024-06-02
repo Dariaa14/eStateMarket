@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main_page/main_page_bloc.dart';
+import '../map_page/map_page_view.dart';
 
 class SidebarMenu extends StatelessWidget {
   const SidebarMenu({super.key});
@@ -18,6 +19,14 @@ class SidebarMenu extends StatelessWidget {
           children: [
             DrawerHeader(
               child: Image.asset('assets/icon/icon_with_title.png'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.explore),
+              title: Text(AppLocalizations.of(context)!.explore),
+              onTap: () {
+                final arguments = {'type': MapType.seeProperties};
+                Navigator.pushNamed(context, RouteNames.mapPage, arguments: arguments);
+              },
             ),
             ListTile(
               leading: const Icon(Icons.favorite),

@@ -300,7 +300,7 @@ class CreateAdView extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          final arguments = {'type': MapType.seeAddress};
+                          final arguments = {'type': MapType.setAddress};
                           Navigator.pushNamed(context, RouteNames.mapPage, arguments: arguments).then((value) {
                             if (value != null) createAdBloc.add(SetLandmarkEvent(landmark: value as LandmarkEntity));
                           });

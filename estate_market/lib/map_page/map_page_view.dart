@@ -25,6 +25,7 @@ class MapPageView extends StatelessWidget {
         mapBloc.add(InitViewLandmarkEvent(landmark: landmark!));
         break;
       case MapType.seeProperties:
+        mapBloc.add(InitPropertiesEvent());
         break;
     }
   }
@@ -85,7 +86,7 @@ class MapPageView extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (state.landmark != null)
+              if (state.landmark != null && type == MapType.setAddress)
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(

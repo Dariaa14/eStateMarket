@@ -1,9 +1,12 @@
 import 'package:data/entities_impl/wrappers/map_controller_entity_impl.dart';
+import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/entities/wrappers/map_controller_entity.dart';
 import 'package:domain/repositories/map_repository.dart';
 import 'package:gem_kit/d3Scene.dart';
+
+import '../entities_impl/wrappers/collection_reference_entity_impl.dart';
 
 class MapRepositoryImpl implements MapRepository {
   final MapControllerEntity mapController;
@@ -49,11 +52,23 @@ class MapRepositoryImpl implements MapRepository {
 
   @override
   void activateHighlight(LandmarkEntity landmark) {
-    mapController.activateHighlight(landmark);
+    mapController.activateHighlight([landmark]);
   }
 
   @override
   void deactivateAllHighlights() {
     mapController.deactivateAllHighlights();
+  }
+
+  @override
+  Future<void> highlightAllProperties() async {
+    final landmarks = await _getLandmarksFromDatabase();
+
+    mapController.activateHighlight(landmarks);
+  }
+
+  Future<List<LandmarkEntity>> _getLandmarksFromDatabase() async {
+    CollectionReferenceEntity landmarks = CollectionReferenceEntityImpl(collection: Collections.landmarks);
+    return await landmarks.get<LandmarkEntity>();
   }
 }

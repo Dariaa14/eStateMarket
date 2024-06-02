@@ -26,6 +26,7 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
 
     on<InitAddressSelectionEvent>(_initAddressSelectionEventHandler);
     on<InitViewLandmarkEvent>(_initViewLandmarkEventHandler);
+    on<InitPropertiesEvent>(_initPropertiesEventHandler);
 
     on<SelectedLandmarkUpdateEvent>(_selectedLandmarkUpdateEventHandler);
     on<DeactivateLandmarkHightlightEvent>(_deactivateLandmarkHightlightEventHandler);
@@ -53,6 +54,12 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     add(InitializeLocationEvent());
     add(CenterOnLandmarkEvent(landmark: event.landmark));
     add(HighlightLandmarkEvent(landmark: event.landmark));
+  }
+
+  _initPropertiesEventHandler(InitPropertiesEvent event, Emitter<MapPageState> emit) {
+    _mapUseCase = sl.get<MapUseCase>();
+    add(InitializeLocationEvent());
+    _mapUseCase!.highlightAllProperties();
   }
 
   _centerOnLandmarkEventHandler(CenterOnLandmarkEvent event, Emitter<MapPageState> emit) {
