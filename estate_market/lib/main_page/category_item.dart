@@ -39,21 +39,21 @@ class CategoryItem extends StatelessWidget {
 
   _getImageForCategory(AdCategory? category) {
     if (category == null) {
-      return Image.asset('assets/Any.png');
+      return Image.asset('assets/icon/Any.png');
     }
     switch (category) {
       case AdCategory.apartament:
-        return Image.asset('assets/Apartment.png');
+        return Image.asset('assets/icon/Apartment.png');
       case AdCategory.deposit:
-        return Image.asset('assets/Deposit.png');
+        return Image.asset('assets/icon/Deposit.png');
       case AdCategory.garage:
-        return Image.asset('assets/Garage.png');
+        return Image.asset('assets/icon/Garage.png');
       case AdCategory.house:
-        return Image.asset('assets/House.png');
+        return Image.asset('assets/icon/House.png');
       case AdCategory.terrain:
-        return Image.asset('assets/Terrain.png');
+        return Image.asset('assets/icon/Terrain.png');
       default:
-        return Image.asset('assets/Any.png');
+        return Image.asset('assets/icon/Any.png');
     }
   }
 }

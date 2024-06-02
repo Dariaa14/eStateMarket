@@ -57,7 +57,9 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
         canUserModifyAdd: canUserModifyAdd ?? false,
       ));
     case RouteNames.mapPage:
-      return routeBuilder(MapPageView(landmark: settings.arguments as LandmarkEntity?));
+      final landmark = (settings.arguments as Map<String, dynamic>)['landmark'] as LandmarkEntity?;
+      final type = (settings.arguments as Map<String, dynamic>)['type'] as MapType;
+      return routeBuilder(MapPageView(landmark: landmark, type: type));
     case RouteNames.favoritesPage:
       return routeBuilder(const FavoritesViewPage());
     case RouteNames.myAdsPage:

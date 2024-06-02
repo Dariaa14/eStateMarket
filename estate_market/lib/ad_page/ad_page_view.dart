@@ -22,6 +22,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../map_page/map_page_view.dart';
 import 'property_widgets/terrain_view.dart';
 
 class AdPageView extends StatelessWidget {
@@ -262,10 +263,11 @@ class AdPageView extends StatelessWidget {
                         ),
                         child: InkWell(
                           onTap: () {
+                            final arguments = {'landmark': ad.landmark, 'type': MapType.seeAddress};
                             Navigator.pushNamed(
                               context,
                               RouteNames.mapPage,
-                              arguments: ad.landmark!,
+                              arguments: arguments,
                             );
                           },
                           child: Center(

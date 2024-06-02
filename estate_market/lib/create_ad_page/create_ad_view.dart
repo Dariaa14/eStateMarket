@@ -18,6 +18,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../map_page/map_page_view.dart';
 import '../utils/translate_enums.dart';
 import 'create_ad_bloc.dart';
 import '../widgets/custom_textfield.dart';
@@ -299,7 +300,8 @@ class CreateAdView extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RouteNames.mapPage).then((value) {
+                          final arguments = {'type': MapType.seeAddress};
+                          Navigator.pushNamed(context, RouteNames.mapPage, arguments: arguments).then((value) {
                             if (value != null) createAdBloc.add(SetLandmarkEvent(landmark: value as LandmarkEntity));
                           });
                         },

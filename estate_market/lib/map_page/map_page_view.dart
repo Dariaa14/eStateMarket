@@ -7,18 +7,26 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'map_page_bloc.dart';
 
+enum MapType { setAddress, seeAddress, seeProperties }
+
 class MapPageView extends StatelessWidget {
+  final MapType type;
   final LandmarkEntity? landmark;
-  const MapPageView({super.key, this.landmark});
+  const MapPageView({super.key, this.landmark, required this.type});
 
   Future<void> onMapCreated(MapPageBloc mapBloc, GemMapController controller) async {
     diWithMapController(controller);
 
-    if (landmark == null) {
-      mapBloc.add(InitAddressSelectionEvent());
-      return;
+    switch (type) {
+      case MapType.setAddress:
+        mapBloc.add(InitAddressSelectionEvent());
+        break;
+      case MapType.seeAddress:
+        mapBloc.add(InitViewLandmarkEvent(landmark: landmark!));
+        break;
+      case MapType.seeProperties:
+        break;
     }
-    mapBloc.add(InitViewLandmarkEvent(landmark: landmark!));
   }
 
   @override
@@ -26,11 +34,11 @@ class MapPageView extends StatelessWidget {
     final MapPageBloc mapBloc = MapPageBloc();
     return Scaffold(
       appBar: AppBar(
-        title: Text((landmark == null) ? AppLocalizations.of(context)!.selectAddress : ''),
+        title: Text((type == MapType.setAddress) ? AppLocalizations.of(context)!.selectAddress : ''),
         centerTitle: true,
         automaticallyImplyLeading: true,
         actions: [
-          if (landmark == null)
+          if (type == MapType.setAddress)
             TextButton(
               onPressed: () => Navigator.pop(context, mapBloc.state.landmark),
               child: Text(AppLocalizations.of(context)!.save),
@@ -62,7 +70,7 @@ class MapPageView extends StatelessWidget {
                   ),
                 ),
               ),
-              if (landmark != null)
+              if (type == MapType.seeAddress)
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
