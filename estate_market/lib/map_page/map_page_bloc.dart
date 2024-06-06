@@ -73,6 +73,10 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
   }
 
   _selectedAdUpdateEventHandler(SelectedAdUpdateEvent event, Emitter<MapPageState> emit) {
+    if (event.ad == null) {
+      emit(state.copyWithNullAd());
+      return;
+    }
     emit(state.copyWith(ad: event.ad));
   }
 

@@ -619,5 +619,10 @@
     "typeMessage": "Type a message...",
     "@typeMessage":{
         "description": "Type a message in chat"
+    },
+
+    "goToAdPage": "Go to ad page",
+    "@goToAdPage":{
+        "description": "Go to ad page"
     }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gem_kit/d3Scene.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'ad_panel.dart';
 import 'map_page_bloc.dart';
 
 enum MapType { setAddress, seeAddress, seeProperties }
@@ -12,7 +13,8 @@ enum MapType { setAddress, seeAddress, seeProperties }
 class MapPageView extends StatelessWidget {
   final MapType type;
   final LandmarkEntity? landmark;
-  const MapPageView({super.key, this.landmark, required this.type});
+  final MapPageBloc mapBloc = MapPageBloc();
+  MapPageView({super.key, this.landmark, required this.type});
 
   Future<void> onMapCreated(MapPageBloc mapBloc, GemMapController controller) async {
     diWithMapController(controller);
@@ -32,7 +34,6 @@ class MapPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MapPageBloc mapBloc = MapPageBloc();
     return Scaffold(
       appBar: AppBar(
         title: Text((type == MapType.setAddress) ? AppLocalizations.of(context)!.selectAddress : ''),
@@ -119,17 +120,7 @@ class MapPageView extends StatelessWidget {
               if (state.ad != null && type == MapType.seeProperties)
                 Align(
                   alignment: Alignment.topCenter,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 16),
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      state.ad!.title,
-                    ),
-                  ),
+                  child: AdPanel(ad: state.ad!, mapBloc: mapBloc),
                 )
             ],
           );

@@ -124,5 +124,6 @@
     "sendSms": "Trimite SMS",
     "contactInApp": "Contactează în aplicație",
     "chatWith": "Vorbește cu",
-    "typeMessage": "Scrie un mesaj..."
+    "typeMessage": "Scrie un mesaj...",
+    "goToAdPage": "Mergi la pagina anunțului"
 }
