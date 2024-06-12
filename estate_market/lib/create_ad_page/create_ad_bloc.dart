@@ -157,7 +157,9 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     emit(state.copyWith(status: CreateAdStatus.loading));
     if (state.emptyFields.contains(CreateAdFields.title) ||
         state.emptyFields.contains(CreateAdFields.description) ||
-        state.emptyFields.contains(CreateAdFields.surface) ||
+        state.emptyFields.contains(CreateAdFields.surface) &&
+            state.currentCategory != AdCategory.house &&
+            state.currentCategory != AdCategory.deposit ||
         state.emptyFields.contains(CreateAdFields.price)) {
       emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
       return;

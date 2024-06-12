@@ -218,18 +218,21 @@ class CreateAdView extends StatelessWidget {
                     const SizedBox(height: 20.0),
 
                     // Surface textfield
-                    Text('${AppLocalizations.of(context)!.surface}*'),
-                    CustomTextfield(
-                      hintText: AppLocalizations.of(context)!.surfaceHintText,
-                      controller: _surfaceController,
-                      keyboardType: TextInputType.number,
-                      onChanged: (surface) => createAdBloc
-                          .add(SetEmptyFieldsEvent(field: CreateAdFields.surface, shouldRemove: surface.isNotEmpty)),
-                      showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.surface),
-                    ),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
+                    if (state.currentCategory != AdCategory.house && state.currentCategory != AdCategory.deposit)
+                      Text('${AppLocalizations.of(context)!.surface}*'),
+                    if (state.currentCategory != AdCategory.house && state.currentCategory != AdCategory.deposit)
+                      CustomTextfield(
+                        hintText: AppLocalizations.of(context)!.surfaceHintText,
+                        controller: _surfaceController,
+                        keyboardType: TextInputType.number,
+                        onChanged: (surface) => createAdBloc
+                            .add(SetEmptyFieldsEvent(field: CreateAdFields.surface, shouldRemove: surface.isNotEmpty)),
+                        showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.surface),
+                      ),
+                    if (state.currentCategory != AdCategory.house && state.currentCategory != AdCategory.deposit)
+                      const SizedBox(
+                        height: 16.0,
+                      ),
 
                     // Price textfield
                     Text('${AppLocalizations.of(context)!.price}*'),
