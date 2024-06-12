@@ -342,7 +342,6 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
   @override
   Future<void> updateHouseEntity(
       {required DocumentReferenceEntity previousProperty,
-      required double surface,
       required double price,
       required bool isNegotiable,
       required int? constructionYear,
@@ -353,7 +352,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required int numberOfBathrooms,
       required FurnishingLevel furnishingLevel}) async {
     HouseEntity house = HouseEntityImpl(
-        surface: surface,
+        surface: insideSurface + outsideSurface,
         price: price,
         isNegotiable: isNegotiable,
         numberOfRooms: numberOfRooms,
@@ -369,7 +368,6 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
   @override
   Future<void> updateDepositEntity(
       {required DocumentReferenceEntity previousProperty,
-      required double surface,
       required double price,
       required bool isNegotiable,
       required int? constructionYear,
@@ -379,7 +377,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required DepositType depositType,
       required int parkingSpaces}) async {
     DepositEntity deposit = DepositEntityImpl(
-      surface: surface,
+      surface: usableSurface + administrativeSurface,
       price: price,
       isNegotiable: isNegotiable,
       constructionYear: constructionYear,

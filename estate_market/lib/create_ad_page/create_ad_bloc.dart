@@ -291,7 +291,9 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
     emit(state.copyWith(status: CreateAdStatus.loading));
     if (state.emptyFields.contains(CreateAdFields.title) ||
         state.emptyFields.contains(CreateAdFields.description) ||
-        state.emptyFields.contains(CreateAdFields.surface) ||
+        state.emptyFields.contains(CreateAdFields.surface) &&
+            state.currentCategory != AdCategory.house &&
+            state.currentCategory != AdCategory.deposit ||
         state.emptyFields.contains(CreateAdFields.price)) {
       emit(state.copyWith(showErrors: true, status: CreateAdStatus.normal));
       return;
@@ -342,7 +344,6 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
           return;
         }
         await _databaseUseCase.updateHouseEntity(
-          surface: double.parse(event.surface),
           price: double.parse(event.price),
           isNegotiable: state.isNegotiable,
           constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
@@ -389,7 +390,6 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
           return;
         }
         await _databaseUseCase.updateDepositEntity(
-          surface: double.parse(event.surface),
           price: double.parse(event.price),
           isNegotiable: state.isNegotiable,
           constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),

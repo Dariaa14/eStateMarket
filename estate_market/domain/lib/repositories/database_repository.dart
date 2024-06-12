@@ -66,7 +66,6 @@ abstract class DatabaseRepository {
 
   Future<void> updateHouseEntity(
       {required DocumentReferenceEntity previousProperty,
-      required double surface,
       required double price,
       required bool isNegotiable,
       required int? constructionYear,
@@ -108,7 +107,6 @@ abstract class DatabaseRepository {
 
   Future<void> updateDepositEntity(
       {required DocumentReferenceEntity previousProperty,
-      required double surface,
       required double price,
       required bool isNegotiable,
       required int? constructionYear,

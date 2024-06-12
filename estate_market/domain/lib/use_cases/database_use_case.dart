@@ -239,7 +239,6 @@ class DatabaseUseCase {
 
   Future<void> updateHouseEntity({
     required DocumentReferenceEntity previousProperty,
-    required double surface,
     required double price,
     required bool isNegotiable,
     required int? constructionYear,
@@ -252,7 +251,6 @@ class DatabaseUseCase {
   }) async {
     await _databaseRepository.updateHouseEntity(
       previousProperty: previousProperty,
-      surface: surface,
       price: price,
       isNegotiable: isNegotiable,
       constructionYear: constructionYear,
@@ -267,7 +265,6 @@ class DatabaseUseCase {
 
   Future<void> updateDepositEntity({
     required DocumentReferenceEntity previousProperty,
-    required double surface,
     required double price,
     required bool isNegotiable,
     required int? constructionYear,
@@ -279,7 +276,6 @@ class DatabaseUseCase {
   }) async {
     await _databaseRepository.updateDepositEntity(
         previousProperty: previousProperty,
-        surface: surface,
         price: price,
         isNegotiable: isNegotiable,
         constructionYear: constructionYear,
