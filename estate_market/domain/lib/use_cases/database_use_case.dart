@@ -86,7 +86,6 @@ class DatabaseUseCase {
   }
 
   Future<DocumentReferenceEntity> insertHouseEntity({
-    required double surface,
     required double price,
     required bool isNegotiable,
     required int? constructionYear,
@@ -98,7 +97,6 @@ class DatabaseUseCase {
     required FurnishingLevel furnishingLevel,
   }) async {
     return await _databaseRepository.insertHouseEntity(
-      surface: surface,
       price: price,
       isNegotiable: isNegotiable,
       constructionYear: constructionYear,
@@ -112,7 +110,6 @@ class DatabaseUseCase {
   }
 
   Future<DocumentReferenceEntity> insertDepositEntity({
-    required double surface,
     required double price,
     required bool isNegotiable,
     required int? constructionYear,
@@ -123,7 +120,6 @@ class DatabaseUseCase {
     required int parkingSpaces,
   }) async {
     return await _databaseRepository.insertDepositEntity(
-        surface: surface,
         price: price,
         isNegotiable: isNegotiable,
         constructionYear: constructionYear,

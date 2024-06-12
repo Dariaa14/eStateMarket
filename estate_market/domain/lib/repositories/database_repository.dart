@@ -53,7 +53,6 @@ abstract class DatabaseRepository {
       required FurnishingLevel furnishingLevel});
 
   Future<DocumentReferenceEntity> insertHouseEntity({
-    required double surface,
     required double price,
     required bool isNegotiable,
     required int? constructionYear,
@@ -97,7 +96,6 @@ abstract class DatabaseRepository {
       required LandUseCategories landUseCategory});
 
   Future<DocumentReferenceEntity> insertDepositEntity({
-    required double surface,
     required double price,
     required bool isNegotiable,
     required int? constructionYear,

@@ -117,8 +117,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
 
   @override
   Future<DocumentReferenceEntity> insertHouseEntity(
-      {required double surface,
-      required double price,
+      {required double price,
       required bool isNegotiable,
       required int? constructionYear,
       required double insideSurface,
@@ -129,7 +128,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required FurnishingLevel furnishingLevel}) async {
     CollectionReferenceEntity properties = CollectionReferenceEntityImpl(collection: Collections.properties);
     HouseEntity house = HouseEntityImpl(
-        surface: surface,
+        surface: insideSurface + outsideSurface,
         price: price,
         isNegotiable: isNegotiable,
         numberOfRooms: numberOfRooms,
@@ -144,8 +143,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
 
   @override
   Future<DocumentReferenceEntity> insertDepositEntity(
-      {required double surface,
-      required double price,
+      {required double price,
       required bool isNegotiable,
       required int? constructionYear,
       required double height,
@@ -155,7 +153,7 @@ class DatabaseRepositoryImpl extends DatabaseRepository {
       required int parkingSpaces}) async {
     CollectionReferenceEntity properties = CollectionReferenceEntityImpl(collection: Collections.properties);
     DepositEntity deposit = DepositEntityImpl(
-      surface: surface,
+      surface: usableSurface + administrativeSurface,
       price: price,
       isNegotiable: isNegotiable,
       constructionYear: constructionYear,

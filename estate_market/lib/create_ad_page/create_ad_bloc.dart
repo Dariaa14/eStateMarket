@@ -238,7 +238,6 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
             return;
           }
           propertyReference = await _databaseUseCase.insertHouseEntity(
-            surface: double.parse(event.surface),
             price: double.parse(event.price),
             isNegotiable: state.isNegotiable,
             constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
@@ -260,7 +259,6 @@ class CreateAdBloc extends Bloc<CreateAdEvent, CreateAdState> {
             return;
           }
           propertyReference = await _databaseUseCase.insertDepositEntity(
-            surface: double.parse(event.surface),
             price: double.parse(event.price),
             isNegotiable: state.isNegotiable,
             constructionYear: (event.constructionYear.isEmpty) ? null : int.parse(event.constructionYear),
