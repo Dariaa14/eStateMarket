@@ -30,8 +30,8 @@ import 'package:domain/use_cases/login_use_case.dart';
 import 'package:domain/use_cases/account_use_case.dart';
 import 'package:domain/use_cases/filter_use_case.dart';
 import 'package:domain/use_cases/chat_use_case.dart';
+import 'package:gem_kit/map.dart';
 
-import 'package:gem_kit/gem_kit_map_controller.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;

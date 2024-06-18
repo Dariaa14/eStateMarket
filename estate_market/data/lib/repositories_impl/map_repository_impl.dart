@@ -1,13 +1,17 @@
 import 'dart:math';
 
+import 'package:data/entities_impl/wrappers/landmark_entity_impl.dart';
 import 'package:data/entities_impl/wrappers/map_controller_entity_impl.dart';
+import 'package:data/entities_impl/wrappers/route_entity_impl.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/collection_reference_entity.dart';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/entities/wrappers/map_controller_entity.dart';
 import 'package:domain/repositories/map_repository.dart';
-import 'package:gem_kit/d3Scene.dart';
+import 'package:gem_kit/map.dart';
+import 'package:gem_kit/core.dart';
+import 'package:gem_kit/routing.dart';
 
 import '../entities_impl/wrappers/collection_reference_entity_impl.dart';
 import '../entities_impl/wrappers/document_reference_entity_impl.dart';
@@ -93,6 +97,23 @@ class MapRepositoryImpl implements MapRepository {
     return null;
   }
 
+  @override
+  void calculateRange(LandmarkEntity landmark, TransportMode mode, int range) {
+    RoutePreferences routePreferences = RoutePreferences(
+        transportMode: _getGemTransportMode(mode),
+        routeRanges: {'Values': range},
+        routeType: RouteType.fastest,
+        routeResultType: RouteResultType.range,
+        resultDetails: RouteResultDetails.timeDistance);
+
+    RoutingService.calculateRoute([(landmark as LandmarkEntityImpl).ref], routePreferences, (err, result) {
+      if (err != GemError.success || result == null || result.isEmpty) return;
+
+      final route = RouteEntityImpl(ref: result.first);
+      mapController.showRange(route);
+    });
+  }
+
   Future<List<LandmarkEntity>> _getLandmarksFromDatabase() async {
     CollectionReferenceEntity landmarks = CollectionReferenceEntityImpl(collection: Collections.landmarks);
     return await landmarks.get<LandmarkEntity>();
@@ -110,5 +131,18 @@ class MapRepositoryImpl implements MapRepository {
     final c = 2 * atan2(sqrt(a), sqrt(1 - a));
 
     return R * c;
+  }
+
+  RouteTransportMode _getGemTransportMode(TransportMode mode) {
+    switch (mode) {
+      case TransportMode.car:
+        return RouteTransportMode.car;
+      case TransportMode.pedestrian:
+        return RouteTransportMode.pedestrian;
+      case TransportMode.bike:
+        return RouteTransportMode.bicycle;
+      default:
+        throw Exception('Unknown transport mode');
+    }
   }
 }

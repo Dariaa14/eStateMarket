@@ -624,5 +624,25 @@
     "goToAdPage": "Go to ad page",
     "@goToAdPage":{
         "description": "Go to ad page"
+    },
+
+    "transportMode": "Transport mode",
+    "@transportMode":{
+        "description": "Transport mode"
+    },
+
+    "car": "Car",
+    "@car":{
+        "description": "Car"
+    },
+
+    "bike": "Bike",
+    "@bike":{
+        "description": "Bike"
+    },
+
+    "pedestrian": "Pedestrian",
+    "@pedestrian":{
+        "description": "Pedestrian"
     }
 }

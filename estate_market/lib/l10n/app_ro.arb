@@ -125,5 +125,9 @@
     "contactInApp": "Contactează în aplicație",
     "chatWith": "Vorbește cu",
     "typeMessage": "Scrie un mesaj...",
-    "goToAdPage": "Mergi la pagina anunțului"
+    "goToAdPage": "Mergi la pagina anunțului",
+    "transportMode": "Mod de transport",
+    "car": "Mașină",
+    "bike": "Bicicletă",
+    "pedestrian": "Pieton"
 }

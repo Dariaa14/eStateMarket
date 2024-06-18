@@ -36,4 +36,8 @@ class MapUseCase {
   Future<AdEntity?> getAdOfLandmark(LandmarkEntity landmark) {
     return _mapRepository.getAdOfLandmark(landmark);
   }
+
+  void calculateRange(LandmarkEntity landmark, TransportMode mode, int range) {
+    _mapRepository.calculateRange(landmark, mode, range);
+  }
 }

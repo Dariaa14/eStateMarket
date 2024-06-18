@@ -1,9 +1,11 @@
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
+import 'package:estate_market/map_page/range_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gem_kit/d3Scene.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:gem_kit/map.dart';
 
 import 'ad_panel.dart';
 import 'map_page_bloc.dart';
@@ -87,6 +89,13 @@ class MapPageView extends StatelessWidget {
                     ),
                   ),
                 ),
+              if (type == MapType.seeAddress)
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: RangePanel(
+                      mapBloc: mapBloc,
+                      landmark: landmark!,
+                    )),
               if (state.landmark != null && type == MapType.setAddress)
                 Align(
                   alignment: Alignment.topCenter,

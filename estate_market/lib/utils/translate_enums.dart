@@ -4,6 +4,7 @@ import 'package:domain/entities/deposit_entity.dart';
 import 'package:domain/entities/garage_entity.dart';
 import 'package:domain/entities/residence_entity.dart';
 import 'package:domain/entities/terrain_entity.dart';
+import 'package:domain/repositories/map_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:domain/entities/ad_entity.dart';
@@ -113,5 +114,16 @@ String sellerTypeTranslate(SellerType type, BuildContext context) {
       return AppLocalizations.of(context)!.company;
     default:
       return AppLocalizations.of(context)!.unknown;
+  }
+}
+
+String transportModeTranslate(TransportMode mode, BuildContext context) {
+  switch (mode) {
+    case TransportMode.car:
+      return AppLocalizations.of(context)!.car;
+    case TransportMode.bike:
+      return AppLocalizations.of(context)!.bike;
+    case TransportMode.pedestrian:
+      return AppLocalizations.of(context)!.pedestrian;
   }
 }

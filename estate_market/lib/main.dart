@@ -24,7 +24,7 @@ Future<void> main() async {
   diRepositories();
   diUseCases();
 
-  GemKitPlatform.instance.loadNative().then((value) {
+  GemKit.initialize().then((value) {
     SdkSettings.setAppAuthorization(gemKitToken);
   });
 

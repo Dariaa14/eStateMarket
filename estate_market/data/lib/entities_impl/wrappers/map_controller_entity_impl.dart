@@ -1,11 +1,13 @@
 import 'dart:math';
+import 'dart:ui';
 
+import 'package:data/entities_impl/wrappers/route_entity_impl.dart';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
 import 'package:domain/entities/wrappers/map_controller_entity.dart';
-import 'package:gem_kit/api/gem_mapviewpreferences.dart';
+import 'package:domain/entities/wrappers/route_entity.dart';
 import 'package:gem_kit/core.dart';
-import 'package:gem_kit/gem_kit_map_controller.dart';
+import 'package:gem_kit/map.dart';
 
 import 'coordinates_entity_impl.dart';
 import 'landmark_entity_impl.dart';
@@ -17,7 +19,7 @@ class MapControllerEntityImpl implements MapControllerEntity {
 
   @override
   void startFollowingPosition() {
-    ref.startFollowingPosition(animation: GemAnimation(type: EAnimation.AnimationLinear));
+    ref.startFollowingPosition(animation: GemAnimation(type: Animation.linear));
   }
 
   @override
@@ -55,7 +57,7 @@ class MapControllerEntityImpl implements MapControllerEntity {
     return CoordinatesEntityImpl(ref: gemCoordinates);
   }
 
-  List<LandmarkEntity> _parseGemLandmarkList(LandmarkList list) {
+  List<LandmarkEntity> _parseGemLandmarkList(List<Landmark> list) {
     final List<LandmarkEntity> landmarks = [];
     for (final gemLandmark in list) {
       landmarks.add(LandmarkEntityImpl(ref: gemLandmark));
@@ -66,7 +68,7 @@ class MapControllerEntityImpl implements MapControllerEntity {
   @override
   void centerOnCoordinates(CoordinatesEntity coordinates) {
     ref.centerOnCoordinates((coordinates as CoordinatesEntityImpl).ref,
-        animation: GemAnimation(type: EAnimation.AnimationLinear));
+        animation: GemAnimation(type: Animation.linear));
   }
 
   @override
@@ -76,15 +78,25 @@ class MapControllerEntityImpl implements MapControllerEntity {
 
   @override
   void activateHighlight(List<LandmarkEntity> landmarks) {
-    final landmarksToHighlight = LandmarkList.create();
+    final List<Landmark> landmarksToHighlight = [];
 
     for (final landmark in landmarks) {
       final gemLandmark = (landmark as LandmarkEntityImpl).ref;
-      gemLandmark.setImageFromIconId(GemIcon.Search_Results_Pin);
+      gemLandmark.setImageFromIconId(GemIcon.searchResultsPin);
 
-      landmarksToHighlight.push_back(gemLandmark);
+      landmarksToHighlight.add(gemLandmark);
     }
 
     ref.activateHighlight(landmarksToHighlight);
+  }
+
+  @override
+  void showRange(RouteEntity route) {
+    if (ref.preferences.routes.isNotEmpty) {
+      ref.preferences.routes.clear();
+    }
+
+    RouteRenderSettings renderSettings = RouteRenderSettings(fillColor: Color(0xFFFF9000));
+    ref.preferences.routes.add((route as RouteEntityImpl).ref, true, routeRenderSettings: renderSettings);
   }
 }

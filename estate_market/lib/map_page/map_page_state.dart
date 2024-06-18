@@ -8,12 +8,17 @@ class MapPageState extends Equatable {
   final bool isLocationEnabled;
   final PositionEntity? currentPosition;
 
+  final double range;
+  final TransportMode transportMode;
+
   const MapPageState({
     this.ad,
     this.landmark,
     this.hasLocationPermission = false,
     this.isLocationEnabled = false,
     this.currentPosition,
+    this.range = 600,
+    this.transportMode = TransportMode.car,
   });
 
   MapPageState copyWith({
@@ -22,6 +27,8 @@ class MapPageState extends Equatable {
     bool? hasLocationPermission,
     bool? isLocationEnabled,
     PositionEntity? currentPosition,
+    double? range,
+    TransportMode? transportMode,
   }) =>
       MapPageState(
         ad: ad ?? this.ad,
@@ -29,6 +36,8 @@ class MapPageState extends Equatable {
         hasLocationPermission: hasLocationPermission ?? this.hasLocationPermission,
         isLocationEnabled: isLocationEnabled ?? this.isLocationEnabled,
         currentPosition: currentPosition ?? this.currentPosition,
+        range: range ?? this.range,
+        transportMode: transportMode ?? this.transportMode,
       );
 
   MapPageState copyWithNullAd() => MapPageState(
@@ -37,6 +46,8 @@ class MapPageState extends Equatable {
         currentPosition: currentPosition,
         landmark: landmark,
         ad: null,
+        range: range,
+        transportMode: transportMode,
       );
 
   MapPageState copyWithNullLandmark() => MapPageState(
@@ -45,6 +56,8 @@ class MapPageState extends Equatable {
         currentPosition: currentPosition,
         landmark: null,
         ad: ad,
+        range: range,
+        transportMode: transportMode,
       );
 
   MapPageState copyWithNullPosition() => MapPageState(
@@ -53,8 +66,11 @@ class MapPageState extends Equatable {
         currentPosition: null,
         landmark: landmark,
         ad: ad,
+        range: range,
+        transportMode: transportMode,
       );
 
   @override
-  List<Object?> get props => [landmark, hasLocationPermission, isLocationEnabled, currentPosition, ad];
+  List<Object?> get props =>
+      [landmark, hasLocationPermission, isLocationEnabled, currentPosition, ad, range, transportMode];
 }

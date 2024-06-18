@@ -15,13 +15,13 @@ class PositionRepositoryImpl implements PositionRepository {
 
   @override
   Future<void> setLivePosition() async {
-    await PositionService.instance.setLiveDataSource().then((value) async {
-      _initializeFirstPosition();
-      _listenForPositionUpdate();
-    });
+    PositionService.instance.setLiveDataSource();
+
+    _initializeFirstPosition();
+    _listenForPositionUpdate();
   }
 
-  void _listenForPositionUpdate() => PositionService.instance.addImprovedPositionListenerffi((gemPosition) {
+  void _listenForPositionUpdate() => PositionService.instance.addImprovedPositionListener((gemPosition) {
         final positionEntity = PositionEntityImpl(ref: gemPosition);
         _positionStreamController.add(positionEntity);
       });

@@ -61,3 +61,21 @@ class HighlightLandmarkEvent extends MapPageEvent {
 class DeactivateLandmarkHightlightEvent extends MapPageEvent {}
 
 class InitializeLocationEvent extends MapPageEvent {}
+
+class ShowRouteRangeEvent extends MapPageEvent {
+  final LandmarkEntity landmark;
+
+  ShowRouteRangeEvent({required this.landmark});
+}
+
+class SetRangeValueEvent extends MapPageEvent {
+  final double range;
+
+  SetRangeValueEvent({required this.range});
+}
+
+class SetTransportModeEvent extends MapPageEvent {
+  final TransportMode mode;
+
+  SetTransportModeEvent({required this.mode});
+}

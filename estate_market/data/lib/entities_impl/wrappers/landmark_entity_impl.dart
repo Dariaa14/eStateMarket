@@ -1,78 +1,77 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/entities/wrappers/address_entity.dart';
+import 'package:domain/entities/wrappers/address_entity.dart' as ae;
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
-import 'package:gem_kit/api/gem_addressinfo.dart';
 import 'package:gem_kit/core.dart';
 import 'address_entity_impl.dart';
 import 'coordinates_entity_impl.dart';
 
 class LandmarkEntityImpl implements LandmarkEntity {
-  AddressEntity? address;
+  ae.AddressEntity? address;
   final Landmark ref;
 
   LandmarkEntityImpl({required this.ref}) {
     address = AddressEntityImpl(
-      country: ref.getAddress().getField(EAddressField.Country),
-      city: ref.getAddress().getField(EAddressField.City),
-      streetName: ref.getAddress().getField(EAddressField.StreetName),
-      streetNumber: ref.getAddress().getField(EAddressField.StreetNumber),
+      country: ref.address.getField(AddressField.country),
+      city: ref.address.getField(AddressField.city),
+      streetName: ref.address.getField(AddressField.streetName),
+      streetNumber: ref.address.getField(AddressField.streetNumber),
     );
   }
 
   @override
   void setCoordinates(CoordinatesEntity coordinates) {
-    ref.setCoordinates((coordinates as CoordinatesEntityImpl).ref);
+    ref.coordinates = ((coordinates as CoordinatesEntityImpl).ref);
   }
 
   @override
   void setName(String name) {
-    ref.setName(name);
+    ref.name = name;
   }
 
   @override
-  String getName() => ref.getName();
+  String getName() => ref.name;
 
   @override
-  String getAddressField(AddressField field) {
+  String getAddressField(ae.AddressField field) {
     switch (field) {
-      case AddressField.country:
-        return address!.getField(AddressField.country);
-      case AddressField.city:
-        return address!.getField(AddressField.city);
-      case AddressField.streetName:
-        return address!.getField(AddressField.streetName);
-      case AddressField.streetNumber:
-        return address!.getField(AddressField.streetNumber);
+      case ae.AddressField.country:
+        return address!.getField(ae.AddressField.country);
+      case ae.AddressField.city:
+        return address!.getField(ae.AddressField.city);
+      case ae.AddressField.streetName:
+        return address!.getField(ae.AddressField.streetName);
+      case ae.AddressField.streetNumber:
+        return address!.getField(ae.AddressField.streetNumber);
     }
   }
 
   @override
   String getAddressString() {
-    final country = address!.getField(AddressField.country);
-    final city = address!.getField(AddressField.city);
-    final street = address!.getField(AddressField.streetName);
-    final streetNumber = address!.getField(AddressField.streetNumber);
+    final country = address!.getField(ae.AddressField.country);
+    final city = address!.getField(ae.AddressField.city);
+    final street = address!.getField(ae.AddressField.streetName);
+    final streetNumber = address!.getField(ae.AddressField.streetNumber);
     return '$country $city $street $streetNumber'.trim();
   }
 
   @override
-  CoordinatesEntity getCoordinates() => CoordinatesEntityImpl(ref: ref.getCoordinates());
+  CoordinatesEntity getCoordinates() => CoordinatesEntityImpl(ref: ref.coordinates);
 
-  LandmarkEntityImpl.create() : ref = Landmark.create() {
-    ref.setImageFromIconId(GemIcon.Search_Results_Pin);
+  LandmarkEntityImpl.create() : ref = Landmark() {
+    ref.setImageFromIconId(GemIcon.searchResultsPin);
   }
 
   @override
-  void setAddress(AddressEntity address) => this.address = address;
+  void setAddress(ae.AddressEntity address) => this.address = address;
 
   Map<String, dynamic> toJson() {
     return {
       'name': getName(),
-      'country': getAddressField(AddressField.country),
-      'city': getAddressField(AddressField.city),
-      'streetName': getAddressField(AddressField.streetName),
-      'streetNumber': getAddressField(AddressField.streetNumber),
+      'country': getAddressField(ae.AddressField.country),
+      'city': getAddressField(ae.AddressField.city),
+      'streetName': getAddressField(ae.AddressField.streetName),
+      'streetNumber': getAddressField(ae.AddressField.streetNumber),
       'latitude': getCoordinates().getLatitude(),
       'longitude': getCoordinates().getLongitude(),
     };

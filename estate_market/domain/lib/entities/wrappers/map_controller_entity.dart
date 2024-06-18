@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
 
 import 'landmark_entity.dart';
+import 'route_entity.dart';
 
 abstract class MapControllerEntity {
   void startFollowingPosition();
@@ -20,4 +21,6 @@ abstract class MapControllerEntity {
 
   void activateHighlight(List<LandmarkEntity> landmarks);
   void deactivateAllHighlights();
+
+  void showRange(RouteEntity route);
 }

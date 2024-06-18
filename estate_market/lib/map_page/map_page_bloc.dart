@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/ad_entity.dart';
 import 'package:domain/entities/wrappers/position_entity.dart';
+import 'package:domain/repositories/map_repository.dart';
 import 'package:domain/use_cases/location_use_case.dart';
 import 'package:domain/use_cases/map_use_case.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
@@ -41,6 +42,11 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     on<InitializeLocationEvent>(_initializeLocationEventHandler);
 
     on<HighlightLandmarkEvent>(_highlightLandmarkEventHandler);
+
+    on<ShowRouteRangeEvent>(_showRouteRangeEventHandler);
+
+    on<SetTransportModeEvent>(_setTransportModeEventHandler);
+    on<SetRangeValueEvent>(_setRangeValueEventHandler);
   }
 
   _initAddressSelectionEventHandler(InitAddressSelectionEvent event, Emitter<MapPageState> emit) {
@@ -145,6 +151,18 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
       if (isClosed) return;
       add(PermissionStatusUpdatedEvent(hasPermission: isEnabled));
     });
+  }
+
+  _showRouteRangeEventHandler(ShowRouteRangeEvent event, Emitter<MapPageState> emit) {
+    _mapUseCase!.calculateRange(event.landmark, state.transportMode, state.range.toInt());
+  }
+
+  _setTransportModeEventHandler(SetTransportModeEvent event, Emitter<MapPageState> emit) {
+    emit(state.copyWith(transportMode: event.mode));
+  }
+
+  _setRangeValueEventHandler(SetRangeValueEvent event, Emitter<MapPageState> emit) {
+    emit(state.copyWith(range: event.range));
   }
 
   @override
