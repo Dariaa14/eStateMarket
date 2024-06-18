@@ -68,11 +68,6 @@ class SidebarMenu extends StatelessWidget {
                 }
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: Text(AppLocalizations.of(context)!.settings),
-              onTap: () {},
-            ),
           ],
         ),
       ),

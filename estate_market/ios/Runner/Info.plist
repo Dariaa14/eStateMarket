@@ -51,5 +51,12 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>No need for it</string>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is needed for map localization and navigation</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  		<string>sms</string>
+  		<string>tel</string>
+	</array>
 </dict>
 </plist>

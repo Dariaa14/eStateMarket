@@ -19,7 +19,6 @@ class LoginUseCase {
         _registerService = registerService,
         _accountRepository = accountRepository;
 
-  // TODO: check if user is not already logged in on another device
   Future<Either<Failure, String>> login(String email, String password, bool stayConnected) async {
     final account = await _loginRepository.login(email, password);
     if (account.isLeft()) {

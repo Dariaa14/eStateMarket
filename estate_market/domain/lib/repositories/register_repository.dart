@@ -14,7 +14,4 @@ abstract class RegisterRepository {
   PasswordStrength calculatePasswordStrenght(String password);
   Future<Either<Failure, bool>> isEmailValid(String email);
   Either<Failure, bool> isPasswordValid(String password);
-
-  // Future<Either<Failure, String?>> createAccount(String email, String password);
-  // Future<Either<Failure, String?>> signIn(String email, String password);
 }
