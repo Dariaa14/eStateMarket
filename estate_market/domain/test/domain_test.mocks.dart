@@ -7,10 +7,16 @@ import 'dart:async' as _i6;
 
 import 'package:domain/entities/account_entity.dart' as _i4;
 import 'package:domain/entities/ad_entity.dart' as _i5;
+import 'package:domain/entities/apartment_entity.dart' as _i12;
+import 'package:domain/entities/deposit_entity.dart' as _i15;
+import 'package:domain/entities/garage_entity.dart' as _i11;
 import 'package:domain/entities/property_entity.dart' as _i8;
+import 'package:domain/entities/residence_entity.dart' as _i13;
+import 'package:domain/entities/terrain_entity.dart' as _i14;
 import 'package:domain/entities/wrappers/document_reference_entity.dart' as _i2;
 import 'package:domain/entities/wrappers/landmark_entity.dart' as _i9;
 import 'package:domain/repositories/account_repository.dart' as _i3;
+import 'package:domain/repositories/database_repository.dart' as _i10;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
 
@@ -310,6 +316,579 @@ class MockAdEntity extends _i1.Mock implements _i5.AdEntity {
         Invocation.method(
           #setReferences,
           [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [DatabaseRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDatabaseRepository extends _i1.Mock
+    implements _i10.DatabaseRepository {
+  MockDatabaseRepository() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<_i2.DocumentReferenceEntity> insertGarageEntity({
+    required double? surface,
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required _i11.ParkingType? parkingType,
+    required int? capacity,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertGarageEntity,
+          [],
+          {
+            #surface: surface,
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #parkingType: parkingType,
+            #capacity: capacity,
+          },
+        ),
+        returnValue: _i6.Future<_i2.DocumentReferenceEntity>.value(
+            _FakeDocumentReferenceEntity_1(
+          this,
+          Invocation.method(
+            #insertGarageEntity,
+            [],
+            {
+              #surface: surface,
+              #price: price,
+              #isNegotiable: isNegotiable,
+              #constructionYear: constructionYear,
+              #parkingType: parkingType,
+              #capacity: capacity,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.DocumentReferenceEntity>);
+
+  @override
+  _i6.Future<void> updateGarageEntity({
+    required _i2.DocumentReferenceEntity? previousProperty,
+    required double? surface,
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required _i11.ParkingType? parkingType,
+    required int? capacity,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateGarageEntity,
+          [],
+          {
+            #previousProperty: previousProperty,
+            #surface: surface,
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #parkingType: parkingType,
+            #capacity: capacity,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<_i2.DocumentReferenceEntity> insertApartmentEntity({
+    required double? surface,
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required _i12.Partitioning? partitioning,
+    required int? floor,
+    required int? numberOfRooms,
+    required int? numberOfBathrooms,
+    required _i13.FurnishingLevel? furnishingLevel,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertApartmentEntity,
+          [],
+          {
+            #surface: surface,
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #partitioning: partitioning,
+            #floor: floor,
+            #numberOfRooms: numberOfRooms,
+            #numberOfBathrooms: numberOfBathrooms,
+            #furnishingLevel: furnishingLevel,
+          },
+        ),
+        returnValue: _i6.Future<_i2.DocumentReferenceEntity>.value(
+            _FakeDocumentReferenceEntity_1(
+          this,
+          Invocation.method(
+            #insertApartmentEntity,
+            [],
+            {
+              #surface: surface,
+              #price: price,
+              #isNegotiable: isNegotiable,
+              #constructionYear: constructionYear,
+              #partitioning: partitioning,
+              #floor: floor,
+              #numberOfRooms: numberOfRooms,
+              #numberOfBathrooms: numberOfBathrooms,
+              #furnishingLevel: furnishingLevel,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.DocumentReferenceEntity>);
+
+  @override
+  _i6.Future<void> updateApartmentEntity({
+    required _i2.DocumentReferenceEntity? previousProperty,
+    required double? surface,
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required _i12.Partitioning? partitioning,
+    required int? floor,
+    required int? numberOfRooms,
+    required int? numberOfBathrooms,
+    required _i13.FurnishingLevel? furnishingLevel,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateApartmentEntity,
+          [],
+          {
+            #previousProperty: previousProperty,
+            #surface: surface,
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #partitioning: partitioning,
+            #floor: floor,
+            #numberOfRooms: numberOfRooms,
+            #numberOfBathrooms: numberOfBathrooms,
+            #furnishingLevel: furnishingLevel,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<_i2.DocumentReferenceEntity> insertHouseEntity({
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required double? insideSurface,
+    required double? outsideSurface,
+    required int? numberOfFloors,
+    required int? numberOfRooms,
+    required int? numberOfBathrooms,
+    required _i13.FurnishingLevel? furnishingLevel,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertHouseEntity,
+          [],
+          {
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #insideSurface: insideSurface,
+            #outsideSurface: outsideSurface,
+            #numberOfFloors: numberOfFloors,
+            #numberOfRooms: numberOfRooms,
+            #numberOfBathrooms: numberOfBathrooms,
+            #furnishingLevel: furnishingLevel,
+          },
+        ),
+        returnValue: _i6.Future<_i2.DocumentReferenceEntity>.value(
+            _FakeDocumentReferenceEntity_1(
+          this,
+          Invocation.method(
+            #insertHouseEntity,
+            [],
+            {
+              #price: price,
+              #isNegotiable: isNegotiable,
+              #constructionYear: constructionYear,
+              #insideSurface: insideSurface,
+              #outsideSurface: outsideSurface,
+              #numberOfFloors: numberOfFloors,
+              #numberOfRooms: numberOfRooms,
+              #numberOfBathrooms: numberOfBathrooms,
+              #furnishingLevel: furnishingLevel,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.DocumentReferenceEntity>);
+
+  @override
+  _i6.Future<void> updateHouseEntity({
+    required _i2.DocumentReferenceEntity? previousProperty,
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required double? insideSurface,
+    required double? outsideSurface,
+    required int? numberOfFloors,
+    required int? numberOfRooms,
+    required int? numberOfBathrooms,
+    required _i13.FurnishingLevel? furnishingLevel,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateHouseEntity,
+          [],
+          {
+            #previousProperty: previousProperty,
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #insideSurface: insideSurface,
+            #outsideSurface: outsideSurface,
+            #numberOfFloors: numberOfFloors,
+            #numberOfRooms: numberOfRooms,
+            #numberOfBathrooms: numberOfBathrooms,
+            #furnishingLevel: furnishingLevel,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<_i2.DocumentReferenceEntity> insertTerrainEntity({
+    required double? surface,
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required bool? isInBuildUpArea,
+    required _i14.LandUseCategories? landUseCategory,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertTerrainEntity,
+          [],
+          {
+            #surface: surface,
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #isInBuildUpArea: isInBuildUpArea,
+            #landUseCategory: landUseCategory,
+          },
+        ),
+        returnValue: _i6.Future<_i2.DocumentReferenceEntity>.value(
+            _FakeDocumentReferenceEntity_1(
+          this,
+          Invocation.method(
+            #insertTerrainEntity,
+            [],
+            {
+              #surface: surface,
+              #price: price,
+              #isNegotiable: isNegotiable,
+              #constructionYear: constructionYear,
+              #isInBuildUpArea: isInBuildUpArea,
+              #landUseCategory: landUseCategory,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.DocumentReferenceEntity>);
+
+  @override
+  _i6.Future<void> updateTerrainEntity({
+    required _i2.DocumentReferenceEntity? previousProperty,
+    required double? surface,
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required bool? isInBuildUpArea,
+    required _i14.LandUseCategories? landUseCategory,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateTerrainEntity,
+          [],
+          {
+            #previousProperty: previousProperty,
+            #surface: surface,
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #isInBuildUpArea: isInBuildUpArea,
+            #landUseCategory: landUseCategory,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<_i2.DocumentReferenceEntity> insertDepositEntity({
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required double? height,
+    required double? usableSurface,
+    required double? administrativeSurface,
+    required _i15.DepositType? depositType,
+    required int? parkingSpaces,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertDepositEntity,
+          [],
+          {
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #height: height,
+            #usableSurface: usableSurface,
+            #administrativeSurface: administrativeSurface,
+            #depositType: depositType,
+            #parkingSpaces: parkingSpaces,
+          },
+        ),
+        returnValue: _i6.Future<_i2.DocumentReferenceEntity>.value(
+            _FakeDocumentReferenceEntity_1(
+          this,
+          Invocation.method(
+            #insertDepositEntity,
+            [],
+            {
+              #price: price,
+              #isNegotiable: isNegotiable,
+              #constructionYear: constructionYear,
+              #height: height,
+              #usableSurface: usableSurface,
+              #administrativeSurface: administrativeSurface,
+              #depositType: depositType,
+              #parkingSpaces: parkingSpaces,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i2.DocumentReferenceEntity>);
+
+  @override
+  _i6.Future<void> updateDepositEntity({
+    required _i2.DocumentReferenceEntity? previousProperty,
+    required double? price,
+    required bool? isNegotiable,
+    required int? constructionYear,
+    required double? height,
+    required double? usableSurface,
+    required double? administrativeSurface,
+    required _i15.DepositType? depositType,
+    required int? parkingSpaces,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateDepositEntity,
+          [],
+          {
+            #previousProperty: previousProperty,
+            #price: price,
+            #isNegotiable: isNegotiable,
+            #constructionYear: constructionYear,
+            #height: height,
+            #usableSurface: usableSurface,
+            #administrativeSurface: administrativeSurface,
+            #depositType: depositType,
+            #parkingSpaces: parkingSpaces,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> insertAdEntity({
+    required String? title,
+    required _i5.AdCategory? category,
+    required String? description,
+    required _i2.DocumentReferenceEntity? property,
+    required _i2.DocumentReferenceEntity? account,
+    required _i2.DocumentReferenceEntity? landmark,
+    required _i5.ListingType? listingType,
+    required List<String>? images,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertAdEntity,
+          [],
+          {
+            #title: title,
+            #category: category,
+            #description: description,
+            #property: property,
+            #account: account,
+            #landmark: landmark,
+            #listingType: listingType,
+            #images: images,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> insertAccountEntity({
+    required String? email,
+    required String? password,
+    required String? phoneNumber,
+    required _i4.SellerType? sellerType,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertAccountEntity,
+          [],
+          {
+            #email: email,
+            #password: password,
+            #phoneNumber: phoneNumber,
+            #sellerType: sellerType,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> updateAdEntity({
+    required _i5.AdEntity? previousAd,
+    required String? title,
+    required _i5.AdCategory? category,
+    required String? description,
+    required _i5.ListingType? listingType,
+    required List<String>? images,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateAdEntity,
+          [],
+          {
+            #previousAd: previousAd,
+            #title: title,
+            #category: category,
+            #description: description,
+            #listingType: listingType,
+            #images: images,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<_i2.DocumentReferenceEntity> insertLandmarkEntity(
+          {required _i9.LandmarkEntity? landmark}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertLandmarkEntity,
+          [],
+          {#landmark: landmark},
+        ),
+        returnValue: _i6.Future<_i2.DocumentReferenceEntity>.value(
+            _FakeDocumentReferenceEntity_1(
+          this,
+          Invocation.method(
+            #insertLandmarkEntity,
+            [],
+            {#landmark: landmark},
+          ),
+        )),
+      ) as _i6.Future<_i2.DocumentReferenceEntity>);
+
+  @override
+  _i6.Future<void> updateLandmarkEntity({
+    required _i9.LandmarkEntity? previousLandmark,
+    required _i9.LandmarkEntity? landmark,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateLandmarkEntity,
+          [],
+          {
+            #previousLandmark: previousLandmark,
+            #landmark: landmark,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> insertFavoriteAd({
+    required _i4.AccountEntity? account,
+    required _i5.AdEntity? ad,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertFavoriteAd,
+          [],
+          {
+            #account: account,
+            #ad: ad,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> removeFavoriteAd({
+    required _i4.AccountEntity? account,
+    required _i5.AdEntity? ad,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeFavoriteAd,
+          [],
+          {
+            #account: account,
+            #ad: ad,
+          },
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> removeAd({required _i5.AdEntity? ad}) => (super.noSuchMethod(
+        Invocation.method(
+          #removeAd,
+          [],
+          {#ad: ad},
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> insertMessage({
+    required _i4.AccountEntity? sender,
+    required _i4.AccountEntity? receiver,
+    required String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertMessage,
+          [],
+          {
+            #sender: sender,
+            #receiver: receiver,
+            #message: message,
+          },
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
