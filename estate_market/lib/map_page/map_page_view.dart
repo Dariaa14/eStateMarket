@@ -1,6 +1,7 @@
 import 'package:core/dependency_injector/di.dart';
 import 'package:domain/entities/wrappers/landmark_entity.dart';
-import 'package:estate_market/map_page/range_panel.dart';
+import 'package:estate_market/map_page/route_panel.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,86 +53,99 @@ class MapPageView extends StatelessWidget {
       body: BlocBuilder<MapPageBloc, MapPageState>(
         bloc: mapBloc,
         builder: (context, state) {
-          return Stack(
-            children: [
-              GemMap(
-                onMapCreated: (controller) => onMapCreated(mapBloc, controller),
-              ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      color: (state.hasLocationPermission) ? Theme.of(context).colorScheme.primary : Colors.red,
-                      shape: BoxShape.circle),
-                  margin: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () => _onLocationButtonPressed(mapBloc, context),
-                    child: (state.hasLocationPermission)
-                        ? Icon(Icons.location_on, color: Theme.of(context).colorScheme.onPrimary, size: 40)
-                        : Icon(Icons.location_off, color: Theme.of(context).colorScheme.onPrimary, size: 40),
-                  ),
+          return BlocListener<MapPageBloc, MapPageState>(
+            bloc: mapBloc,
+            listenWhen: (previous, current) => previous.wasRouteCalculated != current.wasRouteCalculated,
+            listener: (context, state) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  AppLocalizations.of(context)!.somethingWentWrong,
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                 ),
-              ),
-              if (type == MapType.seeAddress)
+                backgroundColor: Theme.of(context).colorScheme.surface,
+              ));
+            },
+            child: Stack(
+              children: [
+                GemMap(
+                  onMapCreated: (controller) => onMapCreated(mapBloc, controller),
+                ),
                 Align(
-                  alignment: Alignment.bottomRight,
+                  alignment: Alignment.bottomLeft,
                   child: Container(
                     height: 60,
                     width: 60,
-                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                        color: (state.hasLocationPermission) ? Theme.of(context).colorScheme.primary : Colors.red,
+                        shape: BoxShape.circle),
                     margin: const EdgeInsets.all(8.0),
                     child: InkWell(
-                      onTap: () => mapBloc.add(CenterOnLandmarkEvent(landmark: landmark!)),
-                      child: Icon(Icons.center_focus_strong_rounded,
-                          color: Theme.of(context).colorScheme.onPrimary, size: 40),
+                      onTap: () => _onLocationButtonPressed(mapBloc, context),
+                      child: (state.hasLocationPermission)
+                          ? Icon(Icons.location_on, color: Theme.of(context).colorScheme.onPrimary, size: 40)
+                          : Icon(Icons.location_off, color: Theme.of(context).colorScheme.onPrimary, size: 40),
                     ),
                   ),
                 ),
-              if (type == MapType.seeAddress)
-                Align(
+                if (type == MapType.seeAddress)
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
+                      margin: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () => mapBloc.add(CenterOnLandmarkEvent(landmark: landmark!)),
+                        child: Icon(Icons.center_focus_strong_rounded,
+                            color: Theme.of(context).colorScheme.onPrimary, size: 40),
+                      ),
+                    ),
+                  ),
+                if (type == MapType.seeAddress)
+                  Align(
+                      alignment: Alignment.topCenter,
+                      child: RoutePanel(
+                        mapBloc: mapBloc,
+                        landmark: landmark!,
+                      )),
+                if (state.landmark != null && type == MapType.setAddress)
+                  Align(
                     alignment: Alignment.topCenter,
-                    child: RangePanel(
-                      mapBloc: mapBloc,
-                      landmark: landmark!,
-                    )),
-              if (state.landmark != null && type == MapType.setAddress)
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 16),
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          state.landmark!.getAddressString(),
-                        ),
-                        SizedBox(
-                          height: 35,
-                          width: 35,
-                          child: IconButton(
-                            iconSize: 20,
-                            onPressed: () => mapBloc.add(DeactivateLandmarkHightlightEvent()),
-                            icon: Icon(Icons.close, color: Theme.of(context).colorScheme.onPrimary),
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            state.landmark!.getAddressString(),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            height: 35,
+                            width: 35,
+                            child: IconButton(
+                              iconSize: 20,
+                              onPressed: () => mapBloc.add(DeactivateLandmarkHightlightEvent()),
+                              icon: Icon(Icons.close, color: Theme.of(context).colorScheme.onPrimary),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              if (state.ad != null && type == MapType.seeProperties)
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: AdPanel(ad: state.ad!, mapBloc: mapBloc),
-                )
-            ],
+                if (state.ad != null && type == MapType.seeProperties)
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: AdPanel(ad: state.ad!, mapBloc: mapBloc),
+                  )
+              ],
+            ),
           );
         },
       ),

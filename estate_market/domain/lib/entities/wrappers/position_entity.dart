@@ -1,1 +1,5 @@
-abstract class PositionEntity {}
+import 'coordinates_entity.dart';
+
+abstract class PositionEntity {
+  CoordinatesEntity getCoordinates();
+}

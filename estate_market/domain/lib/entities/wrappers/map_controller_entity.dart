@@ -22,5 +22,5 @@ abstract class MapControllerEntity {
   void activateHighlight(List<LandmarkEntity> landmarks);
   void deactivateAllHighlights();
 
-  void showRange(RouteEntity route);
+  void showRoute(RouteEntity route);
 }

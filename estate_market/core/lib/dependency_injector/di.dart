@@ -82,5 +82,6 @@ void diWithMapController(GemMapController controller) {
     sl.unregister<MapUseCase>();
   }
   sl.registerLazySingleton<MapRepository>(() => MapRepositoryImpl(controller: controller));
-  sl.registerLazySingleton<MapUseCase>(() => MapUseCase(mapRepository: sl.get<MapRepository>()));
+  sl.registerLazySingleton<MapUseCase>(
+      () => MapUseCase(mapRepository: sl.get<MapRepository>(), positionRepository: sl.get<PositionRepository>()));
 }

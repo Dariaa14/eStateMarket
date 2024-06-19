@@ -68,12 +68,6 @@ class ShowRouteRangeEvent extends MapPageEvent {
   ShowRouteRangeEvent({required this.landmark});
 }
 
-class SetRangeValueEvent extends MapPageEvent {
-  final double range;
-
-  SetRangeValueEvent({required this.range});
-}
-
 class SetTransportModeEvent extends MapPageEvent {
   final TransportMode mode;
 

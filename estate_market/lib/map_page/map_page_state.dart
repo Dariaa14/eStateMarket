@@ -8,8 +8,8 @@ class MapPageState extends Equatable {
   final bool isLocationEnabled;
   final PositionEntity? currentPosition;
 
-  final double range;
   final TransportMode transportMode;
+  final bool wasRouteCalculated;
 
   const MapPageState({
     this.ad,
@@ -17,8 +17,8 @@ class MapPageState extends Equatable {
     this.hasLocationPermission = false,
     this.isLocationEnabled = false,
     this.currentPosition,
-    this.range = 600,
     this.transportMode = TransportMode.car,
+    this.wasRouteCalculated = false,
   });
 
   MapPageState copyWith({
@@ -27,8 +27,8 @@ class MapPageState extends Equatable {
     bool? hasLocationPermission,
     bool? isLocationEnabled,
     PositionEntity? currentPosition,
-    double? range,
     TransportMode? transportMode,
+    bool? wasRouteCalculated,
   }) =>
       MapPageState(
         ad: ad ?? this.ad,
@@ -36,8 +36,8 @@ class MapPageState extends Equatable {
         hasLocationPermission: hasLocationPermission ?? this.hasLocationPermission,
         isLocationEnabled: isLocationEnabled ?? this.isLocationEnabled,
         currentPosition: currentPosition ?? this.currentPosition,
-        range: range ?? this.range,
         transportMode: transportMode ?? this.transportMode,
+        wasRouteCalculated: wasRouteCalculated ?? this.wasRouteCalculated,
       );
 
   MapPageState copyWithNullAd() => MapPageState(
@@ -46,8 +46,8 @@ class MapPageState extends Equatable {
         currentPosition: currentPosition,
         landmark: landmark,
         ad: null,
-        range: range,
         transportMode: transportMode,
+        wasRouteCalculated: wasRouteCalculated,
       );
 
   MapPageState copyWithNullLandmark() => MapPageState(
@@ -56,8 +56,8 @@ class MapPageState extends Equatable {
         currentPosition: currentPosition,
         landmark: null,
         ad: ad,
-        range: range,
         transportMode: transportMode,
+        wasRouteCalculated: wasRouteCalculated,
       );
 
   MapPageState copyWithNullPosition() => MapPageState(
@@ -66,11 +66,11 @@ class MapPageState extends Equatable {
         currentPosition: null,
         landmark: landmark,
         ad: ad,
-        range: range,
         transportMode: transportMode,
+        wasRouteCalculated: wasRouteCalculated,
       );
 
   @override
   List<Object?> get props =>
-      [landmark, hasLocationPermission, isLocationEnabled, currentPosition, ad, range, transportMode];
+      [landmark, hasLocationPermission, isLocationEnabled, currentPosition, ad, transportMode, wasRouteCalculated];
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:data/entities_impl/wrappers/landmark_entity_impl.dart';
@@ -98,20 +99,29 @@ class MapRepositoryImpl implements MapRepository {
   }
 
   @override
-  void calculateRange(LandmarkEntity landmark, TransportMode mode, int range) {
-    RoutePreferences routePreferences = RoutePreferences(
-        transportMode: _getGemTransportMode(mode),
-        routeRanges: {'Values': range},
-        routeType: RouteType.fastest,
-        routeResultType: RouteResultType.range,
-        resultDetails: RouteResultDetails.timeDistance);
+  Future<bool> calculateRoute(LandmarkEntity landmark, CoordinatesEntity currentPosition, TransportMode mode) async {
+    Completer<bool> completer = Completer();
 
-    RoutingService.calculateRoute([(landmark as LandmarkEntityImpl).ref], routePreferences, (err, result) {
-      if (err != GemError.success || result == null || result.isEmpty) return;
+    final currentPositionLandmark = Landmark();
+    currentPositionLandmark.coordinates =
+        Coordinates(latitude: currentPosition.getLatitude()!, longitude: currentPosition.getLongitude()!);
+
+    final gemLandmark = (landmark as LandmarkEntityImpl).ref;
+
+    RoutingService.calculateRoute(
+        [currentPositionLandmark, gemLandmark], RoutePreferences(transportMode: _getGemTransportMode(mode)),
+        (err, result) {
+      if (err != GemError.success || result == null || result.isEmpty) {
+        completer.complete(false);
+        return;
+      }
 
       final route = RouteEntityImpl(ref: result.first);
-      mapController.showRange(route);
+      mapController.showRoute(route);
+      completer.complete(true);
     });
+
+    return completer.future;
   }
 
   Future<List<LandmarkEntity>> _getLandmarksFromDatabase() async {

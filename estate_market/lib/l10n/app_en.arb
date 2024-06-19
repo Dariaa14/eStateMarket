@@ -644,5 +644,10 @@
     "pedestrian": "Pedestrian",
     "@pedestrian":{
         "description": "Pedestrian"
+    },
+
+    "somethingWentWrong": "Something went wrong. Check if your current location is available",
+    "@somethingWentWrong":{
+        "description": "Route not calculating"
     }
 }

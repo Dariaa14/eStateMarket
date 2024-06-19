@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:data/entities_impl/wrappers/route_entity_impl.dart';
 import 'package:domain/entities/wrappers/coordinates_entity.dart';
@@ -91,12 +90,12 @@ class MapControllerEntityImpl implements MapControllerEntity {
   }
 
   @override
-  void showRange(RouteEntity route) {
+  void showRoute(RouteEntity route) {
     if (ref.preferences.routes.isNotEmpty) {
       ref.preferences.routes.clear();
     }
+    ref.preferences.routes.add((route as RouteEntityImpl).ref, true, label: route.getMapLabel());
 
-    RouteRenderSettings renderSettings = RouteRenderSettings(fillColor: Color(0xFFFF9000));
-    ref.preferences.routes.add((route as RouteEntityImpl).ref, true, routeRenderSettings: renderSettings);
+    ref.centerOnRoute(route.ref);
   }
 }

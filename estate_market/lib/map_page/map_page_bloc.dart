@@ -46,7 +46,6 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     on<ShowRouteRangeEvent>(_showRouteRangeEventHandler);
 
     on<SetTransportModeEvent>(_setTransportModeEventHandler);
-    on<SetRangeValueEvent>(_setRangeValueEventHandler);
   }
 
   _initAddressSelectionEventHandler(InitAddressSelectionEvent event, Emitter<MapPageState> emit) {
@@ -153,16 +152,15 @@ class MapPageBloc extends Bloc<MapPageEvent, MapPageState> {
     });
   }
 
-  _showRouteRangeEventHandler(ShowRouteRangeEvent event, Emitter<MapPageState> emit) {
-    _mapUseCase!.calculateRange(event.landmark, state.transportMode, state.range.toInt());
+  _showRouteRangeEventHandler(ShowRouteRangeEvent event, Emitter<MapPageState> emit) async {
+    final isSuccesful = await _mapUseCase!.calculateRoute(event.landmark, state.transportMode);
+    if (!isSuccesful) {
+      emit(state.copyWith(wasRouteCalculated: !state.wasRouteCalculated));
+    }
   }
 
   _setTransportModeEventHandler(SetTransportModeEvent event, Emitter<MapPageState> emit) {
     emit(state.copyWith(transportMode: event.mode));
-  }
-
-  _setRangeValueEventHandler(SetRangeValueEvent event, Emitter<MapPageState> emit) {
-    emit(state.copyWith(range: event.range));
   }
 
   @override

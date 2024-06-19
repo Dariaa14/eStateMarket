@@ -19,5 +19,5 @@ abstract class MapRepository {
 
   Future<AdEntity?> getAdOfLandmark(LandmarkEntity landmark);
 
-  void calculateRange(LandmarkEntity landmark, TransportMode mode, int range);
+  Future<bool> calculateRoute(LandmarkEntity landmark, CoordinatesEntity currentPosition, TransportMode mode);
 }

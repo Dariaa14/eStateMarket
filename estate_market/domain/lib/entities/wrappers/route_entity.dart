@@ -1,1 +1,3 @@
-abstract class RouteEntity {}
+abstract class RouteEntity {
+  String getMapLabel();
+}
