@@ -64,4 +64,8 @@ class AccountUseCase {
     _favoriteAdsController.close();
     _myAdsController.close();
   }
+
+  bool areControllersClosed() {
+    return _accountController.isClosed && _favoriteAdsController.isClosed && _myAdsController.isClosed;
+  }
 }

@@ -39,4 +39,8 @@ class FilterUseCase {
   void dispose() {
     _adsController.close();
   }
+
+  bool isControllerClosed() {
+    return _adsController.isClosed;
+  }
 }

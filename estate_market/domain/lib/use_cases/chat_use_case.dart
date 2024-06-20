@@ -28,4 +28,8 @@ class ChatUseCase {
     _messagesController.close();
     _usersController.close();
   }
+
+  bool areControllersClosed() {
+    return _messagesController.isClosed && _usersController.isClosed;
+  }
 }
