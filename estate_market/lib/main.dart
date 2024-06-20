@@ -1,5 +1,6 @@
 import 'package:core/config.dart';
 import 'package:core/dependency_injector/di.dart';
+import 'package:data/config.dart';
 import 'package:estate_market/ad_page/ad_page_bloc.dart';
 import 'package:estate_market/config/route_names.dart';
 import 'package:estate_market/config/themes.dart';
@@ -19,6 +20,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gem_kit/core.dart';
 import 'firebase_options.dart';
+import 'package:network_discovery/network_discovery.dart';
+import 'package:http/http.dart' as http;
 
 Future<void> main() async {
   diRepositories();
@@ -37,11 +40,40 @@ Future<void> main() async {
   });
 }
 
+String getSubnet(String ip) {
+  List<String> parts = ip.split('.');
+  if (parts.length == 4) {
+    return '${parts[0]}.${parts[1]}.${parts[2]}';
+  }
+  throw const FormatException('Invalid IP address format');
+}
+
+Future<void> setServerIp() async {
+  final String deviceIP = await NetworkDiscovery.discoverDeviceIpAddress();
+  final stream = NetworkDiscovery.discoverAllPingableDevices(getSubnet(deviceIP));
+
+  stream.listen((HostActive host) async {
+    if (host.isActive) {
+      final Uri infoUri = Uri.parse('http://${host.ip}:3000/info');
+
+      try {
+        final response = await http.get(infoUri);
+        if (response.statusCode == 200) {
+          setNodeServer(host.ip);
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  });
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    setServerIp();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => MainPageBloc()),

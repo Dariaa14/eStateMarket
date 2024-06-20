@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const bonjour = require('bonjour')();
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -22,6 +23,12 @@ app.post('/login', (req, res) => {
     res.json({ token });
 });
 
+app.get('/info', (req, res) => {
+    res.json({ server: 'my-node-server', status: 'active' });
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
+
+    bonjour.publish({ name: 'my-node-server', type: 'http', port: port });
 });
