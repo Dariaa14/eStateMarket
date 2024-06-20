@@ -38,11 +38,16 @@ class LoginUseCase {
     _accountRepository.removeCurrentAccount();
   }
 
-  Future<void> initializeCurrentToken() async {
+  Future<void> initializeOnOpeningApp() async {
     await _registerService.initializeCurrentEmail();
     final email = _registerService.getLoggedUserEmail();
     if (email != null) {
       await _accountRepository.setCurrentAccountByEmail(email);
+      final token = await _registerService.login(email, 'password');
+      if (token == null) {
+        return;
+      }
+      await _registerService.saveToken(token, true);
     }
   }
 }

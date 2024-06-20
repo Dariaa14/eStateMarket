@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -12,6 +14,11 @@ class RegisterServiceImpl implements RegisterService {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   String? _currentToken;
   String? _currentEmail;
+  Timer? _tokenCheckTimer;
+
+  RegisterServiceImpl() {
+    _initializeTokenCheck();
+  }
 
   @override
   Future<String?> login(String email, String password) async {
@@ -65,5 +72,34 @@ class RegisterServiceImpl implements RegisterService {
     _currentEmail = null;
     await secureStorage.delete(key: 'token');
     await secureStorage.delete(key: 'email');
+    _tokenCheckTimer?.cancel();
+  }
+
+  bool _isTokenExpired(String token) {
+    return JwtDecoder.isExpired(token);
+  }
+
+  Future<void> _refreshToken() async {
+    final Uri refreshUri = Uri.parse('http://$nodeServer/refresh');
+    try {
+      final response = await http.post(refreshUri, body: {'email': _currentEmail});
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseData = json.decode(response.body);
+        String newToken = responseData['token'];
+        _currentToken = newToken;
+        await secureStorage.write(key: 'token', value: newToken);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void _initializeTokenCheck() {
+    _tokenCheckTimer = Timer.periodic(Duration(minutes: 1), (timer) async {
+      if (_currentToken != null && _isTokenExpired(_currentToken!)) {
+        await _refreshToken();
+      }
+    });
   }
 }

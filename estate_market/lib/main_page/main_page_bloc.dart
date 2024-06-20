@@ -35,7 +35,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   }
 
   _initMainPageEventHandler(InitMainPageEvent event, Emitter<MainPageState> emit) async {
-    await _loginUseCase.initializeCurrentToken();
+    await _loginUseCase.initializeOnOpeningApp();
     _accountUseCase.accountStatus.listen((bool isLoggedIn) {
       add(CurrentUserChangedEvent(isLoggedIn: isLoggedIn));
     });

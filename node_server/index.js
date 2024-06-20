@@ -23,6 +23,13 @@ app.post('/login', (req, res) => {
     res.json({ token });
 });
 
+app.post('/refresh', (req, res) => {
+    const { email } = req.body;
+
+    const newToken = jwt.sign({ email }, jwtSecret, { expiresIn: '1h' });
+    res.json({ token: newToken });
+});
+
 app.get('/info', (req, res) => {
     res.json({ server: 'my-node-server', status: 'active' });
 });
