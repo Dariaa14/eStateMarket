@@ -11,6 +11,7 @@ import '../config.dart';
 class RegisterServiceImpl implements RegisterService {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   String? _currentToken;
+  String? _currentEmail;
 
   @override
   Future<String?> login(String email, String password) async {
@@ -35,33 +36,34 @@ class RegisterServiceImpl implements RegisterService {
   }
 
   @override
-  String? getUserEmailFromToken() {
-    if (_currentToken == null) return null;
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(_currentToken!);
-
-    String email = decodedToken['email'];
-
-    print('Email: $email');
-    return email;
+  String? getLoggedUserEmail() {
+    return _currentEmail;
   }
 
   @override
   Future<void> saveToken(String token, bool stayConnected) async {
     _currentToken = token;
+    await secureStorage.write(key: 'token', value: token);
+
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(_currentToken!);
+    String email = decodedToken['email'];
+    _currentEmail = email;
+
     if (stayConnected == true) {
-      await secureStorage.write(key: 'token', value: token);
+      await secureStorage.write(key: 'email', value: email);
     }
   }
 
   @override
-  Future<void> initializeCurrentToken() async {
-    String? token = await secureStorage.read(key: 'token');
-    _currentToken = token;
+  Future<void> initializeCurrentEmail() async {
+    _currentEmail = await secureStorage.read(key: 'email');
   }
 
   @override
   Future<void> logout() async {
     _currentToken = null;
+    _currentEmail = null;
     await secureStorage.delete(key: 'token');
+    await secureStorage.delete(key: 'email');
   }
 }

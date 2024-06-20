@@ -39,9 +39,10 @@ class LoginUseCase {
   }
 
   Future<void> initializeCurrentToken() async {
-    await _registerService.initializeCurrentToken();
-    if (_registerService.getUserEmailFromToken() != null) {
-      await _accountRepository.setCurrentAccountByEmail(_registerService.getUserEmailFromToken()!);
+    await _registerService.initializeCurrentEmail();
+    final email = _registerService.getLoggedUserEmail();
+    if (email != null) {
+      await _accountRepository.setCurrentAccountByEmail(email);
     }
   }
 }

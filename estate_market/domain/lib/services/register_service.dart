@@ -3,6 +3,7 @@ abstract class RegisterService {
   Future<void> logout();
 
   Future<void> saveToken(String token, bool stayConnected);
-  Future<void> initializeCurrentToken();
-  String? getUserEmailFromToken();
+  Future<void> initializeCurrentEmail();
+
+  String? getLoggedUserEmail();
 }
