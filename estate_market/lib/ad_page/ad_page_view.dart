@@ -148,7 +148,7 @@ class AdPageView extends StatelessWidget {
                             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '${AppLocalizations.of(context)!.price}: ${ad.property!.price.toString()} (${(ad.property!.isNegotiable) ? AppLocalizations.of(context)!.negotiable : AppLocalizations.of(context)!.nonNegotiable})',
+                            '${AppLocalizations.of(context)!.price}: ${ad.property!.price.toString()}€ (${(ad.property!.isNegotiable) ? AppLocalizations.of(context)!.negotiable : AppLocalizations.of(context)!.nonNegotiable})',
                             softWrap: true,
                             style: const TextStyle(fontSize: 16),
                           ),
@@ -207,7 +207,7 @@ class AdPageView extends StatelessWidget {
                             Text(AppLocalizations.of(context)!.propertyDetails,
                                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
                             Text(
-                              '${AppLocalizations.of(context)!.surface}: ${ad.property!.surface.toString()}',
+                              '${AppLocalizations.of(context)!.surface}: ${ad.property!.surface.toString()} m²',
                               softWrap: true,
                               style: const TextStyle(fontSize: 16),
                             ),

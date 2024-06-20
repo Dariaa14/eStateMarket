@@ -130,5 +130,6 @@
     "car": "Mașină",
     "bike": "Bicicletă",
     "pedestrian": "Pieton",
-    "somethingWentWrong": "Ceva nu a mers bine. Verificați dacă locația dumneavoastră actuală este disponibilă."
+    "somethingWentWrong": "Ceva nu a mers bine. Verificați dacă locația dumneavoastră actuală este disponibilă.",
+    "date": "Data publicării"
 }

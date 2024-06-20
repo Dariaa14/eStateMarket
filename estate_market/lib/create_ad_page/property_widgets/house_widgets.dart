@@ -46,23 +46,39 @@ class HouseWidgets extends StatelessWidget {
 
               // Inside surface textfield
               Text('${AppLocalizations.of(context)!.insideSurface}*'),
-              CustomTextfield(
-                controller: insideSurfaceController,
-                hintText: AppLocalizations.of(context)!.insideSurfaceHintText,
-                keyboardType: TextInputType.number,
-                onChanged: (text) => bloc.add(ChangeInsideSurfaceEvent(insideSurface: text)),
-                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.insideSurface),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextfield(
+                      controller: insideSurfaceController,
+                      hintText: AppLocalizations.of(context)!.insideSurfaceHintText,
+                      keyboardType: TextInputType.number,
+                      onChanged: (text) => bloc.add(ChangeInsideSurfaceEvent(insideSurface: text)),
+                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.insideSurface),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
+                  const Text('m²'),
+                ],
               ),
               const SizedBox(height: 16),
 
               // Outside surface textfield
               Text('${AppLocalizations.of(context)!.outsideSurface}*'),
-              CustomTextfield(
-                controller: outsideSurfaceController,
-                hintText: AppLocalizations.of(context)!.outsideSurfaceHintText,
-                keyboardType: TextInputType.number,
-                onChanged: (text) => bloc.add(ChangeOutsideSurfaceEvent(outsideSurface: text)),
-                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.outsideSurface),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextfield(
+                      controller: outsideSurfaceController,
+                      hintText: AppLocalizations.of(context)!.outsideSurfaceHintText,
+                      keyboardType: TextInputType.number,
+                      onChanged: (text) => bloc.add(ChangeOutsideSurfaceEvent(outsideSurface: text)),
+                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.outsideSurface),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
+                  const Text('m²'),
+                ],
               ),
               const SizedBox(height: 16),
 

@@ -13,17 +13,17 @@ class DepositView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${AppLocalizations.of(context)!.height}: ${property.height}',
+          '${AppLocalizations.of(context)!.height}: ${property.height} m',
           softWrap: true,
           style: const TextStyle(fontSize: 16),
         ),
         Text(
-          '${AppLocalizations.of(context)!.usableSurface}: ${property.usableSurface}',
+          '${AppLocalizations.of(context)!.usableSurface}: ${property.usableSurface} m²',
           softWrap: true,
           style: const TextStyle(fontSize: 16),
         ),
         Text(
-          '${AppLocalizations.of(context)!.administrativeSurface}: ${property.administrativeSurface}',
+          '${AppLocalizations.of(context)!.administrativeSurface}: ${property.administrativeSurface} m²',
           softWrap: true,
           style: const TextStyle(fontSize: 16),
         ),

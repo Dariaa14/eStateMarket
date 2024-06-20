@@ -58,7 +58,7 @@ class AdPanel extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  '${AppLocalizations.of(context)!.price}: ${ad.property!.price}, ${AppLocalizations.of(context)!.surface}: ${ad.property!.surface}',
+                  '${AppLocalizations.of(context)!.price}: ${ad.property!.price} €, ${AppLocalizations.of(context)!.surface}: ${ad.property!.surface} m²',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

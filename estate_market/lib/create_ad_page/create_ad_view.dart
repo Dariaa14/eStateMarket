@@ -221,13 +221,21 @@ class CreateAdView extends StatelessWidget {
                     if (state.currentCategory != AdCategory.house && state.currentCategory != AdCategory.deposit)
                       Text('${AppLocalizations.of(context)!.surface}*'),
                     if (state.currentCategory != AdCategory.house && state.currentCategory != AdCategory.deposit)
-                      CustomTextfield(
-                        hintText: AppLocalizations.of(context)!.surfaceHintText,
-                        controller: _surfaceController,
-                        keyboardType: TextInputType.number,
-                        onChanged: (surface) => createAdBloc
-                            .add(SetEmptyFieldsEvent(field: CreateAdFields.surface, shouldRemove: surface.isNotEmpty)),
-                        showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.surface),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomTextfield(
+                              hintText: AppLocalizations.of(context)!.surfaceHintText,
+                              controller: _surfaceController,
+                              keyboardType: TextInputType.number,
+                              onChanged: (surface) => createAdBloc.add(
+                                  SetEmptyFieldsEvent(field: CreateAdFields.surface, shouldRemove: surface.isNotEmpty)),
+                              showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.surface),
+                            ),
+                          ),
+                          const SizedBox(width: 10.0),
+                          const Text('m²'),
+                        ],
                       ),
                     if (state.currentCategory != AdCategory.house && state.currentCategory != AdCategory.deposit)
                       const SizedBox(
@@ -236,13 +244,21 @@ class CreateAdView extends StatelessWidget {
 
                     // Price textfield
                     Text('${AppLocalizations.of(context)!.price}*'),
-                    CustomTextfield(
-                      hintText: AppLocalizations.of(context)!.priceHintText,
-                      controller: _priceController,
-                      keyboardType: TextInputType.number,
-                      onChanged: (price) => createAdBloc
-                          .add(SetEmptyFieldsEvent(field: CreateAdFields.price, shouldRemove: price.isNotEmpty)),
-                      showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.price),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomTextfield(
+                            hintText: AppLocalizations.of(context)!.priceHintText,
+                            controller: _priceController,
+                            keyboardType: TextInputType.number,
+                            onChanged: (price) => createAdBloc
+                                .add(SetEmptyFieldsEvent(field: CreateAdFields.price, shouldRemove: price.isNotEmpty)),
+                            showPrefix: state.showErrors && createAdBloc.fieldIsEmpty(CreateAdFields.price),
+                          ),
+                        ),
+                        const SizedBox(width: 10.0),
+                        const Text('€'),
+                      ],
                     ),
                     const SizedBox(
                       height: 16.0,

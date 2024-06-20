@@ -41,40 +41,64 @@ class DepositWidgets extends StatelessWidget {
             children: [
               // Height textfield
               Text('${AppLocalizations.of(context)!.height}*'),
-              CustomTextfield(
-                controller: heightController,
-                hintText: AppLocalizations.of(context)!.heightHintText,
-                keyboardType: TextInputType.number,
-                onChanged: (height) {
-                  bloc.add(ChangeHeightEvent(height: height));
-                },
-                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.height),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextfield(
+                      controller: heightController,
+                      hintText: AppLocalizations.of(context)!.heightHintText,
+                      keyboardType: TextInputType.number,
+                      onChanged: (height) {
+                        bloc.add(ChangeHeightEvent(height: height));
+                      },
+                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.height),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
+                  const Text('m'),
+                ],
               ),
               const SizedBox(height: 16),
 
               // Usable surface textfield
               Text('${AppLocalizations.of(context)!.usableSurface}*'),
-              CustomTextfield(
-                controller: usableSurfaceController,
-                hintText: AppLocalizations.of(context)!.usableSurfaceHintText,
-                keyboardType: TextInputType.number,
-                onChanged: (usableSurface) {
-                  bloc.add(ChangeUsableSurfaceEvent(usableSurface: usableSurface));
-                },
-                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.usableSurface),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextfield(
+                      controller: usableSurfaceController,
+                      hintText: AppLocalizations.of(context)!.usableSurfaceHintText,
+                      keyboardType: TextInputType.number,
+                      onChanged: (usableSurface) {
+                        bloc.add(ChangeUsableSurfaceEvent(usableSurface: usableSurface));
+                      },
+                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.usableSurface),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
+                  const Text('m²'),
+                ],
               ),
               const SizedBox(height: 16),
 
               // Administrative surface textfield
               Text('${AppLocalizations.of(context)!.administrativeSurface}*'),
-              CustomTextfield(
-                controller: administrativeSurfaceController,
-                hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText,
-                keyboardType: TextInputType.number,
-                onChanged: (administrativeSurface) {
-                  bloc.add(ChangeAdministrativeSurfaceEvent(administrativeSurface: administrativeSurface));
-                },
-                showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.administrativeSurface),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextfield(
+                      controller: administrativeSurfaceController,
+                      hintText: AppLocalizations.of(context)!.administrativeSurfaceHintText,
+                      keyboardType: TextInputType.number,
+                      onChanged: (administrativeSurface) {
+                        bloc.add(ChangeAdministrativeSurfaceEvent(administrativeSurface: administrativeSurface));
+                      },
+                      showPrefix: state.showErrors && bloc.fieldIsEmpty(CreateAdFields.administrativeSurface),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
+                  const Text('m²'),
+                ],
               ),
               const SizedBox(height: 16),
 

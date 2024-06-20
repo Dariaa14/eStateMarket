@@ -86,6 +86,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => MyAdsBloc()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'eState Market',
         theme: lightThemeData,
         darkTheme: darkThemeData,

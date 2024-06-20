@@ -649,5 +649,10 @@
     "somethingWentWrong": "Something went wrong. Check if your current location is available",
     "@somethingWentWrong":{
         "description": "Route not calculating"
+    },
+
+    "date": "Date of publication",
+    "@date":{
+        "description": "Date"
     }
 }

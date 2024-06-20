@@ -21,12 +21,12 @@ class HouseView extends StatelessWidget {
           style: const TextStyle(fontSize: 16),
         ),
         Text(
-          '${AppLocalizations.of(context)!.insideSurface}: ${property.insideSurface}',
+          '${AppLocalizations.of(context)!.insideSurface}: ${property.insideSurface} m²',
           softWrap: true,
           style: const TextStyle(fontSize: 16),
         ),
         Text(
-          '${AppLocalizations.of(context)!.outsideSurface}: ${property.outsideSurface}',
+          '${AppLocalizations.of(context)!.outsideSurface}: ${property.outsideSurface} m²',
           softWrap: true,
           style: const TextStyle(fontSize: 16),
         ),
